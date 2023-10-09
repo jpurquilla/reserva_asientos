@@ -4,14 +4,25 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
-<head>
+<h:head>
     <title>Prueba de jsf</title>
-</head>
-<body bgcolor="blue">
-<h1>si esta entrando aqui</h1>
-<h:outputLabel value="Esta es una prueba"/>
-</body>
+</h:head>
+<h:body >
+    <h1>si esta entrando aqui</h1>
+    <h:outputLabel value="Esta es una prueba"/>
+    <br/>
+        <p:outputLabel value="Prueba de primefaces"/>
+    <br/>
+        <p:inputText />
+    <br/>
+        <p:button value="CLick aqui"> </p:button>
+
+
+    <br/>
+        <p:outputLabel value="#{ejemplo.saludo}"/>
+</h:body>
 
 </html>
