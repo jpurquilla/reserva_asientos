@@ -17,8 +17,8 @@ public class UsuarioRepository   {
 
 
     public Usuario buscarUsuario(String codusr) {
-
-        return entityManager.createQuery("select u from Usuario u where codusr = :codusr",Usuario.class)
+        System.out.println("EL CODIGO DE USUARIO A BUSCAR ES: " + codusr);
+        return entityManager.createQuery("select u from Usuario u where u.codusr = :codusr",Usuario.class)
                 .setParameter("codusr",codusr).getSingleResult();
     }
 }
