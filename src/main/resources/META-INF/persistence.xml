@@ -3,7 +3,16 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
              version="3.0">
-    <persistence-unit name="default">
-
+    <persistence-unit name="PUreservas" transaction-type="JTA">
+        <jta-data-source>java:global/reservasDataSource</jta-data-source>
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>
+        <properties>
+<!--            <property name="jakarta.persistence.sql-load-script-source" value="META-INF/script/reserva.sql"/>-->
+            <property name="jakarta.persistence.schema-generation.create-script-source" value="META-INF/script/reserva.sql"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.id.new_generator_mappings" value="false"/>
+        </properties>
     </persistence-unit>
 </persistence>

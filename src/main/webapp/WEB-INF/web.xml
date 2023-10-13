@@ -6,4 +6,17 @@
     <welcome-file-list>
         <welcome-file>index.xhtml</welcome-file>
     </welcome-file-list>
+    <data-source>
+        <name>java:global/reservasDataSource</name>
+        <class-name>org.postgresql.ds.PGSimpleDataSource</class-name>
+        <server-name>localhost</server-name>
+        <port-number>5432</port-number>
+        <database-name>reserva_asientos</database-name>
+        <user>postgres</user>
+        <password>admin</password>
+        <property>
+            <name>fish.payara.log-jdbc-calls</name>
+            <value>true</value>
+        </property>
+    </data-source>
 </web-app>

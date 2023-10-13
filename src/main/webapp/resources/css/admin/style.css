@@ -18,12 +18,12 @@
 
 .content {
     width: 60%;
-    float: left;
+    float: right;
 }
 
 .menu {
     width: 40%;
-    float: right;
+    float: left;
 }
 
 .menu ul {
