@@ -35,15 +35,15 @@ public class Login {
         this.password = password;
     }
 
-    public void loginAction() {
+    public String loginAction() {
         LOGGER.info("El usuario es " + codusr + " password " + password);
-        System.out.println("Aqui estamos con la info del ususario "+ codusr + " password " + password);
+        System.out.println("Aqui estamos con la info del usuario "+ codusr + " password " + password);
         Usuario usuario = usuarioRepository.buscarUsuario(codusr);
         System.out.println("El usuario es: ");
         System.out.println(usuario.toString());
 
 
-
+        return usuario.getIdperfil() == 10 ? "/admin/principal.xhtml" : "/portal/principal.xhtml";
 
     }
 }
