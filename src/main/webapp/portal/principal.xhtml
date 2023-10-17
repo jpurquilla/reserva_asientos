@@ -21,7 +21,7 @@
         
         <div class="mb-8">
             <p:carousel value="#{portal.eventos}" var="evento" circular="true" autoplayInterval="3000"
-                    numVisible="3" numScroll="1">
+                        numVisible="#{portal.eventos.size() + 1}" numScroll="1">
             <f:facet name="header">
                 <h5>Eventos</h5>
             </f:facet>
@@ -29,7 +29,7 @@
             <div class="product-item">
                 <div class="product-item-content">
                     <div class="mb-3">
-                        <p:graphicImage name="images/#{portal.images[0]}" style="width:100px; height: 50px;" styleClass="product-image"/>
+                        <p:graphicImage name="images/#{portal.images[0]}" style="width:400px; height: 200px;" styleClass="product-image"/>
                     </div>
                     <div>
                         <h4 class="mb-1">#{evento.nombre}</h4>
