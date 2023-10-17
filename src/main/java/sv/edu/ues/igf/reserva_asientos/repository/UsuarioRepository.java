@@ -1,12 +1,9 @@
 package sv.edu.ues.igf.reserva_asientos.repository;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import sv.edu.ues.igf.reserva_asientos.entidades.Usuario;
-
-import java.util.List;
 
 
 @ApplicationScoped

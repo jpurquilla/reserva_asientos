@@ -1,7 +1,6 @@
 package sv.edu.ues.igf.reserva_asientos.web.seguridad;
 
 import jakarta.enterprise.context.RequestScoped;
-import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import sv.edu.ues.igf.reserva_asientos.entidades.Usuario;
