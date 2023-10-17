@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="jakarta.faces.core"
       xmlns:ui="jakarta.faces.facelets"
-      xmlns:h="jakarta.faces.html">
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="http://primefaces.org/ui">
     <f:view>
 
         <h:head>
@@ -12,8 +13,8 @@
                     Título de la aplicación
                 </ui:insert>
             </title>
-            <link href="#{request.contextPath}/resources/css/comprador/style.css" rel="stylesheet"/>
-
+            <link href="#{request.contextPath}/resources/css/portal/style.css" rel="stylesheet"/>
+            <h:outputStylesheet library="webjars" name="primeflex/3.3.1/primeflex.min.css" />
         </h:head>
 
         <h:body>
@@ -21,9 +22,10 @@
             <div >
 
                 <div class="header">
-                    <h1>hola</h1>
+                    <h1>Sistema de venta de boletos</h1>
+                    <p:button class="login-button" value="Iniciar sesión"/>
+                    
                 </div>
-
                 <div class="content">
                     <ui:insert name="content">
                         Contenido de la página
