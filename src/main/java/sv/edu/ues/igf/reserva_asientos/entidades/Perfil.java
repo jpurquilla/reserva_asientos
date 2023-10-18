@@ -12,8 +12,8 @@ public class Perfil {
     @Id
     private int idperfil;
     private String descripcion;
-    @OneToMany(mappedBy = "perfilByIdperfil")
-    private List<Menuxperfil> menuxperfilsByIdperfil;
+//    @OneToMany(mappedBy = "perfilByIdperfil")
+//    private List<Menuxperfil> menuxperfilsByIdperfil;
 
     public int getIdperfil() {
         return idperfil;
@@ -44,11 +44,11 @@ public class Perfil {
         return Objects.hash(idperfil, descripcion);
     }
 
-    public List<Menuxperfil> getMenuxperfilsByIdperfil() {
-        return menuxperfilsByIdperfil;
-    }
-
-    public void setMenuxperfilsByIdperfil(List<Menuxperfil> menuxperfilsByIdperfil) {
-        this.menuxperfilsByIdperfil = menuxperfilsByIdperfil;
-    }
+//    public List<Menuxperfil> getMenuxperfilsByIdperfil() {
+//        return menuxperfilsByIdperfil;
+//    }
+//
+//    public void setMenuxperfilsByIdperfil(List<Menuxperfil> menuxperfilsByIdperfil) {
+//        this.menuxperfilsByIdperfil = menuxperfilsByIdperfil;
+//    }
 }

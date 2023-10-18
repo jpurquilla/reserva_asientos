@@ -4,19 +4,12 @@ import jakarta.persistence.*;
 
 import java.util.Objects;
 
-@Entity
-@IdClass(MenuxperfilPK.class)
+
 public class Menuxperfil {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    @Column(name = "idperfil")
     private int idperfil;
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    @Column(name = "idmenu")
     private int idmenu;
-    @ManyToOne
-    @JoinColumn(name = "idmenu", referencedColumnName = "idmenu", nullable = false)
+//    @ManyToOne
+//    @JoinColumn(name = "idmenu", referencedColumnName = "idmenu", nullable = false)
     private Menu menuByIdmenu;
 
     public int getIdperfil() {

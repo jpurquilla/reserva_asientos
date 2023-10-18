@@ -9,13 +9,9 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class MenuxperfilPK implements Serializable {
-    @Column(name = "idperfil")
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private int idperfil;
-    @Column(name = "idmenu")
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private int idmenu;
 
     public int getIdperfil() {
