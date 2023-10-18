@@ -6,10 +6,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
-@Entity
+//@Entity
 public class Perfil {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Id
     private int idperfil;
     private String descripcion;
 //    @OneToMany(mappedBy = "perfilByIdperfil")

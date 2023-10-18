@@ -19,12 +19,12 @@ public class Usuario {
     private Integer idpersona;
 
     private Integer idperfil;
-    @ManyToOne
-    @JoinColumn(name = "idpersona", referencedColumnName = "idpersona")
-    private Persona personaByIdpersona;
-    @ManyToOne
-    @JoinColumn(name = "idperfil", referencedColumnName = "idperfil")
-    private Perfil perfilByIdperfil;
+//    @ManyToOne
+//    @JoinColumn(name = "idpersona", referencedColumnName = "idpersona")
+//    private Persona personaByIdpersona;
+//    @ManyToOne
+//    @JoinColumn(name = "idperfil", referencedColumnName = "idperfil")
+//    private Perfil perfilByIdperfil;
 
     public String getCodusr() {
         return codusr;
@@ -79,19 +79,19 @@ public class Usuario {
         return Objects.hash(codusr, password, fechacrea, idpersona, idperfil);
     }
 
-    public Persona getPersonaByIdpersona() {
-        return personaByIdpersona;
-    }
-
-    public void setPersonaByIdpersona(Persona personaByIdpersona) {
-        this.personaByIdpersona = personaByIdpersona;
-    }
-
-    public Perfil getPerfilByIdperfil() {
-        return perfilByIdperfil;
-    }
-
-    public void setPerfilByIdperfil(Perfil perfilByIdperfil) {
-        this.perfilByIdperfil = perfilByIdperfil;
-    }
+//    public Persona getPersonaByIdpersona() {
+//        return personaByIdpersona;
+//    }
+//
+//    public void setPersonaByIdpersona(Persona personaByIdpersona) {
+//        this.personaByIdpersona = personaByIdpersona;
+//    }
+//
+//    public Perfil getPerfilByIdperfil() {
+//        return perfilByIdperfil;
+//    }
+//
+//    public void setPerfilByIdperfil(Perfil perfilByIdperfil) {
+//        this.perfilByIdperfil = perfilByIdperfil;
+//    }
 }

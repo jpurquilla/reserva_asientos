@@ -4,11 +4,11 @@ import jakarta.persistence.*;
 
 import java.util.Objects;
 
-@Entity
+//@Entity
 public class Menu {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    @Column(name = "idmenu")
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Id
+//    @Column(name = "idmenu")
     private int idmenu;
     private String url;
     private String nombre;
