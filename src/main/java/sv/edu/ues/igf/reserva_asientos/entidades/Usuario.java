@@ -19,12 +19,12 @@ public class Usuario {
     private Integer idpersona;
 
     private Integer idperfil;
-//    @ManyToOne
-//    @JoinColumn(name = "idpersona", referencedColumnName = "idpersona")
-//    private Persona personaByIdpersona;
-//    @ManyToOne
-//    @JoinColumn(name = "idperfil", referencedColumnName = "idperfil")
-//    private Perfil perfilByIdperfil;
+    @ManyToOne
+    @JoinColumn(name = "idpersona", referencedColumnName = "idpersona",insertable=false, updatable=false)
+    private Persona persona;
+    @ManyToOne
+    @JoinColumn(name = "idperfil", referencedColumnName = "idperfil",insertable=false, updatable=false)
+    private Perfil perfil;
 
     public String getCodusr() {
         return codusr;
@@ -44,6 +44,22 @@ public class Usuario {
 
     public LocalDateTime getFechacrea() {
         return fechacrea;
+    }
+
+    public Persona getPersona() {
+        return persona;
+    }
+
+    public void setPersona(Persona persona) {
+        this.persona = persona;
+    }
+
+    public Perfil getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(Perfil perfil) {
+        this.perfil = perfil;
     }
 
     public void setFechacrea(LocalDateTime fechacrea) {
@@ -94,4 +110,18 @@ public class Usuario {
 //    public void setPerfilByIdperfil(Perfil perfilByIdperfil) {
 //        this.perfilByIdperfil = perfilByIdperfil;
 //    }
+
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "codusr='" + codusr + '\'' +
+                ", password='" + password + '\'' +
+                ", fechacrea=" + fechacrea +
+                ", idpersona=" + idpersona +
+                ", idperfil=" + idperfil +
+                ", persona=" + persona +
+                ", perfil=" + perfil +
+                '}';
+    }
 }

@@ -5,6 +5,7 @@ import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import sv.edu.ues.igf.reserva_asientos.entidades.Usuario;
 import sv.edu.ues.igf.reserva_asientos.repository.UsuarioRepository;
+import sv.edu.ues.igf.reserva_asientos.web.SessionBean;
 
 import java.util.logging.Logger;
 
@@ -13,6 +14,8 @@ import java.util.logging.Logger;
 public class Login {
     @Inject
     private UsuarioRepository usuarioRepository;
+
+    SessionBean sesion;
 
     private static final Logger LOGGER = Logger.getLogger(Login.class.getName());
     private String codusr;
@@ -41,7 +44,7 @@ public class Login {
         System.out.println("El usuario es: ");
         System.out.println(usuario.toString());
 
-
+        sesion = new SessionBean(usuario.getPersona().getNombres(), usuario.getCodusr(), usuario.getIdpersona(),usuario.getPerfil().getMenus());
         return usuario.getIdperfil() == 10 ? "/admin/principal.xhtml" : "/portal/principal.xhtml";
 
     }

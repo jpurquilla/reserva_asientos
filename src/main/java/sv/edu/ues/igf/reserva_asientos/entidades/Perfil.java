@@ -6,14 +6,20 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
-//@Entity
+@Entity
 public class Perfil {
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     private int idperfil;
     private String descripcion;
-//    @OneToMany(mappedBy = "perfilByIdperfil")
-//    private List<Menuxperfil> menuxperfilsByIdperfil;
+//    @OneToMany(ma
+    @ManyToMany
+    @JoinTable(
+            name = "menuxperfil",
+            joinColumns = @JoinColumn(name = "idperfil"),
+            inverseJoinColumns = @JoinColumn(name = "idmenu")
+    )
+    private List<Menu> menus;
 
     public int getIdperfil() {
         return idperfil;
@@ -29,6 +35,14 @@ public class Perfil {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public List<Menu> getMenus() {
+        return menus;
+    }
+
+    public void setMenus(List<Menu> menus) {
+        this.menus = menus;
     }
 
     @Override

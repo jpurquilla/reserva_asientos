@@ -2,16 +2,19 @@ package sv.edu.ues.igf.reserva_asientos.entidades;
 
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.Objects;
 
-//@Entity
+@Entity
 public class Menu {
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Id
-//    @Column(name = "idmenu")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     private int idmenu;
     private String url;
     private String nombre;
+
+    @ManyToMany(mappedBy = "menus")
+    private List<Perfil> perfiles;
 
     public int getIdmenu() {
         return idmenu;
@@ -35,6 +38,14 @@ public class Menu {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public List<Perfil> getPerfiles() {
+        return perfiles;
+    }
+
+    public void setPerfiles(List<Perfil> perfiles) {
+        this.perfiles = perfiles;
     }
 
     @Override
