@@ -1,16 +1,13 @@
-package sv.edu.ues.igf.reserva_asientos.web;
+package sv.edu.ues.igf.reserva_asientos.web.configuracion;
 
 import jakarta.enterprise.context.SessionScoped;
-import jakarta.inject.Named;
 import sv.edu.ues.igf.reserva_asientos.entidades.Menu;
-import sv.edu.ues.igf.reserva_asientos.entidades.Usuario;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
 @SessionScoped
-@Named
 public class SessionBean implements Serializable {
     private String nombreUsuario;
     private String codusr;
@@ -18,13 +15,7 @@ public class SessionBean implements Serializable {
     private List<Menu> listaMenu;
 
 
-    public SessionBean(){}
-    public SessionBean(String nombreUsuario, String codusr, Integer idpersona,List<Menu>listaMenu) {
-        this.nombreUsuario = nombreUsuario;
-        this.codusr = codusr;
-        this.idpersona = idpersona;
-        this.listaMenu = listaMenu;
-    }
+
 
     public String getNombreUsuario() {
         return nombreUsuario;
@@ -36,6 +27,26 @@ public class SessionBean implements Serializable {
 
     public Integer getIdpersona() {
         return idpersona;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
+
+    public void setCodusr(String codusr) {
+        this.codusr = codusr;
+    }
+
+    public void setIdpersona(Integer idpersona) {
+        this.idpersona = idpersona;
+    }
+
+    public List<Menu> getListaMenu() {
+        return listaMenu;
+    }
+
+    public void setListaMenu(List<Menu> listaMenu) {
+        this.listaMenu = listaMenu;
     }
 
     @Override
@@ -57,6 +68,7 @@ public class SessionBean implements Serializable {
                 "nombreUsuario='" + nombreUsuario + '\'' +
                 ", codusr='" + codusr + '\'' +
                 ", idpersona=" + idpersona +
+                ", listaMenu=" + listaMenu +
                 '}';
     }
 }

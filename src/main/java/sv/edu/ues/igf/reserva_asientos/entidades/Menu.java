@@ -60,4 +60,13 @@ public class Menu {
     public int hashCode() {
         return Objects.hash(idmenu, url, nombre);
     }
+
+    @Override
+    public String toString() {
+        return "Menu{" +
+                "idmenu=" + idmenu +
+                ", url='" + url + '\'' +
+                ", nombre='" + nombre +
+                '}';
+    }
 }

@@ -5,7 +5,7 @@ import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import sv.edu.ues.igf.reserva_asientos.entidades.Usuario;
 import sv.edu.ues.igf.reserva_asientos.repository.UsuarioRepository;
-import sv.edu.ues.igf.reserva_asientos.web.SessionBean;
+import sv.edu.ues.igf.reserva_asientos.web.configuracion.SessionBean;
 
 import java.util.logging.Logger;
 
@@ -15,6 +15,7 @@ public class Login {
     @Inject
     private UsuarioRepository usuarioRepository;
 
+    @Inject
     SessionBean sesion;
 
     private static final Logger LOGGER = Logger.getLogger(Login.class.getName());
@@ -44,7 +45,14 @@ public class Login {
         System.out.println("El usuario es: ");
         System.out.println(usuario.toString());
 
-        sesion = new SessionBean(usuario.getPersona().getNombres(), usuario.getCodusr(), usuario.getIdpersona(),usuario.getPerfil().getMenus());
+        sesion.setNombreUsuario(usuario.getPersona().getNombres());
+        sesion.setCodusr(usuario.getCodusr());
+        sesion.setIdpersona(usuario.getIdpersona());
+        System.out.println(usuario.getPerfil().getMenus().size());
+        sesion.setListaMenu(usuario.getPerfil().getMenus());
+
+
+        System.out.println(sesion.toString());
         return usuario.getIdperfil() == 10 ? "/admin/principal.xhtml" : "/portal/principal.xhtml";
 
     }
