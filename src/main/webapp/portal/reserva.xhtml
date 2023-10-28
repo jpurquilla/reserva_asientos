@@ -12,13 +12,25 @@
     </ui:define>
     <ui:define name="content">
         <h1>Resevar</h1>
-        <div class="mt-8 mb-8">
+        <div class="mt-8 mb-8 border-solid border-round-3xl border-1">
             <h2>
                 <p>Nombre de evento</p>
             </h2>
         </div>       
         <div class="mb-8">
-            <h2>Localidades</h2>
+            <h1>Seleccione sus asientos</h1>
+            <h:form id="asientos" class="mx-8">
+                <ui:repeat value="#{reserva.localidades}" var="localidad">
+                    <p:commandLink style="height: 0px;" styleClass="ui-icon bg-red-200" id="asiento">
+                        <f:ajax event="click" execute="@form" render="asientos" listener="#{reserva.changeStatus(localidad)}"/>
+                        <i class="pi pi-stop mx-6 my-4 " style="font-size: 2rem; #{localidad.status eq 20 ? 'color:aquamarine;' : 'color:grey;'}"></i>
+                        <p:tooltip for="asiento"  position="top">
+                            <h:outputLabel value="Local: #{localidad.id}"/>
+                        </p:tooltip>    
+                    </p:commandLink>
+                </ui:repeat>
+            </h:form>
+
         </div>
 
     </ui:define>
