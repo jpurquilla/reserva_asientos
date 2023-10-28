@@ -4,57 +4,51 @@
  */
 package sv.edu.ues.igf.reserva_asientos.entidades;
 
-import java.math.BigDecimal;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import java.io.Serializable;
 import java.util.Objects;
+
 /**
  *
  * @author Leo
  */
-public class Localidad {
+@Entity
+public class Localidad implements Serializable {
     
-    private int id;
-    private int status;
-    private BigDecimal precio;
+    @EmbeddedId
+    private LocalidadPK localidadPK;
+    private int estado;
 
     public Localidad() {
     }
-    
-    public Localidad(int id, int status, BigDecimal precio) {
-        this.id = id;
-        this.status = status;
-        this.precio = precio;
-    }
-    
-    public int getId() {
-        return id;
+
+    public Localidad(LocalidadPK localidadPK, int estado) {
+        this.localidadPK = localidadPK;
+        this.estado = estado;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public LocalidadPK getLocalidadPK() {
+        return localidadPK;
     }
 
-    public int getStatus() {
-        return status;
+    public void setLocalidadPK(LocalidadPK localidadPK) {
+        this.localidadPK = localidadPK;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public int getEstado() {
+        return estado;
     }
 
-    public BigDecimal getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(BigDecimal precio) {
-        this.precio = precio;
+    public void setEstado(int estado) {
+        this.estado = estado;
     }
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 31 * hash + this.id;
-        hash = 31 * hash + this.status;
-        hash = 31 * hash + Objects.hashCode(this.precio);
+        int hash = 3;
+        hash = 97 * hash + Objects.hashCode(this.localidadPK);
+        hash = 97 * hash + this.estado;
         return hash;
     }
 
@@ -70,19 +64,22 @@ public class Localidad {
             return false;
         }
         final Localidad other = (Localidad) obj;
-        if (this.id != other.id) {
+        if (this.estado != other.estado) {
             return false;
         }
-        if (this.status != other.status) {
-            return false;
-        }
-        return Objects.equals(this.precio, other.precio);
+        return Objects.equals(this.localidadPK, other.localidadPK);
     }
 
     @Override
     public String toString() {
-        return "Localidad{" + "id=" + id + ", status=" + status + ", precio=" + precio + '}';
+        StringBuilder sb = new StringBuilder();
+        sb.append("Localidad{");
+        sb.append("localidadPK=").append(localidadPK);
+        sb.append(", estado=").append(estado);
+        sb.append('}');
+        return sb.toString();
     }
+    
     
     
 }

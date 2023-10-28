@@ -6,11 +6,16 @@ package sv.edu.ues.igf.reserva_asientos.web.reserva;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
+import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import java.io.Serializable;
 import sv.edu.ues.igf.reserva_asientos.entidades.Localidad;
 import java.util.List;
+import java.util.ArrayList;
 import java.math.BigDecimal;
+import sv.edu.ues.igf.reserva_asientos.entidades.Seccion;
+import sv.edu.ues.igf.reserva_asientos.repository.LocalidadRepository;
+import sv.edu.ues.igf.reserva_asientos.repository.SeccionRepository;
 /**
  *
  * @author Leo
@@ -18,34 +23,65 @@ import java.math.BigDecimal;
 @Named
 @ViewScoped
 public class Reserva implements Serializable {
+        
+    @Inject
+    SeccionRepository seccionRepository;
     
-    private List<Localidad> localidades;
-
+    private List<Seccion> secciones;
+    private List<Localidad> localidadesSeleccionadas;
+    private BigDecimal subtotal;
+    
     @PostConstruct
     public void init(){
-        
-        localidades = List.of(
-                new Localidad(0, 10, new BigDecimal("10.5")),
-                new Localidad(1, 10, new BigDecimal("15.5")),
-                new Localidad(2, 10, new BigDecimal("11.5")),
-                new Localidad(3, 10, new BigDecimal("10.5")),
-                new Localidad(4, 10, new BigDecimal("15.5")),
-                new Localidad(5, 10, new BigDecimal("10.5")),
-                new Localidad(6, 10, new BigDecimal("15.5")),
-                new Localidad(7, 10, new BigDecimal("15.5")));
-        System.out.println("welcome -> " + localidades);
-    }
-    
-    public List<Localidad> getLocalidades() {
-        return localidades;
+        subtotal = BigDecimal.ZERO;
+        localidadesSeleccionadas = new ArrayList<>();
+        secciones = seccionRepository.getSeccionesByEvento(1);
+        System.out.println("welcome -> " + secciones);            
     }
 
-    public void setLocalidades(List<Localidad> localidades) {
-        this.localidades = localidades;
+    public List<Seccion> getSecciones() {
+        return secciones;
     }
+
+    public void setSecciones(List<Seccion> secciones) {
+        this.secciones = secciones;
+    }
+
+    public List<Localidad> getLocalidadesSeleccionadas() {
+        return localidadesSeleccionadas;
+    }
+
+    public void setLocalidadesSeleccionadas(List<Localidad> localidadesSeleccionadas) {
+        this.localidadesSeleccionadas = localidadesSeleccionadas;
+    }
+
+    public BigDecimal getSubtotal() {
+        return subtotal;
+    }
+
+    public void setSubtotal(BigDecimal subtotal) {
+        this.subtotal = subtotal;
+    }    
     
     public void changeStatus(Localidad localidad){
-        localidades.stream().filter(l -> l.getId() == localidad.getId()).toList().get(0).setStatus(localidad.getStatus() == 20 ? 10 : 20);
-        System.out.println("new -> " + localidades);
+        if(localidad.getEstado() == 30){
+            return;
+        }
+        Seccion seccion = secciones.stream().filter(s -> s.getSeccionPK().getIdseccion() == localidad.getLocalidadPK().getIdseccion()).toList().get(0);
+        seccion.getLocalidades().stream().filter(l -> l.getLocalidadPK() == localidad.getLocalidadPK()).toList().get(0).setEstado(localidad.getEstado()== 20 ? 10 : 20);
+        if(localidad.getEstado() != 20){
+            localidadesSeleccionadas.remove(localidad);
+            subtotal = subtotal.subtract(seccion.getPrecio());
+        }else{
+            localidadesSeleccionadas.add(localidad);
+            subtotal = subtotal.add(seccion.getPrecio());
+        }
+        //subtotal = localidadesSeleccionadas.stream().reduce(BigDecimal.ZERO, (a, b) -> a.add(seccion.getPrecio()), BigDecimal::add);
+        System.out.println("new -> " + seccion.getLocalidades());
+        System.out.println("subtotal -> " + subtotal);
+    }
+    
+    public BigDecimal getPrecioSeccion(Localidad localidad){
+        return secciones.stream().filter(s -> s.getSeccionPK().getIdseccion() == localidad.getLocalidadPK().getIdseccion()).toList().get(0).getPrecio();
     }
 }

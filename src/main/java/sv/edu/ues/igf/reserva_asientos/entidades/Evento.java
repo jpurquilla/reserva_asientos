@@ -5,7 +5,10 @@
 package sv.edu.ues.igf.reserva_asientos.entidades;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Arrays;
@@ -17,7 +20,7 @@ import java.util.Objects;
  */
 @Entity
 public class Evento {
-    
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Integer idevento;
     private Integer estado;
@@ -27,7 +30,7 @@ public class Evento {
     private LocalTime horafin;
     private LocalTime horainicio;
     private LocalDate fecha;
-
+    
     public Integer getIdevento() {
         return idevento;
     }

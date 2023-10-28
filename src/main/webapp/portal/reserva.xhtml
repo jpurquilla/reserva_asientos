@@ -20,15 +20,30 @@
         <div class="mb-8">
             <h1>Seleccione sus asientos</h1>
             <h:form id="asientos" class="mx-8">
-                <ui:repeat value="#{reserva.localidades}" var="localidad">
-                    <p:commandLink style="height: 0px;" styleClass="ui-icon bg-red-200" id="asiento">
-                        <f:ajax event="click" execute="@form" render="asientos" listener="#{reserva.changeStatus(localidad)}"/>
-                        <i class="pi pi-stop mx-6 my-4 " style="font-size: 2rem; #{localidad.status eq 20 ? 'color:aquamarine;' : 'color:grey;'}"></i>
-                        <p:tooltip for="asiento"  position="top">
-                            <h:outputLabel value="Local: #{localidad.id}"/>
-                        </p:tooltip>    
-                    </p:commandLink>
+                <ui:repeat value="#{reserva.secciones}" var="seccion">
+                    <ui:repeat value="#{seccion.localidades}" var="localidad">
+                        <p:commandLink style="height: 0px; #{localidad.estado ne 30} ? 'cursor: pointer;' : 'cursor: default;'}" styleClass="ui-icon bg-red-200" id="asiento">
+                            <f:ajax event="click" execute="@form" render="asientos" listener="#{reserva.changeStatus(localidad)}"/>
+                            <i class="pi pi-stop mx-6 my-4 " style="font-size: 2rem; #{localidad.estado eq 20 ? 'color:aquamarine;' : localidad.estado eq 30 ? 'color:red;' : 'color:grey;'}"></i>
+                            <p:tooltip for="asiento" position="top">
+                                <h:outputLabel rendered="#{localidad.estado ne 30}" value="Local: #{localidad.localidadPK.codigo}"/>
+                                <h:outputLabel rendered="#{localidad.estado eq 30}" value="No disponible"/>
+                            </p:tooltip>    
+                        </p:commandLink>
+                    </ui:repeat>
                 </ui:repeat>
+
+                <div class="mt-8 mb-8 border-solid border-round-3xl border-1">
+                    <ul>
+                        <ui:repeat value="#{reserva.localidadesSeleccionadas}" var="localidadS">
+                            <li>
+                                <h:outputText value="Localidad: #{localidadS.localidadPK.codigo}"/>
+                                <h:outputText value="Precio: #{reserva.getPrecioSeccion(localidadS)}"/>
+                            </li>
+                        </ui:repeat>
+                    </ul>
+                    <h:outputLabel value="#{reserva.subtotal}" />
+                </div>
             </h:form>
 
         </div>
