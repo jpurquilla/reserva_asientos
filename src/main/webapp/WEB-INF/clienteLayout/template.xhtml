@@ -19,23 +19,30 @@
 
         <h:body>
 
-            <div >
-
-                <div class="header">
-                    <h1>Sistema de venta de boletos</h1>
-                    <p:button class="login-button" value="Iniciar sesión"/>
-                    
+            <div class="header">
+                <div class="menu">
+                    <p:tabMenu activeIndex="#{param.i}" orientation="vertical">
+                        <p:menuitem value="Principal" outcome="/portal/principal.xhtml" icon="pi pi-fw pi-home">
+                            <f:param name="i" value="0"/>
+                        </p:menuitem>
+                        <p:menuitem value="Eventos" outcome="/portal/eventos.xhtml" icon="pi pi-fw pi-ticket">
+                            <f:param name="i" value="1"/>
+                        </p:menuitem>
+                        <p:menuitem value="Historial" outcome="/portal/historial.xhtml" icon="pi pi-fw pi-clock">
+                            <f:param name="i" value="2"/>
+                        </p:menuitem>
+                        <p:menuitem value="Iniciar sesión" outcome="/seguridad/login.xhtml" icon="pi pi-fw pi-user">
+                            <f:param name="i" value="3"/>
+                        </p:menuitem>
+                    </p:tabMenu>
                 </div>
-                <div class="content">
-                    <ui:insert name="content">
-                        Contenido de la página
-                    </ui:insert>
-                </div>
-
-
+            </div>
+            <div class="content">
+                <ui:insert name="content">
+                    Contenido de la página
+                </ui:insert>
             </div>
 
         </h:body>
-
     </f:view>
 </html>
