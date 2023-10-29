@@ -30,6 +30,7 @@ public class Reserva implements Serializable {
     private List<Seccion> secciones;
     private List<Localidad> localidadesSeleccionadas;
     private BigDecimal subtotal;
+    private Integer cantidadaReservar;
     
     @PostConstruct
     public void init(){
@@ -62,8 +63,19 @@ public class Reserva implements Serializable {
     public void setSubtotal(BigDecimal subtotal) {
         this.subtotal = subtotal;
     }    
+
+    public Integer getCantidadaReservar() {
+        return cantidadaReservar;
+    }
+
+    public void setCantidadaReservar(Integer cantidadaReservar) {
+        this.cantidadaReservar = cantidadaReservar;
+    }
     
     public void changeStatus(Localidad localidad){
+        if(localidadesSeleccionadas.size() >= cantidadaReservar){
+            return;
+        }
         if(localidad.getEstado() == 30){
             return;
         }
@@ -83,5 +95,15 @@ public class Reserva implements Serializable {
     
     public BigDecimal getPrecioSeccion(Localidad localidad){
         return secciones.stream().filter(s -> s.getSeccionPK().getIdseccion() == localidad.getLocalidadPK().getIdseccion()).toList().get(0).getPrecio();
+    }
+    
+    public void reestablecerSelecciones(){
+        secciones.forEach(s -> {
+            s.getLocalidades().stream().filter(l -> l.getEstado() != 30).forEach(l -> {
+                l.setEstado(10);
+            });
+        });
+        localidadesSeleccionadas.clear();
+        subtotal = BigDecimal.ZERO;
     }
 }
