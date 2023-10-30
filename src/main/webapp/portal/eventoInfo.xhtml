@@ -1,0 +1,41 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:f="jakarta.faces.core"
+                xmlns:h="jakarta.faces.html"
+                template="/WEB-INF/clienteLayout/template.xhtml"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="titulo">
+        Información del Evento
+    </ui:define>
+    <ui:define name="header">
+        <h1 class="event-title">Información del Evento</h1>
+    </ui:define>
+    <ui:define name="content">
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <p:panel styleClass="event-panel">
+                    <div class="ui-g">
+                        <div class="ui-g-12 ui-md-4">
+                        <img alt="user header" src="https://www.primefaces.org/showcase/resources/demo/images/usercard.png"/>
+                        </div>
+                        <div class="ui-g-12 ui-md-8">
+                            <h2 class="event-name">Nombre del Evento</h2>
+                        </div>
+                    </div>
+                </p:panel>
+            </div>
+            <div class="ui-g-12 ui-md-6">
+                <p:panel header="Descripción" styleClass="event-panel">
+                    <p class="event-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>
+                </p:panel>
+            </div>
+            <div class="ui-g-12 ui-md-6">
+                <p:panel header="Horario y Fecha" styleClass="event-panel">
+                    <h5 class="event-time">Horario de Inicio: 10:00 AM</h5>
+                    <h5 class="event-time">Horario de Finalización: 12:00 PM</h5>
+                    <h5 class="event-time">Fecha: 15 de noviembre, 2023</h5>
+                </p:panel>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>
