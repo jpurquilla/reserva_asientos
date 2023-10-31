@@ -1,3 +1,11 @@
+body{
+    font-size: 12px !important; 
+}
+
+.ui-widget {
+    font-size: 12px !important; 
+}
+
 .container {
     width: 100%;
     max-width: 1200px;
@@ -17,12 +25,12 @@
 }
 
 .content {
-    width: 60%;
+    width: 80%;
     float: right;
 }
 
 .menu {
-    width: 40%;
+    width: 20%;
     float: left;
 }
 
@@ -45,3 +53,4 @@
 .menu a:hover {
     color: #ccc;
 }
+

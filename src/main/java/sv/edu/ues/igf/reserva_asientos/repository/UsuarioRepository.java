@@ -14,8 +14,12 @@ public class UsuarioRepository   {
 
 
     public Usuario buscarUsuario(String codusr) {
-        System.out.println("Llego al metodo pero no se si hace algo ");
         return entityManager.createQuery("select u from Usuario u where u.codusr = :codusr",Usuario.class)
                 .setParameter("codusr",codusr).getSingleResult();
+    }
+    
+    public void guardarUsuario(Usuario usuario) {
+        entityManager.persist(usuario);
+        
     }
 }

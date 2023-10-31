@@ -8,9 +8,11 @@
 <f:view>
 
     <h:head>
-        <title>Título de la aplicación</title>
-        <link href="#{request.contextPath}/resources/css/admin/style.css" rel="stylesheet"/>
+        <title>Reserva de Asientos</title>
+        <h:outputStylesheet name="css/admin/style.css"/>
         <h:outputStylesheet library="webjars" name="primeflex/3.3.1/primeflex.min.css" />
+        
+
     </h:head>
 
     <h:body>
@@ -18,26 +20,27 @@
         <div >
 
             <div class="header">
-                <h1>Título de la aplicación</h1>
+                <ui:insert name="header">
+                     <h1>Título de la aplicación</h1>
+                </ui:insert>
             </div>
-
-            <div class="content">
-                <ui:insert name="content">
+            <div class="content h-screen">
+                <ui:insert name="content" >
                     Contenido de la página
                 </ui:insert>
             </div>
-
-            <div class="menu">
+            <div class="menu h-screen">
                 <ul>
                     <li><h:link outcome="/admin/page1" value="Pagina1"/></li>
                     <li><h:link outcome="/admin/page2" value="Pagina1"/></li>
                 </ul>
             </div>
-
         </div>
+        
 
     </h:body>
 
 </f:view>
+    
 
 </html>
