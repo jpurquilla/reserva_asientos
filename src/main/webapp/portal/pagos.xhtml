@@ -41,28 +41,28 @@
                     
                 </div>
                 
-      <div class=" flex  flex-wrap gap-4 justify-content-center" style="margin: 0.5em">
-           
-                <div>
-                    <h:outputText value="Nombre del titular: " style="margin: 0.3em" />
-                    <p:inputText id="cardNombre" required="true"  placeholder="Nombre en tu tarjeta"/>
-                </div>    
-                <div >
-                    <h:outputText value="Número de Tarjeta:" style="margin: 0.3em" />
-                    <p:inputText id="cardNumber" required="true" placeholder="#### #### #### ####" />    
-                </div>    
-                                
-                <div >                    
-                    <h:outputText value="Seguridad CVV:  " style="margin: 0.3em"/>
-                    <p:inputText id="cvv" required="true" placeholder="3 Digitos" />
-                    
+      <div class="formgrid grid" style="padding: 0rem 3rem" >
+    
+                <div class="field col-12 md:col-6">
+                        <h:outputText value ="Nombre del titular:"/>
+                        <p:inputText id="firstname6" type="text" placeholder="Nombre que aparece en tu tarjeta" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"/>
                 </div>
-                <div  >
-                    <h:outputText value="Fecha de Vencimiento:" style="margin: 0.3em"  />
-                    <p:inputText id="expirationDate" required="true" placeholder="Mes/Año" />
-                    
+                <div class="field col-12 md:col-6">
+                        <h:outputText value ="Número de Tarjeta:"/>
+                        <p:inputText id="lastname6" type="text" placeholder="#### #### #### ####" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"/>
                 </div>
-               </div>                          
+                <div class="field col-12 md:col-3">
+                        <h:outputText value ="Seguridad CVV:"/>
+                        <p:inputText id="address" type="text" placeholder="3 Digitos" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"/>
+                </div>
+                <div class="field col-12 md:col-9">
+                        <h:outputText value ="Fecha de Vencimiento:"/>
+                        <p:inputText id="city" type="text" placeholder="Mes/Año" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"/>
+                </div>
+        
+    
+                   
+        </div>                        
                       
         <f:facet name="footer" >
          <div Class="flex justify-content-end ">
