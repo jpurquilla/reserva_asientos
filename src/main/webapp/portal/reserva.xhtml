@@ -65,22 +65,44 @@
                
                 </div>
                 <div class="flex align-items-center justify-content-center">
-                                        <p:card style="width: 25em;"  class="mt-2 mb-2">
-                        <ul>
-                            <ui:repeat value="#{reserva.localidadesSeleccionadas}" var="localidadS">
-                                <li>
-                                    <h:outputText value="Localidad: #{localidadS.localidadPK.codigo}"/>
-                                    <h:outputText value="Precio: #{reserva.getPrecioSeccion(localidadS)}"/>
-                                </li>
-                            </ui:repeat>
-                        </ul>
-                        <p:outputLabel value="Subtotal: $ #{reserva.subtotal}" class="block"/>
-                        
-                        <p:button value="Proceder al pago"/>
-                        
-                            <p:commandButton style="float:right;" value="Restablecer" action="#{reserva.reestablecerSelecciones()}" process="@form" update="asientos"/>
-                        
-                    </p:card>   
+                        <p:sidebar widgetVar="pagosidebar" style="overflow:scroll;" position="right">
+                            <p:accordionPanel widgetVar="basic" activeIndex="-1">
+                                <p:tab title="Ver detalles">
+                                    <div class="mt-2 mb-2">
+                                        <ui:repeat value="#{reserva.localidadesSeleccionadas}" var="localidadS">
+                                            <p:card class="bg-gray-100 py-0">
+
+                                                <h:outputText value="Localidad: "/><p:tag style="float: right;" styleClass="mr-2" value="#{localidadS.localidadPK.codigo}"></p:tag>
+                                                <br/>
+                                                <br/>
+                                                <h:outputText  class="mt-2" value="Precio: "/><p:tag styleClass="mr-2" style="float: right;" severity="warning" value="$ #{reserva.getPrecioSeccion(localidadS)}"></p:tag>
+                                            </p:card>
+                                        </ui:repeat>
+                                    </div>
+                                </p:tab>
+                            </p:accordionPanel>
+
+                            <p:card class="mt-4">
+                                <h:outputText value="Subtotal: " class=""/><p:tag styleClass="mr-2" style="float: right;" severity="warning" value="$ #{reserva.subtotal}"></p:tag>
+                            </p:card>
+                            
+                            <p:card class="mt-4" rendered="#{not empty reserva.localidadesSeleccionadas}">
+                                <div class="field col-12">
+                                    <p:outputLabel for="@next" value="Número de Cuenta:" />
+                                    <p:inputMask id="numCuenta" mask="9999-9999-9999-9999" showMaskOnHover="false" value="#{reserva.numCuenta}"/>
+                                    <p:outputLabel for="@next" value="Fecha de vencimiento:" />
+                                    <p:inputMask id="dateCuenta" mask="99/99" showMaskOnHover="false" value="#{reserva.vencCuenta}"/>
+                                    <p:outputLabel for="@next" value="CCV:" />
+                                    <p:inputMask id="ccvCuenta" mask="999" showMaskOnHover="false" value="#{reserva.ccvCuenta}"/>
+                                    <p:commandButton disabled="#{reserva.numCuenta == null or reserva.vencCuenta == null or reserva.ccvCuenta == null}" 
+                                                     value="Realizar pago" styleClass="ui-button-success ml-6 mt-2"
+                                                     action="#{reserva.confirmarPago()}"/>
+                                </div>
+                                
+                            </p:card>
+                        </p:sidebar>
+                        <p:commandButton icon="pi pi-check" type="button" styleClass="ui-button-success mr-2" value="Proceder a la compra" onclick="PF('pagosidebar').show()"/>                     
+                        <p:commandButton style="float:right;" styleClass="ui-button-secondary" icon="pi pi-undo" value="Restablecer" action="#{reserva.reestablecerSelecciones()}" process="@form" update="asientos"/>                    
                 </div>
   
                 

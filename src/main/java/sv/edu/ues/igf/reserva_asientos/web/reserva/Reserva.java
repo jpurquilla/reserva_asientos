@@ -5,6 +5,7 @@
 package sv.edu.ues.igf.reserva_asientos.web.reserva;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -13,6 +14,9 @@ import sv.edu.ues.igf.reserva_asientos.entidades.Localidad;
 import java.util.List;
 import java.util.ArrayList;
 import java.math.BigDecimal;
+import org.primefaces.PrimeFaces;
+import org.primefaces.event.SelectEvent;
+import org.primefaces.model.DialogFrameworkOptions;
 import sv.edu.ues.igf.reserva_asientos.entidades.Seccion;
 import sv.edu.ues.igf.reserva_asientos.repository.LocalidadRepository;
 import sv.edu.ues.igf.reserva_asientos.repository.SeccionRepository;
@@ -31,6 +35,9 @@ public class Reserva implements Serializable {
     private List<Localidad> localidadesSeleccionadas;
     private BigDecimal subtotal;
     private Integer cantidadaReservar;
+    private String numCuenta = null;
+    private String vencCuenta = null;
+    private String ccvCuenta = null;
     
     @PostConstruct
     public void init(){
@@ -71,9 +78,33 @@ public class Reserva implements Serializable {
     public void setCantidadaReservar(Integer cantidadaReservar) {
         this.cantidadaReservar = cantidadaReservar;
     }
-    
+
+    public String getNumCuenta() {
+        return numCuenta;
+    }
+
+    public void setNumCuenta(String numCuenta) {
+        this.numCuenta = numCuenta;
+    }
+
+    public String getVencCuenta() {
+        return vencCuenta;
+    }
+
+    public void setVencCuenta(String vencCuenta) {
+        this.vencCuenta = vencCuenta;
+    }
+
+    public String getCcvCuenta() {
+        return ccvCuenta;
+    }
+
+    public void setCcvCuenta(String ccvCuenta) {
+        this.ccvCuenta = ccvCuenta;
+    }
+        
     public void changeStatus(Localidad localidad){
-        if(localidadesSeleccionadas.size() >= cantidadaReservar){
+        if(localidadesSeleccionadas.size() >= cantidadaReservar && !localidadesSeleccionadas.contains(localidad)){
             return;
         }
         if(localidad.getEstado() == 30){
@@ -105,5 +136,12 @@ public class Reserva implements Serializable {
         });
         localidadesSeleccionadas.clear();
         subtotal = BigDecimal.ZERO;
+    }
+    
+    public void confirmarPago(){
+        if(numCuenta == null || ccvCuenta == null || vencCuenta == null){
+            return;
+        }
+        System.out.println("Pago realizado con éxito");
     }
 }
