@@ -8,7 +8,7 @@
       xmlns:p="http://primefaces.org/ui">
     <h:outputLabel value="Esta es una prueba de menu"/>
     <p:megaMenu orientation="vertical">
-        <p:submenu value="Prueba" >
+        <p:submenu  >
             <ui:repeat value="#{principal.sessionBean.listaMenu}" var="menu">
                 <p:menuitem value="#{menu.nombre}" url="#{menu.url}"/>
             </ui:repeat>

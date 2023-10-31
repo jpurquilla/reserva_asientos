@@ -1,0 +1,73 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:f="jakarta.faces.core"
+                xmlns:h="jakarta.faces.html"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/adminLayout/template.xhtml">
+    <ui:define name="header">
+        <h1> Registro de Usuarios </h1>
+    </ui:define>
+    <ui:define name="content">
+        <div class="card">
+
+            <h:form>
+                <div class="ui-fluid formgrid">
+
+                    <div class="md:col-4">
+                        <p:outputLabel value="Nombres"/>
+                        <p:inputText id="nombres"  value="#{registroBean.nombres}"/>
+                    </div>
+
+                    <div class="col-12 md:col-4">
+                        <p:outputLabel value="Apellidos"/>
+                        <p:inputText id="apellidos" label="Apellidos" value="#{registroBean.apellidos}" />
+                    </div>
+                    <div class="col-12 md:col-4">
+                        <p:outputLabel value="DUI"/>
+                        <p:inputMask id="dui" mask="99999999-9" value="#{registroBean.dui}" />
+                    </div>
+                    <div class="col-12 md:col-4">
+                        <p:outputLabel value="Email"/>
+                        <p:inputText id="email"  value="#{registroBean.email}" />
+                    </div>
+                    <div class="col-12 md:col-4">
+                        <p:outputLabel value="Telefono"/>
+                        <p:inputMask id="telefono" mask="9999-9999" value="#{registroBean.telefono}" />
+                    </div>
+                    <div class="col-12 md:col-4">
+                        <p:outputLabel value="Usuario"/>
+                        <p:inputText id="codusr" label="Nombre de usuario" value="#{registroBean.codusr}" />
+                    </div>
+                    <div class="col-12 md:col-4">
+                        <p:outputLabel value="Password"/>
+                        <p:password id="password"  value="#{registroBean.password}" />
+                    </div>
+                    <div class="col-12 md:col-4">
+                        <p:commandButton id="btnGuardar" value="Guardar" style="width: 100%" />
+                    </div>
+
+
+                </div>
+                <!--<h:panelGrid columns="2">-->
+
+
+
+
+
+
+
+
+                <!--</h:panelGrid>-->
+                <br/>
+                <br/>
+
+
+
+            </h:form>
+
+        </div>
+
+
+
+    </ui:define>
+</ui:composition>
