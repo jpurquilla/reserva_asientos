@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package sv.edu.ues.igf.reserva_asientos.web.reserva;
+package sv.edu.ues.igf.reserva_asientos.web.portal;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.RequestScoped;
@@ -138,10 +138,7 @@ public class Reserva implements Serializable {
         subtotal = BigDecimal.ZERO;
     }
     
-    public void confirmarPago(){
-        if(numCuenta == null || ccvCuenta == null || vencCuenta == null){
-            return;
-        }
-        System.out.println("Pago realizado con éxito");
+    public String confirmarPago(){
+        return "pagos.xhtml?faces-redirect=true";
     }
 }
