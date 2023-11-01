@@ -6,6 +6,20 @@ body{
     font-size: 12px !important; 
 }
 
+.ui-inputfield .ui-selectonemenu .ui-selectonemenu-label{
+     font-size: 12px !important; 
+}
+
+.ui-selectonemenu-label {
+    font-size: 12px !important;
+}
+.ui-inputfield{
+    font-size: 12px !important;
+}
+
+label {
+    font-size: 12px !important; 
+}
 .container {
     width: 100%;
     max-width: 1200px;

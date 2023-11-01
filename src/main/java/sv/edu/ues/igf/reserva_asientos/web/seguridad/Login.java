@@ -41,19 +41,19 @@ public class Login {
     public String loginAction() {
         LOGGER.info("El usuario es " + codusr + " password " + password);
         System.out.println("Aqui estamos con la info del usuario "+ codusr + " password " + password);
-        Usuario usuario = usuarioRepository.buscarUsuario(codusr);
+        Usuario usuario = usuarioRepository.listarUsuarios(codusr);
         System.out.println("El usuario es: ");
         System.out.println(usuario.toString());
 
         sesion.setNombreUsuario(usuario.getPersona().getNombres());
         sesion.setCodusr(usuario.getCodusr());
-        sesion.setIdpersona(usuario.getIdpersona());
+        sesion.setIdpersona(usuario.getPersona().getIdpersona());
         System.out.println(usuario.getPerfil().getMenus().size());
         sesion.setListaMenu(usuario.getPerfil().getMenus());
 
 
         System.out.println(sesion.toString());
-        return usuario.getIdperfil() == 10 ? "/admin/principal.xhtml" : "/portal/principal.xhtml";
+        return usuario.getPerfil().getIdperfil()== 10 ? "/admin/principal.xhtml" : "/portal/principal.xhtml";
 
     }
 }

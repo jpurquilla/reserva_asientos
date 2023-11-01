@@ -2,13 +2,13 @@ package sv.edu.ues.igf.reserva_asientos.entidades;
 
 import jakarta.persistence.*;
 
-import java.sql.Timestamp;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
 public class Usuario {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    
     @Id
     private String codusr;
 
@@ -16,9 +16,7 @@ public class Usuario {
 
     private LocalDateTime fechacrea;
 
-    private Integer idpersona;
-
-    private Integer idperfil;
+   
     @ManyToOne
     @JoinColumn(name = "idpersona", referencedColumnName = "idpersona",insertable=false, updatable=false)
     private Persona persona;
@@ -26,6 +24,19 @@ public class Usuario {
     @JoinColumn(name = "idperfil", referencedColumnName = "idperfil",insertable=false, updatable=false)
     private Perfil perfil;
 
+    public Usuario() {
+    }
+
+    public Usuario(String codusr, String password, Persona persona, Perfil perfil) {
+        this.codusr = codusr;
+        this.password = password;
+        this.persona = persona;
+        this.perfil = perfil;
+        this.fechacrea = LocalDateTime.now();
+    }
+
+    
+    
     public String getCodusr() {
         return codusr;
     }
@@ -66,50 +77,40 @@ public class Usuario {
         this.fechacrea = fechacrea;
     }
 
-    public Integer getIdpersona() {
-        return idpersona;
-    }
-
-    public void setIdpersona(Integer idpersona) {
-        this.idpersona = idpersona;
-    }
-
-    public Integer getIdperfil() {
-        return idperfil;
-    }
-
-    public void setIdperfil(Integer idperfil) {
-        this.idperfil = idperfil;
-    }
-
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Usuario usuario = (Usuario) o;
-        return Objects.equals(codusr, usuario.codusr) && Objects.equals(password, usuario.password) && Objects.equals(fechacrea, usuario.fechacrea) && Objects.equals(idpersona, usuario.idpersona) && Objects.equals(idperfil, usuario.idperfil);
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Usuario other = (Usuario) obj;
+        if (!Objects.equals(this.codusr, other.codusr)) {
+            return false;
+        }
+        if (!Objects.equals(this.password, other.password)) {
+            return false;
+        }
+        return Objects.equals(this.fechacrea, other.fechacrea);
     }
+
+    
+    
 
     @Override
     public int hashCode() {
-        return Objects.hash(codusr, password, fechacrea, idpersona, idperfil);
+        int hash = 3;
+        hash = 79 * hash + Objects.hashCode(this.codusr);
+        hash = 79 * hash + Objects.hashCode(this.password);
+        hash = 79 * hash + Objects.hashCode(this.fechacrea);
+        return hash;
     }
 
-//    public Persona getPersonaByIdpersona() {
-//        return personaByIdpersona;
-//    }
-//
-//    public void setPersonaByIdpersona(Persona personaByIdpersona) {
-//        this.personaByIdpersona = personaByIdpersona;
-//    }
-//
-//    public Perfil getPerfilByIdperfil() {
-//        return perfilByIdperfil;
-//    }
-//
-//    public void setPerfilByIdperfil(Perfil perfilByIdperfil) {
-//        this.perfilByIdperfil = perfilByIdperfil;
-//    }
+    
 
 
     @Override
@@ -118,8 +119,6 @@ public class Usuario {
                 "codusr='" + codusr + '\'' +
                 ", password='" + password + '\'' +
                 ", fechacrea=" + fechacrea +
-                ", idpersona=" + idpersona +
-                ", idperfil=" + idperfil +
                 ", persona=" + persona +
                 ", perfil=" + perfil +
                 '}';

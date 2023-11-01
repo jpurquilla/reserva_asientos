@@ -7,62 +7,114 @@
     <ui:define name="header">
         <h1> Registro de Usuarios </h1>
     </ui:define>
-    <ui:define name="content">
-        <div class="card">
+    <ui:define name="content" >
+        <div class="card" style="padding: 25px" >
+            <p:toolbar>
+                <p:toolbarGroup>
+                    <p:commandButton value="Nuevo" icon="pi pi-plus" 
+                                     actionListener="#{registroBean.limpiar}"
+                                     update=":dialogos:registroPanel"
+                                     oncomplete="PF('personaDialog').show()"
+                                     style="margin-right: .5rem">
 
-            <h:form>
-                <div class="ui-fluid formgrid">
+                    </p:commandButton>
+                </p:toolbarGroup>
 
-                    <div class="md:col-4">
-                        <p:outputLabel value="Nombres"/>
-                        <p:inputText id="nombres"  value="#{registroBean.nombres}"/>
-                    </div>
+            </p:toolbar>
+            <h:form id="formLista">
+                <div style="padding-top: 25px">
+                    <p:dataTable id="tblUsuarios" value="#{registroBean.lstPersonas}"  var="persona">
+                        <p:column headerText="Nombre">
+                            <h:outputText  value="#{persona.nombres}"/>
+                        </p:column>
+                        <p:column headerText="Apellidos">
+                            <h:outputText value="#{persona.apellidos}" />
+                        </p:column>
+                        <p:column headerText="DUI">
+                            <h:outputText  value="#{persona.dui}"/>
+                        </p:column>
+                        <p:column headerText="email">
+                            <h:outputText  value="#{persona.email}"/>
+                        </p:column>
+                        <p:column headerText="Teléfono">
+                            <h:outputText  value="#{persona.telefono}"/>
+                        </p:column>
+                        <p:column headerText="Usuario">
+                            <h:outputText  value="#{persona.usuario.codusr}"/>
+                        </p:column>
+                        <p:column headerText="acciones">
+                            <p:commandButton icon="pi pi-pencil" 
+                                             styleClass="rounded-button ui-button-info ui-button-flat" 
+                                             actionListener="#{registroBean.seleccionarPersona(persona)}" 
+                                             update=":dialogos:registroPanel"
+                                             oncomplete="PF('personaDialog').show()"
+                                             >
 
-                    <div class="col-12 md:col-4">
-                        <p:outputLabel value="Apellidos"/>
-                        <p:inputText id="apellidos" label="Apellidos" value="#{registroBean.apellidos}" />
-                    </div>
-                    <div class="col-12 md:col-4">
-                        <p:outputLabel value="DUI"/>
-                        <p:inputMask id="dui" mask="99999999-9" value="#{registroBean.dui}" />
-                    </div>
-                    <div class="col-12 md:col-4">
-                        <p:outputLabel value="Email"/>
-                        <p:inputText id="email"  value="#{registroBean.email}" />
-                    </div>
-                    <div class="col-12 md:col-4">
-                        <p:outputLabel value="Telefono"/>
-                        <p:inputMask id="telefono" mask="9999-9999" value="#{registroBean.telefono}" />
-                    </div>
-                    <div class="col-12 md:col-4">
-                        <p:outputLabel value="Usuario"/>
-                        <p:inputText id="codusr" label="Nombre de usuario" value="#{registroBean.codusr}" />
-                    </div>
-                    <div class="col-12 md:col-4">
-                        <p:outputLabel value="Password"/>
-                        <p:password id="password"  value="#{registroBean.password}" />
-                    </div>
-                    <div class="col-12 md:col-4">
-                        <p:commandButton id="btnGuardar" value="Guardar" style="width: 100%" />
-                    </div>
+                            </p:commandButton>
+                            <p:commandButton class="rounded-button ui-button-danger ui-button-flat" icon="pi pi-trash"
+                                             actionListener="#{registroBean.eliminarPersona(persona)}" update="tblUsuarios">
 
-
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
                 </div>
-                <!--<h:panelGrid columns="2">-->
+            </h:form>
 
+            
+            <!--Paneles para guardar ususario-->
+            <h:form id="dialogos">
+                <p:dialog header="Usuario Detalles" showEffect="fade" modal="true" responsive="true" widgetVar="personaDialog">
 
+                    <p:outputPanel id="registroPanel" class="ui-fluid">
+                        <div class="field">
+                            <p:outputLabel for="txtNombres" value="Nombres"/>
+                            <p:inputText id="txtNombres"  value="#{registroBean.nombres}" required="true"/>
+                        </div>
 
+                        <div class="field">
+                            <p:outputLabel for="txtApellidos" value="Apellidos"/>
+                            <p:inputText id="txtApellidos" label="Apellidos" value="#{registroBean.apellidos}" required="true" />
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="txtEmail" value="Email"/>
+                            <p:inputText id="txtEmail"  value="#{registroBean.email}" required="true"/>
+                        </div>
+                        <div class="formgrid grid">
+                            <div class="field col">
+                                <p:outputLabel for="txtDui" value="DUI"/>
+                                <p:inputMask id="txtDui" mask="99999999-9" value="#{registroBean.dui}" required="true" />
+                            </div>
+                            <div class="field col">
+                                <p:outputLabel for="txtTelefono" value="Telefono"/>
+                                <p:inputMask id="txtTelefono" mask="9999-9999" value="#{registroBean.telefono}" required="true" />
+                            </div>
 
+                        </div>
+                        <p:divider/>
+                        <div class="field">
+                            <p:outputLabel for="txtCodUsr" value="Usuario"/>
+                            <p:inputText id="txtCodUsr" label="Nombre de usuario" value="#{registroBean.codusr}" required="true" />
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="cmbPerfil" value="Perfil"/>
+                            <p:selectOneMenu id="cmbPerfil" style="font-size: 8px" required="true">
+                                <f:selectItem itemLabel="No Seleccionado" itemValue="0"/>
+                                <f:selectItems value="#{registroBean.lstPerfilItem}"/>
+                            </p:selectOneMenu>
+                        </div>
 
+                        <div class="field">
+                            <p:outputLabel for="txtPassword" value="Password"/>
+                            <p:password id="txtPassword"  value="#{registroBean.password}"  required="true"/>
+                        </div>
+                    </p:outputPanel>
 
-
-
-                <!--</h:panelGrid>-->
-                <br/>
-                <br/>
-
-
-
+                    <f:facet name="footer">
+                        <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{registroBean.guardarRegistro}" />
+                        <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('personaDialog').hide()"
+                                         class="ui-button-secondary" type="button" />
+                    </f:facet>
+                </p:dialog>
             </h:form>
 
         </div>
