@@ -11,54 +11,58 @@
         <h1>Titulo de pantalla de comprador</h1>
     </ui:define>
     <ui:define name="content">
-        <h1>Resevar</h1>
-        <div class="mt-2 mb-2 border-solid border-round-3xl border-1">
-            <h2>
-                <p>Nombre de evento</p>
-            </h2>
-        </div>       
+        <p:outputLabel value="Reservar boletos" class="text-4xl flex justify-content-center "/>
+        <p:card class="mt-2 mb-2">
+            <p:outputLabel value="#{reserva.evento.nombre}"/>
+        </p:card>       
         <div class="mb-2">
-            <span>Ingrese cantidad de localidades a reservar</span>
+            
             <h:form id="inputCantidadaSeleccionar">
-                <p:inputNumber class="ml-4" id="cantidadAReservar" value="#{reserva.cantidadaReservar}" minValue="0" decimalPlaces="0">
-                    <f:ajax event="keyup" render="asientos" execute="@this" listener="#{reserva.reestablecerSelecciones()}" />
-                </p:inputNumber>
+                <div class="field col-12">
+                    <p:outputLabel value="Ingrese cantidad de localidades a reservar"/>
+                    <p:inputNumber class="ml-4" id="cantidadAReservar" value="#{reserva.cantidadaReservar}" minValue="0" decimalPlaces="0">
+                        <f:ajax event="keyup" render="asientos" execute="@this" listener="#{reserva.reestablecerSelecciones()}" />
+                    </p:inputNumber>
+                </div>
             </h:form>
+            <div class="">
+                
+            </div>
 
-            <h2>Seleccione sus asientos</h2>
             
             <h:form id="asientos" class="mx-8">
+                
                 <div class="">
+                    <p:outputLabel value="Seleccione sus asientos" class="text-3xl flex justify-content-center mb-4"/>
                     <div style="">
                         <ui:repeat value="#{reserva.secciones}" var="seccion">                   
-                            <h:outputLabel value="#{seccion.nombre}" class="block" />
+                            <p:outputLabel value="#{seccion.nombre}" class="block" />
                             <div class="flex flex-wrap gap-0 justify-content-center align-items-center">
                                 <div class="grid grid-nogutter">
-                                <ui:repeat value="#{seccion.localidades}" var="localidad" varStatus="loop">
+                                    <ui:repeat value="#{seccion.localidades}" var="localidad" varStatus="loop">
                                     <div class="col-2">
-
                                         <p:commandLink class="" disabled="#{reserva.cantidadaReservar eq null or reserva.cantidadaReservar le 0}" 
-                                                   style="height: 0px; #{localidad.estado ne 30} ? 'cursor: pointer;' : 'cursor: default;'}" 
-                                                   styleClass="ui-icon" id="asiento">
-                                            <f:ajax event="click" execute="@form" render="asientos" listener="#{reserva.changeStatus(localidad)}"/>
-                                            <i class="pi pi-stop" style="font-size: 2rem; #{localidad.estado eq 20 ? 'color:aquamarine;' : localidad.estado eq 30 ? 'color:red;' : 'color:grey;'}"></i>
+                                                    style="height: 0px; #{localidad.estado ne 30} ? 'cursor: pointer;' : 'cursor: default;'}" 
+                                                    styleClass="ui-icon" id="asiento">
+                                             <f:ajax event="click" execute="@form" render="asientos" listener="#{reserva.changeStatus(localidad)}"/>
+                                             <i class="pi pi-stop" style="font-size: 2rem; #{localidad.estado eq 20 ? 'color:aquamarine;' : localidad.estado eq 30 ? 'color:red;' : 'color:grey;'}"></i>
 
-                                            <p:tooltip rendered="#{localidad.estado ne 30}" for="asiento" position="top">
-                                                <h:outputLabel value="Local: #{localidad.localidadPK.codigo}"/>
-                                            </p:tooltip>
-                                            <p:tooltip rendered="#{localidad.estado eq 30}" for="asiento" position="top">
-                                                <h:outputLabel value="No disponible"/>
-                                            </p:tooltip>  
-                                            <p:tooltip rendered="#{reserva.localidadesSeleccionadas.size() ge reserva.cantidadaReservar}" for="asiento" position="top">
-                                                <h:outputLabel  value="Límite máximo de asientos alcanzado"/>
-                                            </p:tooltip>  
+                                             <p:tooltip rendered="#{localidad.estado ne 30}" for="asiento" position="top">
+                                                 <h:outputLabel value="Local: #{localidad.localidadPK.codigo}"/>
+                                             </p:tooltip>
+                                             <p:tooltip rendered="#{localidad.estado eq 30}" for="asiento" position="top">
+                                                 <h:outputLabel value="No disponible"/>
+                                             </p:tooltip>  
+                                             <p:tooltip rendered="#{reserva.localidadesSeleccionadas.size() ge reserva.cantidadaReservar}" for="asiento" position="top">
+                                                 <h:outputLabel  value="Límite máximo de asientos alcanzado"/>
+                                             </p:tooltip>  
 
-                                        </p:commandLink>   
+                                         </p:commandLink>
 
-                                    </div>
-                                </ui:repeat>
-                                </div>
-                            </div>        
+                                    </div> 
+                                    </ui:repeat>
+                                </div>                                             
+                            </div>
                             <p:divider />                            
                         </ui:repeat>                        
                     </div>
@@ -90,7 +94,9 @@
                                 <div class="field col-12">
                                     <p:commandButton disabled="#{empty reserva.localidadesSeleccionadas}" 
                                                      value="Proceder al pago" styleClass="ui-button-success ml-6 mt-4"
-                                                     action="#{reserva.confirmarPago()}"/>      
+                                                     action="#{reserva.confirmarPago()}">
+                                        <f:param name="subtotal" value="#{reserva.subtotal}"/>
+                                    </p:commandButton>
                                 </div>
                                 
                             </div>

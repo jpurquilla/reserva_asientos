@@ -18,33 +18,35 @@
                 <p:graphicImage name="images/#{evento}" title="demo" style="width: 100%; display: block; margin-left: auto; margin-right: auto" />
             </p:galleria>
         </div>
-        
-        <div class="mb-8">
-            <p:carousel value="#{portal.eventos}" var="evento" circular="true" autoplayInterval="3000"
-                        numVisible="#{portal.eventos.size()}" numScroll="1">
-            <f:facet name="header">
-                <h5>Eventos</h5>
-            </f:facet>
+        <h:form id="form">
+            <div class="mb-8">
+                <p:carousel value="#{portal.eventos}" var="evento" circular="true" autoplayInterval="3000"
+                            numVisible="#{portal.eventos.size()}" numScroll="1">
+                    <f:facet name="header">
+                        <h5>Eventos</h5>
+                    </f:facet>
 
-            <div class="product-item">
-                <div class="product-item-content">
-                    <div class="mb-3">
-                        <p:graphicImage name="images/#{portal.images[0]}" style="width:400px; height: 200px;" styleClass="product-image"/>
-                    </div>
-                    <div>
-                        <h4 class="mb-1">#{evento.nombre}</h4>
-                        <h6 class="mt-0 mb-3">
-                            <h:outputText value="#{evento.descripcion}">                               
-                            </h:outputText>
-                        </h6>
-                        <div class="mt-5">
-                            <p:commandButton value="Reservar" type="button" icon="pi pi-search" styleClass="mr-2" />
+                    <div class="product-item">
+                        <div class="product-item-content">
+                            <div class="mb-3">
+                                <p:graphicImage name="images/#{portal.images[0]}" style="width:400px; height: 200px;" styleClass="product-image"/>
+                            </div>
+                            <div>
+                                <h4 class="mb-1">#{evento.nombre}</h4>
+                                <h6 class="mt-0 mb-3">
+                                    <h:outputText value="#{evento.descripcion}">                               
+                                    </h:outputText>
+                                </h6>
+                                <div class="mt-5">
+                                    <p:commandButton value="Reservar" type="submit" icon="pi pi-search" styleClass="mr-2" action="#{portal.goToReserva(evento)}"/>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </p:carousel>
-        </div>
+                </p:carousel>
+            </div>            
+        </h:form>    
+
 
     </ui:define>
 </ui:composition>

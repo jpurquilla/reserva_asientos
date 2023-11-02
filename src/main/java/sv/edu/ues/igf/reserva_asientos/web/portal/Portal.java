@@ -5,6 +5,7 @@
 package sv.edu.ues.igf.reserva_asientos.web.portal;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -56,4 +57,8 @@ public class Portal implements Serializable {
         this.images = images;
     }
 
+    public String goToReserva(Evento evento){
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("evento", evento);
+        return "reserva.xhtml?faces-redirect=true";
+    }
 }

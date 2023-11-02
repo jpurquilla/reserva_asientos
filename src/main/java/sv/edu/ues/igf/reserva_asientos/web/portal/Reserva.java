@@ -6,6 +6,8 @@ package sv.edu.ues.igf.reserva_asientos.web.portal;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.RequestScoped;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.context.Flash;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
@@ -17,6 +19,7 @@ import java.math.BigDecimal;
 import org.primefaces.PrimeFaces;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DialogFrameworkOptions;
+import sv.edu.ues.igf.reserva_asientos.entidades.Evento;
 import sv.edu.ues.igf.reserva_asientos.entidades.Seccion;
 import sv.edu.ues.igf.reserva_asientos.repository.LocalidadRepository;
 import sv.edu.ues.igf.reserva_asientos.repository.SeccionRepository;
@@ -35,16 +38,14 @@ public class Reserva implements Serializable {
     private List<Localidad> localidadesSeleccionadas;
     private BigDecimal subtotal;
     private Integer cantidadaReservar;
-    private String numCuenta = null;
-    private String vencCuenta = null;
-    private String ccvCuenta = null;
+    private Evento evento;
     
     @PostConstruct
     public void init(){
         subtotal = BigDecimal.ZERO;
         localidadesSeleccionadas = new ArrayList<>();
         secciones = seccionRepository.getSeccionesByEvento(1);
-        System.out.println("welcome -> " + secciones);            
+        evento = (Evento) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("evento");
     }
 
     public List<Seccion> getSecciones() {
@@ -79,30 +80,14 @@ public class Reserva implements Serializable {
         this.cantidadaReservar = cantidadaReservar;
     }
 
-    public String getNumCuenta() {
-        return numCuenta;
+    public Evento getEvento() {
+        return evento;
     }
 
-    public void setNumCuenta(String numCuenta) {
-        this.numCuenta = numCuenta;
+    public void setEvento(Evento evento) {
+        this.evento = evento;
     }
-
-    public String getVencCuenta() {
-        return vencCuenta;
-    }
-
-    public void setVencCuenta(String vencCuenta) {
-        this.vencCuenta = vencCuenta;
-    }
-
-    public String getCcvCuenta() {
-        return ccvCuenta;
-    }
-
-    public void setCcvCuenta(String ccvCuenta) {
-        this.ccvCuenta = ccvCuenta;
-    }
-        
+          
     public void changeStatus(Localidad localidad){
         if(localidadesSeleccionadas.size() >= cantidadaReservar && !localidadesSeleccionadas.contains(localidad)){
             return;
@@ -139,6 +124,9 @@ public class Reserva implements Serializable {
     }
     
     public String confirmarPago(){
-        return "pagos.xhtml?faces-redirect=true";
+        Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+        flash.put("subtotal", subtotal);
+        flash.put("cantidadaReservar", cantidadaReservar);
+        return "pagosentradas.xhtml?faces-redirect=true";
     }
 }

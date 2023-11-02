@@ -24,9 +24,9 @@
                              <h:outputText value ="Titulo"/>
                     </f:facet>
                     <f:facet name="subtitle">
-                        <h:outputText value ="Precio: $"/>
+                        <h:outputText value ="Precio: $ "/>
                         <p:divider />
-                        <h:outputText value ="Fecha: Dia/Mes/Año"/>
+                        <h:outputText value ="Fecha: "/>
                         <p:divider />
                         
                         
@@ -79,7 +79,7 @@
                        </div>
                         
                      </div>
-                    <p:outputLabel value ="TOTAL A PAGAR: $ " styleClass="  h-8rem bg-primary-900 font-bold border-round m-2 flex align-items-center justify-content-center text-white w-full" /> 
+                    <p:outputLabel value ="TOTAL A PAGAR: $ #{pago.subtotal}" styleClass="  h-8rem bg-primary-900 font-bold border-round m-2 flex align-items-center justify-content-center text-white w-full" /> 
                                                 
             </div> 
 
