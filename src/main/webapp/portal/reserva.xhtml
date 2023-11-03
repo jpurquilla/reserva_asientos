@@ -28,12 +28,12 @@
             <div class="">
                 
             </div>
-
-            
+            <p:tag id="timer" styleClass="mr-2" severity="success"></p:tag>
             <h:form id="asientos" class="mx-8">
                 
                 <div class="">
                     <p:outputLabel value="Seleccione sus asientos" class="text-3xl flex justify-content-center mb-4"/>
+                    
                     <div class="w-12">
                         <ui:repeat value="#{reservaBean.secciones}" var="seccion">                   
                             <p:outputLabel value="#{seccion.nombre}" class="block" />
@@ -44,7 +44,7 @@
                                         <p:commandLink class="" disabled="#{reservaBean.cantidadaReservar eq null or reservaBean.cantidadaReservar le 0}" 
                                                     style="height: 0px; #{localidad.estado ne 30} ? 'cursor: pointer;' : 'cursor: default;'}" 
                                                     styleClass="ui-icon" id="asiento">
-                                             <f:ajax event="click" execute="@form" render="asientos" listener="#{reservaBean.changeStatus(localidad)}"/>
+                                             <f:ajax event="click" execute="@form" render="asientos sidebar" listener="#{reservaBean.changeStatus(localidad)}"/>
                                              <i class="pi pi-stop" 
                                                 style="font-size: 2rem; #{localidad.estado eq 20 ? 'color:aquamarine;' : localidad.estado eq 30 ? 'color:yellow;' : localidad.estado eq 40 ? 'color:red;' : 'color:grey;'}"></i>
 
@@ -72,47 +72,90 @@
                 <div class="flex align-items-center justify-content-center">
 
                         <p:commandButton icon="pi pi-check" type="button" styleClass="ui-button-success mr-2" value="Confirmar reserva" onclick="PF('pagosidebar').show()"/>                     
-                        <p:commandButton style="float:right;" styleClass="ui-button-secondary" icon="pi pi-undo" value="Restablecer" action="#{reservaBean.reestablecerSelecciones()}" process="@form" update="asientos"/>                    
-                </div>
-  
-                
-
-
+                        <p:commandButton id="reestablecerButton" style="float:right;" styleClass="ui-button-secondary" icon="pi pi-undo" value="Restablecer" 
+                                         action="#{reservaBean.reestablecerSelecciones()}" process="@form" update="asientos sidebar"/>
+                        <p:commandButton id="timeoutButton" style="display:none;" value="Show" type="button" icon="pi pi-external-link" onclick="PF('timeoutDialog').show()"/>
+                </div>                
                 <p:poll interval="3" listener="#{reservaBean.pollLocalidades()}" update="asientos"/>
+                    <script>
+                        var timer;
+                        window.onload = function() {
+                            clearTimeout(timer);
+                            var timerElement = document.getElementById('timer');
+                            timerElement.style.display = 'block';
+                            var secondsRemaining = 180; // 3 minutos
+                            timerElement.innerText = 'Tiempo restante: 0' + Math.trunc(secondsRemaining/60) + ':' + (secondsRemaining%60).toLocaleString('en-US', {
+                                                                                                                                            minimumIntegerDigits: 2,
+                                                                                                                                            useGrouping: false
+                                                                                                                                        });
+                            timer = setTimeout(function() {
+                                document.getElementById('asientos:reestablecerButton').click();
+                                timerElement.style.display = 'none';
+                                document.getElementById('asientos:timeoutButton').click();
+                            }, secondsRemaining * 1000);
+                            var updateTimer = function() {
+                                secondsRemaining--;
+                                timerElement.innerText = 'Tiempo restante: 0' + Math.trunc(secondsRemaining/60) + ':' + (secondsRemaining%60).toLocaleString('en-US', {
+                                                                                                                                                minimumIntegerDigits: 2,
+                                                                                                                                                useGrouping: false
+                                                                                                                                            });
+                            };
+                            setInterval(updateTimer, 1000);
+                        };
+                        
+                        window.onbeforeunload = function(){
+                            document.getElementById('asientos:reestablecerButton').click();
+                        };
+                    </script>
             </h:form>
-                        <p:sidebar widgetVar="pagosidebar" style="overflow:scroll;" position="right">
-                            <p:accordionPanel widgetVar="basic" activeIndex="-1">
-                                <p:tab title="Ver detalles">
-                                    <div class="mt-2 mb-2">
-                                        <ui:repeat value="#{reservaBean.localidadesSeleccionadas}" var="localidadS">
-                                            <p:card class="bg-gray-100 py-0">
+            <p:sidebar id="sidebar" widgetVar="pagosidebar" style="overflow:scroll;" position="right">
+                <p:accordionPanel widgetVar="basic" activeIndex="-1">
+                    <p:tab title="Ver detalles">
+                        <div class="mt-2 mb-2">
+                            <ui:repeat value="#{reservaBean.localidadesSeleccionadas}" var="localidadS">
+                                <p:card class="bg-gray-100 py-0">
 
-                                                <h:outputText value="Localidad: "/><p:tag style="float: right;" styleClass="mr-2" value="#{localidadS.localidadPK.codigo}"></p:tag>
-                                                <br/>
-                                                <br/>
-                                                <h:outputText  class="mt-2" value="Precio: "/><p:tag styleClass="mr-2" style="float: right;" severity="warning" value="$ #{reservaBean.getPrecioSeccion(localidadS)}"></p:tag>
-                                            </p:card>
-                                        </ui:repeat>
-                                    </div>
-                                </p:tab>
-                            </p:accordionPanel>
+                                    <h:outputText value="Localidad: "/><p:tag style="float: right;" styleClass="mr-2" value="#{localidadS.localidadPK.codigo}"></p:tag>
+                                    <br/>
+                                    <br/>
+                                    <h:outputText  class="mt-2" value="Precio: "/><p:tag styleClass="mr-2" style="float: right;" severity="warning" value="$ #{reservaBean.getPrecioSeccion(localidadS)}"></p:tag>
+                                </p:card>
+                            </ui:repeat>
+                        </div>
+                    </p:tab>
+                </p:accordionPanel>
 
-                            <p:card class="mt-4">
-                                    <h:outputText value="Subtotal: " class=""/><p:tag styleClass="mr-2" style="float: right;" severity="warning" value="$ #{reservaBean.subtotal}"></p:tag>    
-                            </p:card>
-                            
-                            <div class="mt-2">
-                                <div class="field col-12">
-                                    <p:commandButton disabled="#{empty reservaBean.localidadesSeleccionadas}" 
-                                                     value="Proceder al pago" styleClass="ui-button-success ml-6 mt-4"
-                                                     action="#{reservaBean.confirmarPago()}">
-                                        <f:param name="subtotal" value="#{reservaBean.subtotal}"/>
-                                    </p:commandButton>
-                                </div>
-                                
-                            </div>
-                        </p:sidebar>
-        </div>
+                <p:card class="mt-4">
+                        <h:outputText value="Subtotal: " class=""/><p:tag styleClass="mr-2" style="float: right;" severity="warning" value="$ #{reservaBean.subtotal}"></p:tag>    
+                </p:card>
 
+                <div class="mt-2">
+                    <div class="field col-12">
+                        <p:commandButton disabled="#{empty reservaBean.localidadesSeleccionadas}" 
+                                         value="Proceder al pago" styleClass="ui-button-success ml-6 mt-4"
+                                         action="#{reservaBean.confirmarPago()}">
+                            <f:param name="subtotal" value="#{reservaBean.subtotal}"/>
+                        </p:commandButton>
+                    </div>
+
+                </div>
+            </p:sidebar>
+            <p:dialog header="Advertencia" widgetVar="timeoutDialog" minHeight="40" width="350" showEffect="fade" modal="true">
+                
+                    <p class="m-0">El tiempo se ha acabado!</p>
+                    <f:facet name="footer">
+                        <h:form id="xxx">
+                            <p:commandButton type="submit" value="Aceptar" styleClass="ui-button-flat mr-2" style="width: 6rem" action="#{reservaBean.redirectTimeout()}" />
+                        </h:form>                      
+                    </f:facet>
+                
+            </p:dialog>
+    </div>
+        
+        
+
+        
+        
+        
     </ui:define>
 </ui:composition>

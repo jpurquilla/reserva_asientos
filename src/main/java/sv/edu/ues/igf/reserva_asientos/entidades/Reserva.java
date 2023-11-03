@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Objects;
 
 /**
@@ -26,7 +27,8 @@ public class Reserva implements Serializable {
     private Integer idpersona;
     private Integer estado;
     private BigDecimal total;
-
+    private LocalDate fecha;
+    
     public Integer getIdreserva() {
         return idreserva;
     }
@@ -59,13 +61,22 @@ public class Reserva implements Serializable {
         this.total = total;
     }
 
+    public LocalDate getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 67 * hash + Objects.hashCode(this.idreserva);
-        hash = 67 * hash + Objects.hashCode(this.idpersona);
-        hash = 67 * hash + Objects.hashCode(this.estado);
-        hash = 67 * hash + Objects.hashCode(this.total);
+        int hash = 7;
+        hash = 29 * hash + Objects.hashCode(this.idreserva);
+        hash = 29 * hash + Objects.hashCode(this.idpersona);
+        hash = 29 * hash + Objects.hashCode(this.estado);
+        hash = 29 * hash + Objects.hashCode(this.total);
+        hash = 29 * hash + Objects.hashCode(this.fecha);
         return hash;
     }
 
@@ -90,12 +101,14 @@ public class Reserva implements Serializable {
         if (!Objects.equals(this.estado, other.estado)) {
             return false;
         }
-        return Objects.equals(this.total, other.total);
+        if (!Objects.equals(this.total, other.total)) {
+            return false;
+        }
+        return Objects.equals(this.fecha, other.fecha);
     }
 
     @Override
     public String toString() {
-        return "Reserva{" + "idreserva=" + idreserva + ", idpersona=" + idpersona + ", estado=" + estado + ", total=" + total + '}';
+        return "Reserva{" + "idreserva=" + idreserva + ", idpersona=" + idpersona + ", estado=" + estado + ", total=" + total + ", fecha=" + fecha + '}';
     }
-    
 }

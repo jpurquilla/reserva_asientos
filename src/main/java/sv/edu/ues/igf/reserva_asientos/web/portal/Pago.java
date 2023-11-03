@@ -7,12 +7,21 @@ package sv.edu.ues.igf.reserva_asientos.web.portal;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
+import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import sv.edu.ues.igf.reserva_asientos.entidades.Localidad;
 import java.util.List;
 import java.math.BigDecimal;
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.ArrayList;
 import sv.edu.ues.igf.reserva_asientos.entidades.Evento;
+import sv.edu.ues.igf.reserva_asientos.entidades.Reserva;
+import sv.edu.ues.igf.reserva_asientos.entidades.Reservadetalle;
+import sv.edu.ues.igf.reserva_asientos.entidades.ReservadetallePK;
+import sv.edu.ues.igf.reserva_asientos.repository.LocalidadRepository;
+import sv.edu.ues.igf.reserva_asientos.repository.ReservaRepository;
+import sv.edu.ues.igf.reserva_asientos.repository.ReservadetalleRepository;
  /*
  * @author Leo
  */
@@ -20,14 +29,28 @@ import sv.edu.ues.igf.reserva_asientos.entidades.Evento;
 @ViewScoped
 public class Pago implements Serializable{
     
+    @Inject
+    LocalidadRepository localidadRepository;
+    
+    @Inject     
+    ReservadetalleRepository reservadetalleRepository;
+    
+    @Inject
+    ReservaRepository reservaRepository;        
+    
     List<Localidad> localidadesSeleccionadas;
     BigDecimal subtotal;
     Evento evento;
+    Reserva reserva;
     
     @PostConstruct
     public void init(){
         subtotal = (BigDecimal)FacesContext.getCurrentInstance().getExternalContext().getFlash().get("subtotal");
         evento = (Evento)FacesContext.getCurrentInstance().getExternalContext().getFlash().get("evento");
+        reserva = (Reserva)FacesContext.getCurrentInstance().getExternalContext().getFlash().get("reserva");
+        if(FacesContext.getCurrentInstance().getExternalContext().getFlash().get("localidadesSeleccionadas") instanceof Collection){
+            localidadesSeleccionadas = new ArrayList<>((Collection<Localidad>) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("localidadesSeleccionadas"));
+        }
     }
 
     public List<Localidad> getLocalidadesSeleccionadas() {
@@ -54,6 +77,25 @@ public class Pago implements Serializable{
         this.evento = evento;
     }
     
-    
+    public String confirmarPago(){
+        List<Reservadetalle> reservaDetalles = new ArrayList<>();
+        localidadesSeleccionadas.forEach(l -> {
+            ReservadetallePK pk = new ReservadetallePK();
+            pk.setIdreserva(reserva.getIdreserva());
+            pk.setIdevento(l.getLocalidadPK().getIdevento());
+            pk.setIdseccion(l.getLocalidadPK().getIdseccion());
+            pk.setCodigo(l.getLocalidadPK().getCodigo());
+            Reservadetalle reservadetalle = new Reservadetalle();
+            reservadetalle.setReservadetallePK(pk);
+            reservaDetalles.add(reservadetalle);
+            l.setEstado(40);
+            reservadetalleRepository.guardarReservaDetalle(reservadetalle);
+            localidadRepository.actualizarLocalidad(l);
+        });
+        reserva.setEstado(20);
+        reserva.setTotal(subtotal);
+        reservaRepository.actualizarReserva(reserva);
+        return "principal.xhtml?faces-redirect=true";
+    }
     
 }

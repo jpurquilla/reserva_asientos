@@ -14,11 +14,18 @@
 
         <div class="mt-8 mb-8">
             <p:outputLabel value="Historial de reservas" class="flex justify-content-center text-4xl"/>
-            <!--<p:dataTable var="reserva" value="#{historico.reserva}">
-                <p:column headerText="Fecha">
-                    <p:outputText value="reserva 1" />
+            <p:dataTable var="reserva" value="#{historico.reservas}">
+                <p:column headerText="Estado">
+                    <p:tag rendered="#{reserva.estado eq 20}" styleClass="mr-2" icon="pi pi-check" severity="success" value="COMPLETADA"></p:tag>
+                    <p:tag rendered="#{reserva.estado eq 10}" styleClass="mr-2" icon="pi pi-times" severity="danger" value="NO TERMINADA"></p:tag>
                 </p:column>
-            </p:dataTable>-->
+                <p:column headerText="Total">
+                    <h:outputText value="#{reserva.total}" />
+                </p:column>
+                <p:column headerText="Fecha de reserva">
+                    <h:outputText value="#{reserva.fecha}" />
+                </p:column>
+            </p:dataTable>
         </div>    
 
     </ui:define>

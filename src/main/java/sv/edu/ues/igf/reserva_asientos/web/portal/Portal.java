@@ -58,7 +58,7 @@ public class Portal implements Serializable {
     }
 
     public String goToReserva(Evento evento){
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("evento", evento);
-        return "reserva.xhtml?faces-redirect=true";
+        //FacesContext.getCurrentInstance().getExternalContext().getFlash().put("evento", evento);
+        return "reserva.xhtml?faces-redirect=true&idevento=" + evento.getIdevento();
     }
 }

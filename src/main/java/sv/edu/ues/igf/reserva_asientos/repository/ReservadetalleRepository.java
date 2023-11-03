@@ -7,27 +7,23 @@ package sv.edu.ues.igf.reserva_asientos.repository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 import java.util.List;
-import sv.edu.ues.igf.reserva_asientos.entidades.Evento;
-import sv.edu.ues.igf.reserva_asientos.entidades.Usuario;
+import sv.edu.ues.igf.reserva_asientos.entidades.Reserva;
+import sv.edu.ues.igf.reserva_asientos.entidades.Reservadetalle;
 
 /**
  *
  * @author Leo
  */
 @ApplicationScoped
-public class EventoRepository {
+public class ReservadetalleRepository {
     
     @PersistenceContext
-    private EntityManager entityManager;
+    EntityManager entityManager;
     
-    public List<Evento> buscarEventos(){
-        return entityManager.createQuery("select e from Evento e",Evento.class)
-                .getResultList();
-    }
-    
-    public Evento buscarEventoById(int idevento){
-        return entityManager.find(Evento.class, idevento);
-    }
-    
+    @Transactional
+    public void guardarReservaDetalle(Reservadetalle reservadetalle){
+        entityManager.persist(reservadetalle);
+    }          
 }

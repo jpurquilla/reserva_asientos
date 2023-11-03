@@ -33,4 +33,10 @@ public class LocalidadRepository {
         return localidad;
     }
     
+    @Transactional
+    public List<Localidad> actualizarLocalidad(List<Localidad> localidad){
+        entityManager.merge(localidad);
+        return localidad;
+    }
+    
 }

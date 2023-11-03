@@ -17,13 +17,13 @@ import java.util.List;
 import java.util.Comparator;
 import java.util.ArrayList;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Collections;
-import org.primefaces.PrimeFaces;
-import org.primefaces.event.SelectEvent;
-import org.primefaces.model.DialogFrameworkOptions;
+import java.util.Map;
 import sv.edu.ues.igf.reserva_asientos.entidades.Evento;
 import sv.edu.ues.igf.reserva_asientos.entidades.Reserva;
 import sv.edu.ues.igf.reserva_asientos.entidades.Seccion;
+import sv.edu.ues.igf.reserva_asientos.repository.EventoRepository;
 import sv.edu.ues.igf.reserva_asientos.repository.LocalidadRepository;
 import sv.edu.ues.igf.reserva_asientos.repository.ReservaRepository;
 import sv.edu.ues.igf.reserva_asientos.repository.SeccionRepository;
@@ -44,6 +44,10 @@ public class ReservaBean implements Serializable {
 
     @Inject
     LocalidadRepository localidadRepository;
+    
+    @Inject
+    EventoRepository eventoRepository;
+    
 
     private List<Seccion> secciones;
     private List<Localidad> localidadesSeleccionadas;
@@ -55,7 +59,8 @@ public class ReservaBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        evento = (Evento) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("evento");
+        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        evento = eventoRepository.buscarEventoById(Integer.parseInt(params.get("idevento")));
         subtotal = BigDecimal.ZERO;
         guardarReserva = true;
         if (guardarReserva) {
@@ -114,6 +119,7 @@ public class ReservaBean implements Serializable {
         reserva.setEstado(10);
         reserva.setTotal(subtotal);
         reserva.setIdpersona(1);
+        reserva.setFecha(LocalDate.now());
         return reserva;
     }
 
@@ -163,6 +169,8 @@ public class ReservaBean implements Serializable {
         flash.put("subtotal", subtotal);
         flash.put("cantidadaReservar", cantidadaReservar);
         flash.put("evento", evento);
+        flash.put("reserva", reserva);
+        flash.put("localidadesSeleccionadas", localidadesSeleccionadas);
         return "pagosentradas.xhtml?faces-redirect=true";
     }
     
@@ -173,5 +181,9 @@ public class ReservaBean implements Serializable {
             s.getLocalidades().stream().filter(l -> localidadesSeleccionadas.stream().map(p -> p.getLocalidadPK()).toList().contains(l.getLocalidadPK())).toList().forEach(l -> l.setEstado(20));
         });
         System.out.println(localidadesSeleccionadas);
+    }
+    
+    public String redirectTimeout(){
+        return "principal.xhtml?faces-redirect=true";
     }
 }
