@@ -7,6 +7,7 @@ package sv.edu.ues.igf.reserva_asientos.repository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 import sv.edu.ues.igf.reserva_asientos.entidades.Localidad;
 import java.util.List;
 import sv.edu.ues.igf.reserva_asientos.entidades.Usuario;
@@ -24,6 +25,12 @@ public class LocalidadRepository {
     public List<Localidad> getLocalidadesByEvento(int idevento){
         return entityManager.createQuery("select l from Localidad l where l.localidadPK.idevento = :idevento", Localidad.class)
         .setParameter("idevento",idevento).getResultList();
+    }
+    
+    @Transactional
+    public Localidad actualizarLocalidad(Localidad localidad){
+        entityManager.merge(localidad);
+        return localidad;
     }
     
 }
