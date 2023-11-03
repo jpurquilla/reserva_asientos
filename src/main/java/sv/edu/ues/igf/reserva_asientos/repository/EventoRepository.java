@@ -21,7 +21,7 @@ public class EventoRepository {
     @PersistenceContext
     private EntityManager entityManager;
     
-    public List<Evento> buscarEventos(){
+    public List<Evento> buscarEventos() {
         return entityManager.createQuery("select e from Evento e",Evento.class)
                 .getResultList();
     }

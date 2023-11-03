@@ -1,0 +1,104 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:f="jakarta.faces.core"
+                xmlns:h="jakarta.faces.html"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/adminLayout/template.xhtml">
+
+    <ui:define name="header">
+        <h1> Registro de eventos </h1>
+    </ui:define>
+    <ui:define name="content" >
+        <div class="card" style="padding: 25px" >
+            <p:toolbar>
+                <p:toolbarGroup>
+                    <p:commandButton value="Nuevo" icon="pi pi-plus" 
+                                     update=":dialogos:eventoPanel"
+                                     oncomplete="PF('eventoDialog').show()"
+                                     style="margin-right: .5rem">
+
+                    </p:commandButton>
+                </p:toolbarGroup>
+
+            </p:toolbar>
+            <h:form id="dialogos">
+                <p:dialog header="Detalles del Evento" showEffect="fade" modal="true" responsive="true" style="max-width: 800px" widgetVar="eventoDialog">
+
+                    <p:outputPanel id="eventoPanel" class="grid" >
+<!--                        <p:tabView>
+                            <f:facet name="actions">
+                                Global actions
+                            </f:facet>
+                            <p:tab title="Header I">
+                                <f:facet name="actions">
+                                    Options I
+                                </f:facet>
+                                <p class="m-0">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+                                    dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                </p>
+                            </p:tab>
+                        </p:tabView>-->
+                            <div class="ui-fluid col form-grid">
+
+
+                                <div class="field">
+                                    <p:outputLabel for="txtNombre" value="Nombre"/>
+                                    <p:inputText id="txtNombre"   required="true"/>
+                                </div>
+                                <div class="field">
+                                    <p:outputLabel for="txtDescripcion" value="Descripcion"/>
+                                    <p:inputTextarea rows="6" cols="33" id="txtDescripcion"   required="true" />
+                                </div>
+
+
+                                <div class="field">
+                                    <p:fileUpload listener="#{eventos.handleFileUpload}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                                                  invalidFileMessage="Formato no permitido gif | jpg | jpeg | png" update="gIPoster"
+                                                  skinSimple="true" multiple="false" mode="simple" auto='true' />
+
+
+                                    <br/>
+                                    <p:graphicImage  id="gIPoster" value="#{not empty eventos.evento.foto ?eventos.evento.foto : null}" height="100" width="100" stream="false"/>
+
+
+                                </div>
+                            </div>
+                            <div class="ui-fluid col form-grid">
+                                <div class="field">
+                                    <p:outputLabel for="dpFecha" value="Fecha" />
+                                    <p:datePicker id="dpFecha"  locale="es" showIcon="true" mindate="#{eventos.fechaMinima}" required="true"/>
+                                </div>
+                                <div class="field">
+                                    <p:outputLabel for="dpHora" value="Hora" />
+                                    <p:datePicker id="dpHora" value="#{eventos.evento.horainicio}"
+                                                  pattern="HH:mm"/>
+                                </div>
+                                <div class="field">
+                                    <p:outputLabel for="tblprecios" value="Precios" />
+                                    <p:dataTable id="tblprecios" value="#{eventos.lstSecciones}" var="seccion">
+                                        <p:column headerText="Sección">
+                                            <p:outputLabel value="#{seccion.nombre}"/>
+                                        </p:column>
+                                        <p:column headerText="Precio">
+                                            
+                                        </p:column>
+                                    </p:dataTable>
+                                </div>
+                            </div>
+
+
+                    </p:outputPanel>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Guardar" icon="pi pi-check" />
+                        <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('eventoPanel').hide()"
+                                         class="ui-button-secondary" type="button" />
+                    </f:facet>
+                </p:dialog>
+            </h:form>
+        </div>
+
+    </ui:define>
+</ui:composition>

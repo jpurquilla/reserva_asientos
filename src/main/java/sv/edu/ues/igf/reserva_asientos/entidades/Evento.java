@@ -8,24 +8,24 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.Objects;
 
-/**
- *
- * @author Leo
- */
+
 @Entity
 public class Evento {
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Integer idevento;
     private Integer estado;
     private String nombre;
     private String descripcion;
+    
+    @Lob
     private byte[] foto;
     private LocalTime horafin;
     private LocalTime horainicio;
@@ -71,6 +71,8 @@ public class Evento {
         this.foto = foto;
     }
 
+    
+
     public LocalTime getHorafin() {
         return horafin;
     }
@@ -102,7 +104,6 @@ public class Evento {
         hash = 67 * hash + Objects.hashCode(this.estado);
         hash = 67 * hash + Objects.hashCode(this.nombre);
         hash = 67 * hash + Objects.hashCode(this.descripcion);
-        hash = 67 * hash + Arrays.hashCode(this.foto);
         hash = 67 * hash + Objects.hashCode(this.horafin);
         hash = 67 * hash + Objects.hashCode(this.horainicio);
         hash = 67 * hash + Objects.hashCode(this.fecha);
@@ -133,9 +134,7 @@ public class Evento {
         if (!Objects.equals(this.estado, other.estado)) {
             return false;
         }
-        if (!Arrays.equals(this.foto, other.foto)) {
-            return false;
-        }
+        
         if (!Objects.equals(this.horafin, other.horafin)) {
             return false;
         }
@@ -147,7 +146,7 @@ public class Evento {
 
     @Override
     public String toString() {
-        return "Evento{" + "idevento=" + idevento + ", estado=" + estado + ", nombre=" + nombre + ", descripcion=" + descripcion + ", foto=" + foto + ", horafin=" + horafin + ", horainicio=" + horainicio + ", fecha=" + fecha + '}';
+        return "Evento{" + "idevento=" + idevento + ", estado=" + estado + ", nombre=" + nombre + ", descripcion=" + descripcion + ", horafin=" + horafin + ", horainicio=" + horainicio + ", fecha=" + fecha + '}';
     }
         
 }
