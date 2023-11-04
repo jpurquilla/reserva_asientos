@@ -131,7 +131,6 @@ public class ReservaBean implements Serializable {
             return;
         }
         Seccion seccion = secciones.stream().filter(s -> s.getSeccionPK().getIdseccion() == localidad.getLocalidadPK().getIdseccion()).toList().get(0);
-        //localidad.setEstado(localidad.getEstado() == 20 ? 10 : 20);
         System.out.println("localidad ------------------> " + localidad);
         if (localidad.getEstado() == 20) {
             localidadesSeleccionadas.remove(localidad);
@@ -167,11 +166,10 @@ public class ReservaBean implements Serializable {
     public String confirmarPago() {
         Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
         flash.put("subtotal", subtotal);
-        flash.put("cantidadaReservar", cantidadaReservar);
         flash.put("evento", evento);
         flash.put("reserva", reserva);
         flash.put("localidadesSeleccionadas", localidadesSeleccionadas);
-        return "pagosentradas.xhtml?faces-redirect=true";
+        return "pagosentradas.xhtml?faces-redirect=true&idevento="+evento.getIdevento()+"&idreserva="+reserva.getIdreserva();
     }
     
     public void pollLocalidades(){

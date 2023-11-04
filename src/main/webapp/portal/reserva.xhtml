@@ -13,7 +13,25 @@
     <ui:define name="content">
         <p:outputLabel value="Reservar boletos" class="text-4xl flex justify-content-center "/>
         <p:card class="mt-2 mb-2">
-            <p:outputLabel value="#{reservaBean.evento.nombre}"/>
+            <p:panelGrid columns="2" layout="grid" styleClass="showcase-text-align-center bg-red-200">
+                <p:graphicImage value="#{not empty reservaBean.evento.foto ? reservaBean.evento.foto : 'resources/images/ImageDefault.jpg'}" styleClass="product-image max-w-full max-h-full float-left" stream="false"/>
+                <!--<p:outputLabel class="flex justify-content-center" value="#{reservaBean.evento.nombre}"/>-->
+                <div class="grid">    
+                    <div class="col-12">
+                        <h:outputText value ="#{reservaBean.evento.nombre}"/>                     
+                    </div>
+                    <div class="col-12">
+                        <p:divider />
+                    </div>
+                    <div class="fluid formgrid">
+                        <h:outputText value ="Fecha: #{reservaBean.evento.fecha} "/>
+                        
+                        <h:outputText value ="Hora: #{reservaBean.evento.horainicio} "/>   
+                        
+                    </div>         
+                </div>
+            </p:panelGrid>
+            
         </p:card>       
         <div class="mb-2">
             
@@ -28,16 +46,20 @@
             <div class="">
                 
             </div>
-            <p:tag id="timer" styleClass="mr-2" severity="success"></p:tag>
+            <p:tag id="timer" styleClass="mr-2" class="text-xl" severity="success"></p:tag>
+            
             <h:form id="asientos" class="mx-8">
                 
                 <div class="">
-                    <p:outputLabel value="Seleccione sus asientos" class="text-3xl flex justify-content-center mb-4"/>
+                    <p:outputLabel value="Seleccionar asientos" class="text-3xl flex justify-content-center mb-4 mt-2"/>
+                    <div class="flex justify-content-center">
+                        <p:graphicImage name="images/escenarioDefault.png" alt="" style="max-height: 200px"/>
+                    </div>
                     
                     <div class="w-12">
                         <ui:repeat value="#{reservaBean.secciones}" var="seccion">                   
-                            <p:outputLabel value="#{seccion.nombre}" class="block" />
-                            <div class="flex flex-wrap gap-0 justify-content-center align-items-center">
+                            <p:outputLabel value="#{seccion.nombre} ($ #{seccion.precio})" class="block" />
+                            <div class="flex flex-wrap gap-0 justify-content-center align-items-center mt-2 ml-2">
                                 <div class="grid grid-nogutter">
                                     <ui:repeat value="#{seccion.localidades}" var="localidad" varStatus="loop">
                                     <div class="col-2">
@@ -141,11 +163,11 @@
                 </div>
             </p:sidebar>
             
-            <p:dialog header="Advertencia" widgetVar="timeoutDialog" minHeight="40" width="350" showEffect="fade" modal="true">                
+            <p:dialog closable="false" draggable="false" resizable="false" header="Advertencia" widgetVar="timeoutDialog" minHeight="40" width="350" showEffect="fade" modal="true">                
                     <p class="m-0">El tiempo se ha acabado!</p>
                     <f:facet name="footer">
-                        <h:form id="xxx">
-                            <p:commandButton type="submit" value="Aceptar" styleClass="ui-button-flat mr-2" style="width: 6rem" action="#{reservaBean.redirectTimeout()}" />
+                        <h:form id="xxx" class="flex justify-content-center">
+                            <p:commandButton type="submit" value="Aceptar" styleClass="ui-button-info mr-2" style="width: 6rem" action="#{reservaBean.redirectTimeout()}" />
                         </h:form>                      
                     </f:facet>               
             </p:dialog>

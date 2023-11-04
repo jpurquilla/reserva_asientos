@@ -17,7 +17,8 @@
             <p:dataTable var="reserva" value="#{historico.reservas}">
                 <p:column headerText="Estado">
                     <p:tag rendered="#{reserva.estado eq 20}" styleClass="mr-2" icon="pi pi-check" severity="success" value="COMPLETADA"></p:tag>
-                    <p:tag rendered="#{reserva.estado eq 10}" styleClass="mr-2" icon="pi pi-times" severity="danger" value="NO TERMINADA"></p:tag>
+                    <p:tag rendered="#{reserva.estado eq 10}" styleClass="mr-2" icon="pi pi-exclamation-circle" severity="warning" value="NO TERMINADA"></p:tag>
+                    <p:tag rendered="#{reserva.estado eq 30}" styleClass="mr-2" icon="pi pi-times" severity="danger" value="CANCELADA"></p:tag>
                 </p:column>
                 <p:column headerText="Total">
                     <h:outputText value="#{reserva.total}" />

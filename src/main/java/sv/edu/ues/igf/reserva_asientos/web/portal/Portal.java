@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.io.ByteArrayInputStream;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import sv.edu.ues.igf.reserva_asientos.entidades.Evento;
 import sv.edu.ues.igf.reserva_asientos.repository.EventoRepository;
 
@@ -57,6 +59,11 @@ public class Portal implements Serializable {
         this.images = images;
     }
 
+    public String getTimeFormatted(LocalTime time){
+        DateTimeFormatter dtFormatter = DateTimeFormatter.ofPattern("hh:mm a");
+        return time.format(dtFormatter);
+    }
+    
     public String goToReserva(Evento evento){
         //FacesContext.getCurrentInstance().getExternalContext().getFlash().put("evento", evento);
         return "reserva.xhtml?faces-redirect=true&idevento=" + evento.getIdevento();

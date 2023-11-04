@@ -9,6 +9,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import java.util.List;
+import sv.edu.ues.igf.reserva_asientos.entidades.Evento;
 import sv.edu.ues.igf.reserva_asientos.entidades.Localidad;
 import sv.edu.ues.igf.reserva_asientos.entidades.Reserva;
 
@@ -25,6 +26,10 @@ public class ReservaRepository {
     public List<Reserva> getReservasByPersona(int idpersona){
         return entityManager.createQuery("select r from Reserva r where r.idpersona = :idpersona", Reserva.class)
         .setParameter("idpersona",idpersona).getResultList();
+    }
+    
+    public Reserva buscarEventoById(int idreserva){
+        return entityManager.find(Reserva.class, idreserva);
     }
     
     @Transactional

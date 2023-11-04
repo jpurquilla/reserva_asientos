@@ -12,34 +12,36 @@
     </ui:define>
     <ui:define name="content">
 
-        <div class="mt-8 mb-8">
+        <div class="mt-2 mb-4 flex justify-content-center">
             <p:galleria value="#{portal.images}" var="evento" 
-                        showItemNavigators="true" circular="true" numVisible="3" showThumbnails="false" style="max-width: 100%; min-height: 300px">
-                <p:graphicImage name="images/#{evento}" title="demo" style="width: 100%; display: block; margin-left: auto; margin-right: auto" />
+                        showItemNavigators="true" circular="true" numVisible="3" showThumbnails="false" style="max-width: 60%; max-height: 60%">
+                <p:graphicImage name="images/ImageDefault.jpg" title="demo" stream="false" style="width: 100%; display: block; margin-left: auto; margin-right: auto" />
             </p:galleria>
         </div>
         <h:form id="form">
             <div class="mb-8">
                 <p:carousel value="#{portal.eventos}" var="evento" circular="true" autoplayInterval="3000"
-                            numVisible="#{portal.eventos.size()}" numScroll="1">
+                            numVisible="3" numScroll="1">
                     <f:facet name="header">
-                        <h5>Eventos</h5>
+                        <p:outputLabel value="Eventos" class="text-4xl flex justify-content-center mb-2"/>
                     </f:facet>
 
-                    <div class="product-item">
+                    <div class="product-item p-2">
                         <div class="product-item-content">
-                            <div class="mb-3">
+                            <div class="">
                                 <!--<p:graphicImage name="images/#{portal.images[0]}" style="width:400px; height: 200px;" styleClass="product-image"/>-->
-                                <p:graphicImage value="#{not empty evento.foto ? evento.foto : null}" style="width:400px; height: 200px;" styleClass="product-image" stream="false"/>
+                                <p:graphicImage value="#{not empty evento.foto ? evento.foto : 'resources/images/ImageDefault.jpg'}" styleClass="product-image max-h-full max-w-full" stream="false"/>
                             </div>
                             <div>
-                                <h4 class="mb-1">#{evento.nombre}</h4>
-                                <h6 class="mt-0 mb-3">
-                                    <h:outputText value="#{evento.descripcion}">                               
-                                    </h:outputText>
-                                </h6>
-                                <div class="mt-5">
-                                    <p:commandButton value="Reservar" type="submit" icon="pi pi-search" styleClass="mr-2" action="#{portal.goToReserva(evento)}"/>
+                                <p:outputLabel class="mb-1 block flex justify-content-center text-xl" value="#{evento.nombre}" />
+                                <p:outputLabel class="block" value="#{evento.descripcion}"/>
+                                <div class="flex justify-content-between">
+                                    <p:tag class="mt-2" severity="warning" value="#{evento.fecha}" />
+                                    <p:tag class="mt-2" severity="danger" value="#{portal.getTimeFormatted(evento.horainicio)}" />                                     
+                                </div>
+   
+                                <div class="mt-2 flex justify-content-center">
+                                    <p:commandButton value="Reservar" type="submit" icon="pi pi-check" styleClass="mr-2 ui-button-secondary" action="#{portal.goToReserva(evento)}"/>
                                 </div>
                             </div>
                         </div>

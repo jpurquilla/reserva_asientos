@@ -17,16 +17,16 @@
             <div    class="flex-initial flex align-items-center justify-content-start surface-200 font-bold m-2 px-5 py-3 border-round" style=" width:40%">
                 <p:card style="width: 25em">
                     <f:facet name="header">
-                        <img alt="user header" src="https://www.primefaces.org/showcase/resources/demo/images/usercard.png"/>
+                        <p:graphicImage value="#{not empty pago.evento.foto ? pago.evento.foto : null}"  styleClass="product-image" stream="false"/>
                     </f:facet>
                     <f:facet name="title">
 
-                        <h:outputText value ="Titulo"/>
+                        <h:outputText value ="#{pago.evento.nombre}"/>
                     </f:facet>
                     <f:facet name="subtitle">
-                        <h:outputText value ="Precio: $ "/>
+                        <h:outputText value ="Fecha: #{pago.evento.fecha} "/>
                         <p:divider />
-                        <h:outputText value ="Fecha: "/>
+                        <h:outputText value ="Hora: #{pago.evento.horainicio} "/>
                         <p:divider />
 
 
@@ -49,7 +49,7 @@
             <div class="flex-initial flex align-items-center justify-content-center surface-200 font-bold m-2 px-5 py-3 border-round  flex-column" style=" width:  100%">
                 <div class="formgrid grid"  >
                     <div class="field col-12 ">
-                        <p:outputLabel value ="Informacion de Compra" styleClass="  h-3rem surface-800 font-bold border-round  flex align-items-center justify-content-center text-white w-full"/>
+                        <p:outputLabel value ="Información de Compra" styleClass="  h-3rem surface-800 font-bold border-round  flex align-items-center justify-content-center text-white w-full"/>
 
                     </div>
                     <div class="field col-12">
@@ -62,24 +62,27 @@
                         <p:inputText type="text" placeholder="Direccion de Facturacion" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"/>
 
                     </div>
+
                     <div class="field col-12 md:col-6 ">
                         <div class="formgrid grid">
                             <p:outputLabel class="field col-12 md:col-6" value="Cantidad de Tickets" />
                             <span class="ui-float-label field col-12 md:col-6">
-                                <p:selectOneMenu id="cantidadTicket" autoWidth="false">
+                                <!--<p:selectOneMenu id="cantidadTicket" autoWidth="false">
                                     <f:selectItem itemLabel="1" itemValue="1" />
                                     <f:selectItem itemLabel="2" itemValue="2" />
                                     <f:selectItem itemLabel="3" itemValue="3" />
                                     <f:selectItem itemLabel="4" itemValue="4" />
                                     <f:selectItem itemLabel="5" itemValue="5" />
                                     <f:selectItem itemLabel="6" itemValue="6" />
-                                </p:selectOneMenu>
-
+                                </p:selectOneMenu>-->
+                                <p:outputLabel value="#{pago.localidadesSeleccionadas.size()}" />
                             </span>
                         </div>
 
-                    </div>
-                    <p:outputLabel value ="TOTAL A PAGAR: $ #{pago.subtotal}" styleClass="  h-8rem bg-primary-900 font-bold border-round m-2 flex align-items-center justify-content-center text-white w-full" /> 
+                    </div>                        
+
+
+                    <p:outputLabel value ="TOTAL A PAGAR: $ #{pago.subtotal}" styleClass="  h-8rem bg-primary-900 text-2xl font-bold border-round m-2 flex align-items-center justify-content-center text-white w-full" /> 
 
                 </div> 
 
@@ -96,7 +99,7 @@
 
                 <f:facet name="title">
                     <div class ="bg-primary-900 font-bold border-round m-2 flex align-items-center justify-content-center text-white">
-                        Tarjeta de Credito
+                        Tarjeta de Crédito
                     </div>
 
 
@@ -142,21 +145,29 @@
                 <f:facet name="footer" >
                     <div Class="flex justify-content-end ">
                         <p:commandButton icon="pi pi-check" value="Pagar" styleClass="ui-button-info" onclick="PF('confirmarPagoDialog').show()"/>
-                        <p:commandButton icon="pi pi-times" value="Cancelar" styleClass="ui-button-secondary" style="margin-left: .5em"/>
+                        <p:commandButton icon="pi pi-times" value="Cancelar" styleClass="ui-button-secondary" style="margin-left: .5em" onclick="PF('cancelarPagoDialog').show()"/>
                     </div>
                 </f:facet>  
 
 
             </p:card>
-            <p:dialog header="Atención" widgetVar="confirmarPagoDialog" minHeight="40" width="350" showEffect="fade" modal="true">
+            <p:dialog closable="false" draggable="false" resizable="false" header="Atención" widgetVar="confirmarPagoDialog" minHeight="40" width="350" showEffect="fade" modal="true">
                 <p class="m-0">La reserva se ha realizado correctamente</p>
                 <f:facet name="footer">
-                    
-                    <p:commandButton type="submit" value="Aceptar" styleClass="ui-button-flat mr-2" style="width: 6rem" action="#{pago.confirmarPago()}" />
-                                        
+                    <div class="flex justify-content-center">
+                        <p:commandButton  type="submit" value="Aceptar" styleClass="ui-button-success mr-2" style="width: 6rem" action="#{pago.confirmarPago()}" />                        
+                    </div>
                 </f:facet>
             </p:dialog>
             
+            <p:dialog closable="false" draggable="false" resizable="false" header="¿Desea cancelar la compra?" widgetVar="cancelarPagoDialog" minHeight="40" width="350" showEffect="fade" modal="true">
+                <div class="flex justify-content-center">
+                    <p:commandButton type="submit" value="SI" styleClass="ui-button-danger mr-2" style="width: 6rem" action="#{pago.cancelarPago()}" />
+                    <p:commandButton type="submit" value="NO" styleClass="ui-button-danger ui-button-flat mr-2" style="width: 6rem" onclick="PF('cancelarPagoDialog').hide()" />
+                </div>
+
+            </p:dialog>
+
         </h:form>    
 
 

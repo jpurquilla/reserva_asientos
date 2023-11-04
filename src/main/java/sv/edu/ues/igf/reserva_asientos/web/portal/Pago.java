@@ -15,10 +15,12 @@ import java.math.BigDecimal;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.ArrayList;
+import java.util.Map;
 import sv.edu.ues.igf.reserva_asientos.entidades.Evento;
 import sv.edu.ues.igf.reserva_asientos.entidades.Reserva;
 import sv.edu.ues.igf.reserva_asientos.entidades.Reservadetalle;
 import sv.edu.ues.igf.reserva_asientos.entidades.ReservadetallePK;
+import sv.edu.ues.igf.reserva_asientos.repository.EventoRepository;
 import sv.edu.ues.igf.reserva_asientos.repository.LocalidadRepository;
 import sv.edu.ues.igf.reserva_asientos.repository.ReservaRepository;
 import sv.edu.ues.igf.reserva_asientos.repository.ReservadetalleRepository;
@@ -36,7 +38,10 @@ public class Pago implements Serializable{
     ReservadetalleRepository reservadetalleRepository;
     
     @Inject
-    ReservaRepository reservaRepository;        
+    ReservaRepository reservaRepository;  
+    
+    @Inject
+    EventoRepository eventoRepository;        
     
     List<Localidad> localidadesSeleccionadas;
     BigDecimal subtotal;
@@ -46,8 +51,9 @@ public class Pago implements Serializable{
     @PostConstruct
     public void init(){
         subtotal = (BigDecimal)FacesContext.getCurrentInstance().getExternalContext().getFlash().get("subtotal");
-        evento = (Evento)FacesContext.getCurrentInstance().getExternalContext().getFlash().get("evento");
-        reserva = (Reserva)FacesContext.getCurrentInstance().getExternalContext().getFlash().get("reserva");
+        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        evento = eventoRepository.buscarEventoById(Integer.parseInt(params.get("idevento")));
+        reserva = reservaRepository.buscarEventoById(Integer.parseInt(params.get("idreserva")));
         if(FacesContext.getCurrentInstance().getExternalContext().getFlash().get("localidadesSeleccionadas") instanceof Collection){
             localidadesSeleccionadas = new ArrayList<>((Collection<Localidad>) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("localidadesSeleccionadas"));
         }
@@ -78,6 +84,9 @@ public class Pago implements Serializable{
     }
     
     public String confirmarPago(){
+        if(localidadesSeleccionadas == null){
+            return "principal.xhtml?faces-redirect=true";
+        }
         List<Reservadetalle> reservaDetalles = new ArrayList<>();
         localidadesSeleccionadas.forEach(l -> {
             ReservadetallePK pk = new ReservadetallePK();
@@ -94,6 +103,19 @@ public class Pago implements Serializable{
         });
         reserva.setEstado(20);
         reserva.setTotal(subtotal);
+        reservaRepository.actualizarReserva(reserva);
+        return "principal.xhtml?faces-redirect=true";
+    }
+    
+    public String cancelarPago(){
+        if(localidadesSeleccionadas == null){
+            return "principal.xhtml?faces-redirect=true";
+        }
+        localidadesSeleccionadas.forEach(l -> {
+            l.setEstado(10);
+            localidadRepository.actualizarLocalidad(l);
+        });
+        reserva.setEstado(30);
         reservaRepository.actualizarReserva(reserva);
         return "principal.xhtml?faces-redirect=true";
     }
