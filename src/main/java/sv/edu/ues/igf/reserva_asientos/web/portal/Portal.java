@@ -19,6 +19,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import sv.edu.ues.igf.reserva_asientos.entidades.Evento;
 import sv.edu.ues.igf.reserva_asientos.repository.EventoRepository;
+import sv.edu.ues.igf.reserva_asientos.web.configuracion.SessionBean;
 
 /**
  *
@@ -30,6 +31,9 @@ public class Portal implements Serializable {
 
     @Inject
     EventoRepository eventoRepository;
+    
+    @Inject
+    private SessionBean sessionBean;
     
     private List<Evento> eventos;
     private List<String> images = List.of("demo-image.avif", "demo-image.avif", "demo-image.avif");
@@ -65,6 +69,11 @@ public class Portal implements Serializable {
     }
     
     public String goToReserva(Evento evento){
+        if(sessionBean == null || sessionBean.getCodusr() == null || sessionBean.getCodusr().equals("")) {
+            System.out.println("Entro al if");
+            return "/seguridad/login.xhtml?faces-redirect=true";
+        }
+            
         //FacesContext.getCurrentInstance().getExternalContext().getFlash().put("evento", evento);
         return "reserva.xhtml?faces-redirect=true&idevento=" + evento.getIdevento();
     }

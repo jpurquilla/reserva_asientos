@@ -6,11 +6,13 @@ package sv.edu.ues.igf.reserva_asientos.web.portal;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.RequestScoped;
+import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.context.Flash;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import java.io.IOException;
 import java.io.Serializable;
 import sv.edu.ues.igf.reserva_asientos.entidades.Localidad;
 import java.util.List;
@@ -20,6 +22,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import sv.edu.ues.igf.reserva_asientos.entidades.Evento;
 import sv.edu.ues.igf.reserva_asientos.entidades.Reserva;
 import sv.edu.ues.igf.reserva_asientos.entidades.Seccion;
@@ -61,6 +65,17 @@ public class ReservaBean implements Serializable {
     public void init() {
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         evento = eventoRepository.buscarEventoById(Integer.parseInt(params.get("idevento")));
+        if(evento == null) {
+            try {
+               
+                ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+                externalContext.redirect(externalContext.getRequestContextPath() + "/portal/principal.xhtml");
+               
+                return;
+            } catch (IOException ex) {
+                Logger.getLogger(ReservaBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         subtotal = BigDecimal.ZERO;
         guardarReserva = true;
         if (guardarReserva) {

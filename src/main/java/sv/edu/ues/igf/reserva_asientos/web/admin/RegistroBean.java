@@ -10,12 +10,14 @@ import jakarta.inject.Named;
 import jakarta.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import org.mindrot.jbcrypt.BCrypt;
 import org.primefaces.PrimeFaces;
 import sv.edu.ues.igf.reserva_asientos.entidades.Perfil;
 import sv.edu.ues.igf.reserva_asientos.entidades.Persona;
 import sv.edu.ues.igf.reserva_asientos.entidades.Usuario;
 import sv.edu.ues.igf.reserva_asientos.repository.PerfilRepository;
 import sv.edu.ues.igf.reserva_asientos.repository.PersonaRepository;
+import sv.edu.ues.igf.reserva_asientos.repository.UsuarioRepository;
 
 @Named
 @RequestScoped
@@ -25,6 +27,9 @@ public class RegistroBean {
     
     @Inject
     PerfilRepository perfilRepository;
+    
+    @Inject
+    UsuarioRepository usuarioRepository;
     
     private Integer idPersona = null;
     private String nombres;
@@ -37,6 +42,25 @@ public class RegistroBean {
     private List <Persona> lstPersonas = new ArrayList<>();
     private List <Perfil> lstPerfiles;
     private List <SelectItem> lstPerfilItem;
+    private Integer perfilSel;
+
+    public List<Perfil> getLstPerfiles() {
+        return lstPerfiles;
+    }
+
+    public Integer getPerfilSel() {
+        return perfilSel;
+    }
+
+    public void setPerfilSel(Integer perfilSel) {
+        this.perfilSel = perfilSel;
+    }
+
+    public void setLstPerfiles(List<Perfil> lstPerfiles) {
+        this.lstPerfiles = lstPerfiles;
+    }
+    
+    
 
     public List<SelectItem> getLstPerfilItem() {
         return lstPerfilItem;
@@ -118,17 +142,31 @@ public class RegistroBean {
         lstPerfilItem = lstPerfiles.stream().map(p -> {
             return new SelectItem(p.getIdperfil(), p.getDescripcion());
         }).toList();
+        
     }
     
     
     @Transactional
     public void guardarRegistro(ActionEvent ae) {
-        Persona persona = new Persona(nombres, apellidos, dui, email, telefono);
-        personaRepository.guardarPersona(persona);
-        //Usuario usuario = new Usuario(codusr, password, persona, null);
-        //usuario
         
-        lstPersonas.add(persona);
+        System.out.println("Entro al medoto de guardar Registros");
+        try {
+            Persona persona = new Persona(nombres, apellidos, dui, email, telefono);
+        persona = personaRepository.guardarPersona(persona);
+        Perfil perfil =lstPerfiles.stream().filter(p -> p.getIdperfil() == perfilSel).findAny().get();
+            System.out.println("perfil " + perfil.getDescripcion());
+        Usuario usuario = new Usuario(codusr, BCrypt.hashpw(password, BCrypt.gensalt()), persona, perfil);
+        usuario.setIdpersona(persona.getIdpersona());
+        usuario.setIdperfil(perfil.getIdperfil());
+        persona.setUsuario(usuario);
+        System.out.println("Antes de guardar " + usuario.getPassword());
+        usuarioRepository.guardarUsuario(usuario);
+         lstPersonas.add(persona);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+       
         limpiar();
         
         PrimeFaces.current().ajax().update( "formLista:tblUsuarios");

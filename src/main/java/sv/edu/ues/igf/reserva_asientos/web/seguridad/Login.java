@@ -1,17 +1,20 @@
 package sv.edu.ues.igf.reserva_asientos.web.seguridad;
 
 import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import java.io.Serializable;
 import sv.edu.ues.igf.reserva_asientos.entidades.Usuario;
 import sv.edu.ues.igf.reserva_asientos.repository.UsuarioRepository;
 import sv.edu.ues.igf.reserva_asientos.web.configuracion.SessionBean;
 
 import java.util.logging.Logger;
+import org.mindrot.jbcrypt.BCrypt;
 
 @Named
-@RequestScoped
-public class Login {
+@SessionScoped
+public class Login implements Serializable{
     @Inject
     private UsuarioRepository usuarioRepository;
 
@@ -21,6 +24,8 @@ public class Login {
     private static final Logger LOGGER = Logger.getLogger(Login.class.getName());
     private String codusr;
     private String password;
+    
+    private boolean isLogged = false;
 
     public String getCodusr() {
         return codusr;
@@ -38,21 +43,33 @@ public class Login {
         this.password = password;
     }
 
+    public boolean isIsLogged() {
+        return isLogged;
+    }
+
+    public void setIsLogged(boolean isLogged) {
+        this.isLogged = isLogged;
+    }
+
     public String loginAction() {
-        LOGGER.info("El usuario es " + codusr + " password " + password);
         System.out.println("Aqui estamos con la info del usuario "+ codusr + " password " + password);
         Usuario usuario = usuarioRepository.listarUsuarios(codusr);
-        System.out.println("El usuario es: ");
-        System.out.println(usuario.toString());
-
+        
+        if(usuario == null) {
+            return "";
+        }
+        if(!BCrypt.checkpw(password, usuario.getPassword())) {
+            return "ususario o password incorrecto";
+        }
+        
+        
         sesion.setNombreUsuario(usuario.getPersona().getNombres());
         sesion.setCodusr(usuario.getCodusr());
         sesion.setIdpersona(usuario.getPersona().getIdpersona());
-        System.out.println(usuario.getPerfil().getMenus().size());
-        sesion.setListaMenu(usuario.getPerfil().getMenus());
+        isLogged = true;
 
 
-        System.out.println(sesion.toString());
+       
         return usuario.getPerfil().getIdperfil()== 10 ? "/admin/principal.xhtml" : "/portal/principal.xhtml";
 
     }

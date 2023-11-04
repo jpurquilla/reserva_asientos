@@ -20,8 +20,8 @@ public class PersonaRepository {
      }
      
      public Persona guardarPersona(Persona persona) {
-         entityManager.persist(persona);
-         return persona;
+         return entityManager.merge(persona);
+         
      }
      
      public Persona buscarPersonaPorId(Integer idPersona) {

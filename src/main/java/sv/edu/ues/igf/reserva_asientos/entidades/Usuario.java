@@ -15,6 +15,8 @@ public class Usuario {
     private String password;
 
     private LocalDateTime fechacrea;
+    private Integer idpersona;
+    private Integer idperfil;
 
    
     @ManyToOne
@@ -33,6 +35,22 @@ public class Usuario {
         this.persona = persona;
         this.perfil = perfil;
         this.fechacrea = LocalDateTime.now();
+    }
+
+    public Integer getIdpersona() {
+        return idpersona;
+    }
+
+    public void setIdpersona(Integer idpersona) {
+        this.idpersona = idpersona;
+    }
+
+    public Integer getIdperfil() {
+        return idperfil;
+    }
+
+    public void setIdperfil(Integer idperfil) {
+        this.idperfil = idperfil;
     }
 
     

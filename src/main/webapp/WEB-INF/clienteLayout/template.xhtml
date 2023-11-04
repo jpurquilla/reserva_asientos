@@ -4,7 +4,8 @@
       xmlns:f="jakarta.faces.core"
       xmlns:ui="jakarta.faces.facelets"
       xmlns:h="jakarta.faces.html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="jakarta.tags.core">
     <f:view>
 
         <h:head>
@@ -31,7 +32,8 @@
                         <p:menuitem value="FAQ" outcome="/portal/faq.xhtml" icon="pi pi-fw pi-ticket">
                             <f:param name="i" value="2"/>
                         </p:menuitem>
-                        <p:menuitem value="Iniciar sesión" outcome="/seguridad/login.xhtml" icon="pi pi-fw pi-user">
+                        
+                        <p:menuitem value="Iniciar sesión" rendered="#{!login.isLogged}"  outcome="/seguridad/login.xhtml" icon="pi pi-fw pi-user">
                             <f:param name="i" value="3"/>
                         </p:menuitem>
 

@@ -90,7 +90,8 @@
                 </p:card>
             </div>
         </div>-->
-        <p:outputLabel value="Preguntas frecuentes" class="flex justify-content-center text-5xl mb-8" />
+        <p:outputPanel class="h-full">
+             <p:outputLabel value="Preguntas frecuentes" class="flex justify-content-center text-5xl mb-8" />
         <p:fieldset legend="¿Qué pasa si se termina mi tiempo de reserva?" class="my-4">
             <p class="m-0 my-2 text-justify">
                 Con el objetivo de agilizar los procesos de reservación de boletos se ha determinado un tiempo de reservación de máximo 3 minutos por sesión en el navegador.
@@ -112,5 +113,7 @@
                 aquellos quienes seleccionan sus asientos a reservar.
             </p>
         </p:fieldset>
+        </p:outputPanel>
+       
     </ui:define>
 </ui:composition>
