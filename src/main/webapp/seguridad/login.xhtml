@@ -9,26 +9,34 @@
 <h:head>
    <h:outputStylesheet library="webjars" name="primeflex/3.3.1/primeflex.min.css" />
 </h:head>
-<f:view>
-   <div class="flex  justify-content-center align-items-center flex-wrap bg-primary  h-screen">
-      <h:form>
-         <p:card styleClass="w-full">
-            <div class="field">
-               <p:outputLabel for="txtUsuario">Usuario</p:outputLabel>
-               <p:inputText id="txtUsuario" styleClass="text-base w-full" value="#{login.codusr}"/>
+<h:body style="margin: 0; padding: 0;" >
+    
+
+<f:view  >
+   <div class="flex  justify-content-center align-items-center flex-wrap   h-screen w-screen " style="background-image: url('../resources/images/Login-Fondo.jpg'); background-size: cover;" >
+      <h:form styleClass="w-3 h-6" >
+         <p:card styleClass="w-full shadow-8  px-2 bg-gray-50">
+             <p:graphicImage library="images" name="Logo.png" width="100%"  alt="Mi Imagen" />
+             <p:outputLabel value ="Sistema de Boletos en línea" styleClass=" font-bold border-round  flex align-items-center justify-content-center text-black"></p:outputLabel>
+             <p:outputLabel value ="Inicia sesión" styleClass="  h-1rem  flex align-items-center justify-content-center text-black"></p:outputLabel>
+             <p:divider />
+             <div class="field">
+<!--             <p:outputLabel for="txtUsuario">Usuario</p:outputLabel>-->
+               <p:inputText placeholder="Usuario" id="txtUsuario" styleClass="text-base w-full font-bold border-round " value="#{login.codusr}"/>
 
             </div>
             <div class="field">
-               <p:outputLabel for="txtPassword">Password</p:outputLabel>
-               <p:password  id="txtPassword" styleClass="text-base w-full" value="#{login.password}"/>
+<!--               <p:outputLabel for="txtPassword">Password</p:outputLabel>-->
+               <p:password  id="txtPassword" placeholder="Password"  styleClass="text-base w-full font-bold border-roun " value="#{login.password}"/>
 
             </div>
-            <p:commandButton value="Ingresar" styleClass="w-full" action="#{login.loginAction()}"/>
-
+            <p:commandButton value="Inicia sesión" styleClass=" font-bold border-roun w-full bg-gray-700 text-write focus:border-700" action="#{login.loginAction()}"/>
+           <p:divider />
          </p:card>
 
       </h:form>
 
    </div>
 </f:view>
+</h:body>
 </html>
