@@ -68,7 +68,7 @@
                         </ui:repeat>                        
                     </div>
                
-                </div>
+                </div>                    
                 <div class="flex align-items-center justify-content-center">
 
                         <p:commandButton icon="pi pi-check" type="button" styleClass="ui-button-success mr-2" value="Confirmar reserva" onclick="PF('pagosidebar').show()"/>                     
@@ -140,17 +140,17 @@
 
                 </div>
             </p:sidebar>
-            <p:dialog header="Advertencia" widgetVar="timeoutDialog" minHeight="40" width="350" showEffect="fade" modal="true">
-                
+            
+            <p:dialog header="Advertencia" widgetVar="timeoutDialog" minHeight="40" width="350" showEffect="fade" modal="true">                
                     <p class="m-0">El tiempo se ha acabado!</p>
                     <f:facet name="footer">
                         <h:form id="xxx">
                             <p:commandButton type="submit" value="Aceptar" styleClass="ui-button-flat mr-2" style="width: 6rem" action="#{reservaBean.redirectTimeout()}" />
                         </h:form>                      
-                    </f:facet>
-                
+                    </f:facet>               
             </p:dialog>
-    </div>
+            
+        </div>
         
         
 
