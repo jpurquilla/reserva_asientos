@@ -141,13 +141,22 @@
 
                 <f:facet name="footer" >
                     <div Class="flex justify-content-end ">
-                        <p:commandButton icon="pi pi-check" value="Pagar" styleClass="ui-button-info" action="#{pago.confirmarPago()}"/>
+                        <p:commandButton icon="pi pi-check" value="Pagar" styleClass="ui-button-info" onclick="PF('confirmarPagoDialog').show()"/>
                         <p:commandButton icon="pi pi-times" value="Cancelar" styleClass="ui-button-secondary" style="margin-left: .5em"/>
                     </div>
                 </f:facet>  
 
 
             </p:card>
+            <p:dialog header="Atención" widgetVar="confirmarPagoDialog" minHeight="40" width="350" showEffect="fade" modal="true">
+                <p class="m-0">La reserva se ha realizado correctamente</p>
+                <f:facet name="footer">
+                    
+                    <p:commandButton type="submit" value="Aceptar" styleClass="ui-button-flat mr-2" style="width: 6rem" action="#{pago.confirmarPago()}" />
+                                        
+                </f:facet>
+            </p:dialog>
+            
         </h:form>    
 
 
