@@ -26,12 +26,12 @@ public class Seccion implements Serializable {
     @EmbeddedId
     private SeccionPK seccionPK;
     private String nombre;
-    private BigDecimal precio;
+    private BigDecimal precio = BigDecimal.ZERO;
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumns({
-        @JoinColumn(name="idevento", referencedColumnName="idevento"),
-        @JoinColumn(name="idseccion", referencedColumnName="idseccion"),
+        @JoinColumn(name="idevento", referencedColumnName="idevento",insertable=false, updatable=false),
+        @JoinColumn(name="idseccion", referencedColumnName="idseccion",insertable=false, updatable=false),
     })
     private List<Localidad> localidades = new ArrayList<>();
     
@@ -42,6 +42,11 @@ public class Seccion implements Serializable {
         this.seccionPK = seccionPK;
         this.nombre = nombre;
         this.precio = precio;
+    }
+    
+    public Seccion (Integer idseccion,String nombre) {
+        this.seccionPK = new SeccionPK(idseccion);
+        this.nombre = nombre;
     }
 
     public SeccionPK getSeccionPK() {

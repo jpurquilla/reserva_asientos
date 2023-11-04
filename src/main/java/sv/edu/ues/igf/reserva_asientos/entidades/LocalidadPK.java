@@ -15,18 +15,23 @@ import java.util.Objects;
 public class LocalidadPK implements Serializable{
     
     private String codigo;
-    private int idevento;
-    private int idseccion;
+    private Integer idevento;
+    private Integer idseccion;
 
     public LocalidadPK() {
     }
 
-    public LocalidadPK(String codigo, int idevento, int idseccion) {
+    public LocalidadPK(String codigo, Integer idevento, Integer idseccion) {
         this.codigo = codigo;
         this.idevento = idevento;
         this.idseccion = idseccion;
     }
 
+    public LocalidadPK(String codigo, Integer idseccion) {
+        this.codigo = codigo;
+        this.idseccion = idseccion;
+    }
+    
     public String getCodigo() {
         return codigo;
     }
@@ -35,19 +40,19 @@ public class LocalidadPK implements Serializable{
         this.codigo = codigo;
     }
 
-    public int getIdevento() {
+    public Integer getIdevento() {
         return idevento;
     }
 
-    public void setIdevento(int idevento) {
+    public void setIdevento(Integer idevento) {
         this.idevento = idevento;
     }
 
-    public int getIdseccion() {
+    public Integer getIdseccion() {
         return idseccion;
     }
 
-    public void setIdseccion(int idseccion) {
+    public void setIdseccion(Integer idseccion) {
         this.idseccion = idseccion;
     }
 

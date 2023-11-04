@@ -4,16 +4,17 @@
  */
 package sv.edu.ues.igf.reserva_asientos.entidades;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
-import jakarta.persistence.ManyToMany;
+import java.sql.Types;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Arrays;
 import java.util.Objects;
+import org.hibernate.annotations.JdbcTypeCode;
 
 
 @Entity
@@ -26,6 +27,7 @@ public class Evento {
     private String descripcion;
     
     @Lob
+    @JdbcTypeCode(Types.BINARY)
     private byte[] foto;
     private LocalTime horafin;
     private LocalTime horainicio;

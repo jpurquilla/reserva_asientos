@@ -30,4 +30,8 @@ public class EventoRepository {
         return entityManager.find(Evento.class, idevento);
     }
     
+    public Evento guardarEvento(Evento evento) {
+        return entityManager.merge(evento);
+    }
+    
 }

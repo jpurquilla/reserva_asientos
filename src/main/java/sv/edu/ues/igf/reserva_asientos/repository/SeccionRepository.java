@@ -27,4 +27,9 @@ public class SeccionRepository implements Serializable {
     }
     
     
+    public void guardarSecciones (List<Seccion> lstSecciones) {
+        System.out.println("tamaño de la lista secciones --> " + lstSecciones.size());
+        lstSecciones.forEach(s -> {entityManager.merge(s);});
+    }
+    
 }

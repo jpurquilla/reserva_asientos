@@ -33,10 +33,16 @@ public class LocalidadRepository {
         return localidad;
     }
     
-    @Transactional
+    
     public List<Localidad> actualizarLocalidad(List<Localidad> localidad){
-        entityManager.merge(localidad);
+        System.out.println("tamaño de la lista localidad --> " + localidad.size());
+        
+        localidad.forEach( l-> {
+            entityManager.merge(l);
+        });
         return localidad;
     }
+    
+    
     
 }

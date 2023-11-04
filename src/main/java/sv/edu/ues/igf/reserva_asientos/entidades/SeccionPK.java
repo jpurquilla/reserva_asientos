@@ -14,30 +14,34 @@ import java.io.Serializable;
 @Embeddable
 public class SeccionPK implements Serializable {
     
-    private int idevento;
-    private int idseccion;
+    private Integer idevento;
+    private Integer idseccion;
 
     public SeccionPK() {
     }
 
-    public SeccionPK(int idevento, int idseccion) {
+    public SeccionPK(Integer idevento, Integer idseccion) {
         this.idevento = idevento;
         this.idseccion = idseccion;
     }
+    
+    public SeccionPK(Integer idseccion) {
+        this.idseccion = idseccion;
+    }
 
-    public int getIdevento() {
+    public Integer getIdevento() {
         return idevento;
     }
 
-    public void setIdevento(int idevento) {
+    public void setIdevento(Integer idevento) {
         this.idevento = idevento;
     }
 
-    public int getIdseccion() {
+    public Integer getIdseccion() {
         return idseccion;
     }
 
-    public void setIdseccion(int idseccion) {
+    public void setIdseccion(Integer idseccion) {
         this.idseccion = idseccion;
     }
 

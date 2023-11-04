@@ -29,7 +29,8 @@
                     <div class="product-item">
                         <div class="product-item-content">
                             <div class="mb-3">
-                                <p:graphicImage name="images/#{portal.images[0]}" style="width:400px; height: 200px;" styleClass="product-image"/>
+                                <!--<p:graphicImage name="images/#{portal.images[0]}" style="width:400px; height: 200px;" styleClass="product-image"/>-->
+                                <p:graphicImage value="#{not empty evento.foto ? evento.foto : null}" style="width:400px; height: 200px;" styleClass="product-image" stream="false"/>
                             </div>
                             <div>
                                 <h4 class="mb-1">#{evento.nombre}</h4>

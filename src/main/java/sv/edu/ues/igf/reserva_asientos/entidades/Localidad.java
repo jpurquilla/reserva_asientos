@@ -18,13 +18,18 @@ public class Localidad implements Serializable {
     
     @EmbeddedId
     private LocalidadPK localidadPK;
-    private int estado;
+    private Integer estado;
 
     public Localidad() {
     }
 
     public Localidad(LocalidadPK localidadPK, int estado) {
         this.localidadPK = localidadPK;
+        this.estado = estado;
+    }
+    
+    public Localidad (String codigo, Integer idseccion,Integer estado) {
+        this.localidadPK = new LocalidadPK(codigo, idseccion);
         this.estado = estado;
     }
 
