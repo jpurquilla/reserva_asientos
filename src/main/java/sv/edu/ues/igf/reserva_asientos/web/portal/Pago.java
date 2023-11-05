@@ -30,50 +30,51 @@ import sv.edu.ues.igf.reserva_asientos.repository.LocalidadRepository;
 import sv.edu.ues.igf.reserva_asientos.repository.ReservaRepository;
 import sv.edu.ues.igf.reserva_asientos.repository.ReservadetalleRepository;
 import sv.edu.ues.igf.reserva_asientos.repository.SeccionRepository;
- /*
+
+/*
  * @author Leo
  */
 @Named
 @ViewScoped
-public class Pago implements Serializable{
-    
+public class Pago implements Serializable {
+
     @Inject
     LocalidadRepository localidadRepository;
-    
-    @Inject     
-    ReservadetalleRepository reservadetalleRepository;
-    
+
     @Inject
-    ReservaRepository reservaRepository;  
-    
+    ReservadetalleRepository reservadetalleRepository;
+
+    @Inject
+    ReservaRepository reservaRepository;
+
     @Inject
     EventoRepository eventoRepository;
-    
+
     @Inject
-    SeccionRepository seccionRepository;        
-    
+    SeccionRepository seccionRepository;
+
     List<Localidad> localidadesSeleccionadas;
     BigDecimal subtotal;
     Evento evento;
     Reserva reserva;
     List<Seccion> secciones;
-    
+
     @PostConstruct
-    public void init(){
-        subtotal = (BigDecimal)FacesContext.getCurrentInstance().getExternalContext().getFlash().get("subtotal");
+    public void init() {
+        subtotal = (BigDecimal) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("subtotal");
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         evento = eventoRepository.buscarEventoById(Integer.parseInt(params.get("idevento")));
         reserva = reservaRepository.buscarEventoById(Integer.parseInt(params.get("idreserva")));
         secciones = seccionRepository.getSeccionesByEvento(evento.getIdevento());
-        if(FacesContext.getCurrentInstance().getExternalContext().getFlash().get("localidadesSeleccionadas") instanceof Collection){
+        if (FacesContext.getCurrentInstance().getExternalContext().getFlash().get("localidadesSeleccionadas") instanceof Collection) {
             localidadesSeleccionadas = new ArrayList<>((Collection<Localidad>) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("localidadesSeleccionadas"));
         }
-        if(localidadesSeleccionadas == null || localidadesSeleccionadas.isEmpty()) {
+        if (localidadesSeleccionadas == null || localidadesSeleccionadas.isEmpty()) {
             try {
-               
+
                 ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
                 externalContext.redirect(externalContext.getRequestContextPath() + "/portal/principal.xhtml");
-               
+
                 return;
             } catch (IOException ex) {
                 Logger.getLogger(ReservaBean.class.getName()).log(Level.SEVERE, null, ex);
@@ -96,7 +97,7 @@ public class Pago implements Serializable{
     public void setSecciones(List<Seccion> secciones) {
         this.secciones = secciones;
     }
-    
+
     public BigDecimal getSubtotal() {
         return subtotal;
     }
@@ -112,9 +113,9 @@ public class Pago implements Serializable{
     public void setEvento(Evento evento) {
         this.evento = evento;
     }
-    
-    public String confirmarPago(){
-        if(localidadesSeleccionadas == null){
+
+    public String confirmarPago() {
+        if (localidadesSeleccionadas == null) {
             return "principal.xhtml?faces-redirect=true";
         }
         List<Reservadetalle> reservaDetalles = new ArrayList<>();
@@ -136,9 +137,9 @@ public class Pago implements Serializable{
         reservaRepository.actualizarReserva(reserva);
         return "principal.xhtml?faces-redirect=true";
     }
-    
-    public String cancelarPago(){
-        if(localidadesSeleccionadas == null){
+
+    public String cancelarPago() {
+        if (localidadesSeleccionadas == null) {
             return "principal.xhtml?faces-redirect=true";
         }
         localidadesSeleccionadas.forEach(l -> {
@@ -149,9 +150,9 @@ public class Pago implements Serializable{
         reservaRepository.actualizarReserva(reserva);
         return "principal.xhtml?faces-redirect=true";
     }
-    
+
     public Seccion getSeccion(Localidad localidad) {
         return secciones.stream().filter(s -> s.getSeccionPK().getIdseccion().equals(localidad.getLocalidadPK().getIdseccion())).toList().get(0);
     }
-    
+
 }

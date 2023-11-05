@@ -49,13 +49,12 @@ public class ReservaBean implements Serializable {
 
     @Inject
     LocalidadRepository localidadRepository;
-    
+
     @Inject
     EventoRepository eventoRepository;
-    
+
     @Inject
     SessionBean sessionBean;
-    
 
     private List<Seccion> secciones;
     private List<Localidad> localidadesSeleccionadas;
@@ -71,10 +70,10 @@ public class ReservaBean implements Serializable {
         evento = eventoRepository.buscarEventoById(Integer.parseInt(params.get("idevento")));
         if(evento == null) {
             try {
-               
+
                 ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
                 externalContext.redirect(externalContext.getRequestContextPath() + "/portal/principal.xhtml");
-               
+
                 return;
             } catch (IOException ex) {
                 Logger.getLogger(ReservaBean.class.getName()).log(Level.SEVERE, null, ex);
@@ -153,8 +152,7 @@ public class ReservaBean implements Serializable {
             subtotal = subtotal.subtract(seccion.getPrecio());
             localidad.setEstado(10);
             localidadRepository.actualizarLocalidad(localidad);
-        } 
-        else if (localidad.getEstado() == 10) {
+        } else if (localidad.getEstado() == 10) {
             localidadesSeleccionadas.add(localidad);
             subtotal = subtotal.add(seccion.getPrecio());
             localidad.setEstado(30);
@@ -189,10 +187,10 @@ public class ReservaBean implements Serializable {
         flash.put("evento", evento);
         flash.put("reserva", reserva);
         flash.put("localidadesSeleccionadas", localidadesSeleccionadas);
-        return "pagosentradas.xhtml?faces-redirect=true&idevento="+evento.getIdevento()+"&idreserva="+reserva.getIdreserva();
+        return "pagosentradas.xhtml?faces-redirect=true&idevento=" + evento.getIdevento() + "&idreserva=" + reserva.getIdreserva();
     }
-    
-    public void pollLocalidades(){
+
+    public void pollLocalidades() {
         secciones = seccionRepository.getSeccionesByEvento(evento.getIdevento());
         secciones.forEach(s -> {
             Collections.sort(s.getLocalidades(), (a, b) -> a.getLocalidadPK().getCodigo().compareTo(b.getLocalidadPK().getCodigo()));
@@ -200,8 +198,8 @@ public class ReservaBean implements Serializable {
         });
         System.out.println(localidadesSeleccionadas);
     }
-    
-    public String redirectTimeout(){
+
+    public String redirectTimeout() {
         return "principal.xhtml?faces-redirect=true";
     }
 }

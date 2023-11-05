@@ -90,30 +90,33 @@
                 </p:card>
             </div>
         </div>-->
-        <p:outputPanel class="h-full">
-             <p:outputLabel value="Preguntas frecuentes" class="flex justify-content-center text-5xl mb-8" />
-        <p:fieldset legend="¿Qué pasa si se termina mi tiempo de reserva?" class="my-4">
-            <p class="m-0 my-2 text-justify">
-                Con el objetivo de agilizar los procesos de reservación de boletos se ha determinado un tiempo de reservación de máximo 3 minutos por sesión en el navegador.
-                Si se acaban esos 3 minutos se reestablecen todos los asientos seleccionados para su posterior reserva, pero se puede realizar otro proceso de reserva en cualquier
-                momento.
-            </p>
-        </p:fieldset>
-        <p:fieldset legend="¿Qué significa cada color de los iconos del mapa de asientos?" class="my-4">
-            <p class="m-0 my-2 text-justify">
-                Los asientos representados mediante iconos tienen un color significativo dependiendo de su estado actual, esto con el objetivo de ofrecer la usuario una mayor 
-                visibilidad y transparencia a la hora de informar sobre las reservas que se realizan en el momento. Cuando un icono está de color gris, significa que el asiento
-                está disponible, cuando se selecciona cambia a verde, cuando cambia a amarillo es porque alguien más lo ha seleccionado para reservar; y cuando está en rojo significa 
-                que ya está reservado.
-            </p>
-        </p:fieldset>
-        <p:fieldset legend="El color del icono de los asientos cambia a amarillo repentinamente" class="my-4">
-            <p class="m-0 my-2 text-justify">
-                Significa que otro usuario ha seleccionado dichos asientos para reservar en el momento. Esto con el objetivo de ofrecer una mejor experiencia de usuario para todos
-                aquellos quienes seleccionan sus asientos a reservar.
-            </p>
-        </p:fieldset>
-        </p:outputPanel>
-       
+        <div class="mt-8 mb-8">
+            <p:outputPanel class="h-full">
+                <p:outputLabel value="Preguntas frecuentes" class="flex justify-content-center text-5xl mb-8" style="font-size: 25px !important;"/>
+                <p:fieldset legend="¿Qué pasa si se termina mi tiempo de reserva?" class="my-4">
+                    <p class="m-0 my-2 text-justify">
+                        Con el objetivo de agilizar los procesos de reservación de boletos se ha determinado un tiempo de reservación de máximo 3 minutos por sesión en el navegador.
+                        Si se acaban esos 3 minutos se reestablecen todos los asientos seleccionados para su posterior reserva, pero se puede realizar otro proceso de reserva en cualquier
+                        momento.
+                    </p>
+                </p:fieldset>
+                <p:fieldset legend="¿Qué significa cada color de los iconos del mapa de asientos?" class="my-4">
+                    <p class="m-0 my-2 text-justify">
+                        Los asientos representados mediante iconos tienen un color significativo dependiendo de su estado actual, esto con el objetivo de ofrecer la usuario una mayor 
+                        visibilidad y transparencia a la hora de informar sobre las reservas que se realizan en el momento. Cuando un icono está de color gris, significa que el asiento
+                        está disponible, cuando se selecciona cambia a verde, cuando cambia a amarillo es porque alguien más lo ha seleccionado para reservar; y cuando está en rojo significa 
+                        que ya está reservado.
+                    </p>
+                </p:fieldset>
+                <p:fieldset legend="El color del icono de los asientos cambia a amarillo repentinamente" class="my-4">
+                    <p class="m-0 my-2 text-justify">
+                        Significa que otro usuario ha seleccionado dichos asientos para reservar en el momento. Esto con el objetivo de ofrecer una mejor experiencia de usuario para todos
+                        aquellos quienes seleccionan sus asientos a reservar.
+                    </p>
+                </p:fieldset>
+            </p:outputPanel>            
+        </div>
+
+
     </ui:define>
 </ui:composition>

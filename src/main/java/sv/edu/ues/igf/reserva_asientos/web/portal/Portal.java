@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 import java.io.ByteArrayInputStream;
+import java.time.LocalDate;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import java.time.LocalTime;
@@ -36,14 +37,10 @@ public class Portal implements Serializable {
     private SessionBean sessionBean;
     
     private List<Evento> eventos;
-    private List<String> images = List.of("demo-image.avif", "demo-image.avif", "demo-image.avif");
 
     @PostConstruct
     public void init(){
         eventos = eventoRepository.buscarEventos();
-        eventos.forEach(e -> {
-            //images.add(new DefaultStreamedContent(new ByteArrayInputStream(e.getFoto())));
-        });
         System.out.println(eventos);
     }
 
@@ -55,18 +52,15 @@ public class Portal implements Serializable {
         this.eventos = eventos;
     }
 
-    public List<String> getImages() {
-        return images;
-    }
-
-    public void setImages(List<String> images) {
-        this.images = images;
-    }
-
     public String getTimeFormatted(LocalTime time){
         DateTimeFormatter dtFormatter = DateTimeFormatter.ofPattern("hh:mm a");
         return time.format(dtFormatter);
     }
+    
+    public String getDateFormatted(LocalDate time) {
+        DateTimeFormatter dtFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return time.format(dtFormatter);
+    }    
     
     public String goToReserva(Evento evento){
 //        if(sessionBean == null || sessionBean.getCodusr() == null || sessionBean.getCodusr().equals("")) {
