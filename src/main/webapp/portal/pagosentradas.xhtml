@@ -16,7 +16,7 @@
     <!-- Contenedor informacion de Entradas*/-->
         <div class="flex justify-content-between  " >
             <!--            seccion 1-->
-            <div    class="flex-initial flex align-items-center justify-content-start surface-200 font-bold m-2 px-5 py-3 border-round" style=" width:40%">
+            <div    class="flex-initial flex align-items-center ml-0 mr-1 justify-content-start surface-200 font-bold  px-5 py-3 border-round" style=" width:40%">
                 <p:card style="width: 25em">
                     <f:facet name="header">
                         <p:graphicImage value="#{not empty pago.evento.foto ? pago.evento.foto : null}"  styleClass="product-image" stream="false"/>
@@ -48,7 +48,7 @@
 
             </div>
             <!--            seccion 2-->
-            <div class="flex-initial flex align-items-center justify-content-center surface-200 font-bold m-2 px-5 py-3 border-round  flex-column" style=" width:  100%">
+            <div class="flex-initial flex align-items-center justify-content-center surface-200 font-bold mr-0 px-5 py-3 border-round  flex-column" style=" width:  100%">
                 <div class="formgrid grid"  >
                     <div class="field col-12 ">
                         <p:outputLabel value ="Información de Compra" styleClass="  h-3rem surface-800 font-bold border-round  flex align-items-center justify-content-center text-white w-full"/>
@@ -87,7 +87,7 @@
 
         </div>    
     
-    <h:form id="pago">
+    <h:form id="pago" styleClass="mt-3">
 
             <p:card style=" width: 100%; margin-bottom: 2em " styleClass="shadow-8" >
 
