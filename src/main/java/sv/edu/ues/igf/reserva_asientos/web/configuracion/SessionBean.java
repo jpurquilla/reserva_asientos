@@ -13,7 +13,7 @@ public class SessionBean implements Serializable {
     private String codusr;
     private Integer idpersona;
     private List<Menu> listaMenu;
-
+    private Integer idperfil;
 
 
 
@@ -49,26 +49,54 @@ public class SessionBean implements Serializable {
         this.listaMenu = listaMenu;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        SessionBean that = (SessionBean) o;
-        return Objects.equals(nombreUsuario, that.nombreUsuario) && Objects.equals(codusr, that.codusr) && Objects.equals(idpersona, that.idpersona);
+    public Integer getIdperfil() {
+        return idperfil;
+    }
+
+    public void setIdperfil(Integer idperfil) {
+        this.idperfil = idperfil;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nombreUsuario, codusr, idpersona);
+        int hash = 5;
+        hash = 79 * hash + Objects.hashCode(this.nombreUsuario);
+        hash = 79 * hash + Objects.hashCode(this.codusr);
+        hash = 79 * hash + Objects.hashCode(this.idpersona);
+        hash = 79 * hash + Objects.hashCode(this.listaMenu);
+        hash = 79 * hash + Objects.hashCode(this.idperfil);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final SessionBean other = (SessionBean) obj;
+        if (!Objects.equals(this.nombreUsuario, other.nombreUsuario)) {
+            return false;
+        }
+        if (!Objects.equals(this.codusr, other.codusr)) {
+            return false;
+        }
+        if (!Objects.equals(this.idpersona, other.idpersona)) {
+            return false;
+        }
+        if (!Objects.equals(this.listaMenu, other.listaMenu)) {
+            return false;
+        }
+        return Objects.equals(this.idperfil, other.idperfil);
     }
 
     @Override
     public String toString() {
-        return "SessionBean{" +
-                "nombreUsuario='" + nombreUsuario + '\'' +
-                ", codusr='" + codusr + '\'' +
-                ", idpersona=" + idpersona +
-                ", listaMenu=" + listaMenu +
-                '}';
+        return "SessionBean{" + "nombreUsuario=" + nombreUsuario + ", codusr=" + codusr + ", idpersona=" + idpersona + ", listaMenu=" + listaMenu + ", idperfil=" + idperfil + '}';
     }
 }

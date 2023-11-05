@@ -131,7 +131,7 @@ public class ReservaBean implements Serializable {
 
     public Reserva guardarReserva() {
         Reserva reserva = new Reserva();
-        
+        reserva.setIdevento(evento.getIdevento());
         reserva.setEstado(10);
         reserva.setTotal(BigDecimal.ZERO);
         reserva.setIdpersona(sessionBean.getIdpersona());

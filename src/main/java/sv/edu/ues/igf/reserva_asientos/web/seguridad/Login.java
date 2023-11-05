@@ -66,11 +66,12 @@ public class Login implements Serializable{
         sesion.setNombreUsuario(usuario.getPersona().getNombres());
         sesion.setCodusr(usuario.getCodusr());
         sesion.setIdpersona(usuario.getPersona().getIdpersona());
+        sesion.setIdperfil(usuario.getIdperfil());
         isLogged = true;
 
 
        
-        return usuario.getPerfil().getIdperfil()== 10 ? "/admin/principal.xhtml" : "/portal/principal.xhtml";
+        return usuario.getPerfil().getIdperfil() == 10 ? "/admin/principal.xhtml" : "/portal/principal.xhtml";
 
     }
 }

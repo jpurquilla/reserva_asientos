@@ -25,8 +25,9 @@ public class ReservaRepository {
     @PersistenceContext
     private EntityManager entityManager;
     
-    public List<Reserva> getReservasByPersona(int idpersona){
-        StringBuilder jpql = new StringBuilder("select r from Reserva r where 1 = 1");
+    public List<Reserva> getReservasByPersona(Integer idpersona){
+        StringBuilder jpql = new StringBuilder("select r from Reserva r");
+        jpql.append(" where 1 = 1");
         if(Objects.nonNull(idpersona)){
             jpql.append(" AND idpersona = :idpersona");
         }
@@ -36,6 +37,8 @@ public class ReservaRepository {
         }      
         return query.getResultList();
     }
+    
+    
     
     public Reserva buscarEventoById(int idreserva){
         return entityManager.find(Reserva.class, idreserva);

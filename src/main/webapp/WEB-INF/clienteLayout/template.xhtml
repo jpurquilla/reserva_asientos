@@ -32,7 +32,7 @@
                             <f:param name="i" value="1"/>
                         </p:menuitem>
                         <p:menuitem value="FAQ" outcome="/portal/faq.xhtml" icon="pi pi-fw pi-ticket">
-                            <f:param name="i" value="2"/>
+                            <f:param name="i" value="#{login.isLogged ? '2' : '1'}"/>
                         </p:menuitem>
                         
                         <p:menuitem value="Iniciar sesión" rendered="#{!login.isLogged}"  outcome="/seguridad/login.xhtml" icon="pi pi-fw pi-user">

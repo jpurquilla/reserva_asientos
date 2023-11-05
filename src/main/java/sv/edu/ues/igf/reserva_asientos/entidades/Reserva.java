@@ -5,9 +5,13 @@
 package sv.edu.ues.igf.reserva_asientos.entidades;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinColumns;
+import jakarta.persistence.ManyToOne;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -25,9 +29,18 @@ public class Reserva implements Serializable {
     private Integer idreserva;
     
     private Integer idpersona;
+    
     private Integer estado;
+    
     private BigDecimal total;
+    
     private LocalDate fecha;
+    
+    private Integer idevento;
+    
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idevento", referencedColumnName = "idevento",insertable=false, updatable=false)
+    private Evento evento;
     
     public Integer getIdreserva() {
         return idreserva;
@@ -69,14 +82,32 @@ public class Reserva implements Serializable {
         this.fecha = fecha;
     }
 
+    public Evento getEvento() {
+        return evento;
+    }
+
+    public void setEvento(Evento evento) {
+        this.evento = evento;
+    }
+
+    public Integer getIdevento() {
+        return idevento;
+    }
+
+    public void setIdevento(Integer idevento) {
+        this.idevento = idevento;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 29 * hash + Objects.hashCode(this.idreserva);
-        hash = 29 * hash + Objects.hashCode(this.idpersona);
-        hash = 29 * hash + Objects.hashCode(this.estado);
-        hash = 29 * hash + Objects.hashCode(this.total);
-        hash = 29 * hash + Objects.hashCode(this.fecha);
+        hash = 67 * hash + Objects.hashCode(this.idreserva);
+        hash = 67 * hash + Objects.hashCode(this.idpersona);
+        hash = 67 * hash + Objects.hashCode(this.estado);
+        hash = 67 * hash + Objects.hashCode(this.total);
+        hash = 67 * hash + Objects.hashCode(this.fecha);
+        hash = 67 * hash + Objects.hashCode(this.idevento);
+        hash = 67 * hash + Objects.hashCode(this.evento);
         return hash;
     }
 
@@ -104,11 +135,18 @@ public class Reserva implements Serializable {
         if (!Objects.equals(this.total, other.total)) {
             return false;
         }
-        return Objects.equals(this.fecha, other.fecha);
+        if (!Objects.equals(this.fecha, other.fecha)) {
+            return false;
+        }
+        if (!Objects.equals(this.idevento, other.idevento)) {
+            return false;
+        }
+        return Objects.equals(this.evento, other.evento);
     }
 
     @Override
     public String toString() {
-        return "Reserva{" + "idreserva=" + idreserva + ", idpersona=" + idpersona + ", estado=" + estado + ", total=" + total + ", fecha=" + fecha + '}';
+        return "Reserva{" + "idreserva=" + idreserva + ", idpersona=" + idpersona + ", estado=" + estado + ", total=" + total + ", fecha=" + fecha + ", idevento=" + idevento + ", evento=" + evento + '}';
     }
+    
 }
