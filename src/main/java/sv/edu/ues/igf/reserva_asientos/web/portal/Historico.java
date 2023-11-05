@@ -12,6 +12,7 @@ import java.io.Serializable;
 import sv.edu.ues.igf.reserva_asientos.entidades.Reserva;
 import java.util.List;
 import sv.edu.ues.igf.reserva_asientos.repository.ReservaRepository;
+import sv.edu.ues.igf.reserva_asientos.web.configuracion.SessionBean;
 /**
  *
  * @author Leo
@@ -23,11 +24,14 @@ public class Historico implements Serializable{
     @Inject
     private ReservaRepository reservaRepository;
     
+    @Inject
+    SessionBean sessionBean;
+    
     private List<Reserva> reservas;
 
     @PostConstruct
     public void init(){
-        reservas = reservaRepository.getReservasByPersona(1);
+        reservas = reservaRepository.getReservasByPersona(sessionBean.getIdpersona());
     }
     
     public List<Reserva> getReservas() {

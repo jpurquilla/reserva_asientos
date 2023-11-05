@@ -7,8 +7,10 @@ package sv.edu.ues.igf.reserva_asientos.repository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 import sv.edu.ues.igf.reserva_asientos.entidades.Evento;
 import sv.edu.ues.igf.reserva_asientos.entidades.Localidad;
 import sv.edu.ues.igf.reserva_asientos.entidades.Reserva;
@@ -24,8 +26,15 @@ public class ReservaRepository {
     private EntityManager entityManager;
     
     public List<Reserva> getReservasByPersona(int idpersona){
-        return entityManager.createQuery("select r from Reserva r where r.idpersona = :idpersona", Reserva.class)
-        .setParameter("idpersona",idpersona).getResultList();
+        StringBuilder jpql = new StringBuilder("select r from Reserva r where 1 = 1");
+        if(Objects.nonNull(idpersona)){
+            jpql.append(" AND idpersona = :idpersona");
+        }
+        Query query = entityManager.createQuery(jpql.toString(), Reserva.class);
+        if(Objects.nonNull(idpersona)){
+            query.setParameter("idpersona",idpersona);
+        }      
+        return query.getResultList();
     }
     
     public Reserva buscarEventoById(int idreserva){

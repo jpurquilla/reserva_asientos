@@ -21,8 +21,10 @@
         <h:body>
 
             <div class="header">
+                
                 <div class="menu">
-                    <p:tabMenu activeIndex="#{param.i}" orientation="vertical">
+                    
+                    <p:tabMenu styleClass="w-full" activeIndex="#{param.i}" orientation="vertical">
                         <p:menuitem value="Principal" outcome="/portal/principal.xhtml" icon="pi pi-fw pi-home">
                             <f:param name="i" value="0"/>
                         </p:menuitem>
@@ -39,6 +41,7 @@
 
                     </p:tabMenu>
                 </div>
+
             </div>
             <div class="content">
                 <ui:insert name="content">

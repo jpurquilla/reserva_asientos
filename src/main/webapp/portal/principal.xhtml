@@ -14,7 +14,7 @@
 
         <div class="mt-2 mb-4 flex justify-content-center">
             <p:galleria value="#{portal.images}" var="evento" 
-                        showItemNavigators="true" circular="true" numVisible="3" showThumbnails="false" style="max-width: 60%; max-height: 60%">
+                        showItemNavigators="true" circular="true" numVisible="3" showThumbnails="false" style="max-width: 30%; max-height: 30%">
                 <p:graphicImage name="images/ImageDefault.jpg" title="demo" stream="false" style="width: 100%; display: block; margin-left: auto; margin-right: auto" />
             </p:galleria>
         </div>
@@ -30,7 +30,8 @@
                         <div class="product-item-content">
                             <div class="">
                                 <!--<p:graphicImage name="images/#{portal.images[0]}" style="width:400px; height: 200px;" styleClass="product-image"/>-->
-                                <p:graphicImage value="#{not empty evento.foto ? evento.foto : 'resources/images/ImageDefault.jpg'}" styleClass="product-image max-h-full max-w-full" stream="false"/>
+                                <p:graphicImage rendered="#{not empty evento.foto }" value="#{evento.foto}" styleClass="product-image max-h-full max-w-full" stream="false"/>
+                                <p:graphicImage rendered="#{empty evento.foto }" name="images/ImageDefault.jpg" styleClass="product-image max-h-full max-w-full" stream="false"/>
                             </div>
                             <div>
                                 <p:outputLabel class="mb-1 block flex justify-content-center text-xl" value="#{evento.nombre}" />
