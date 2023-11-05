@@ -11,7 +11,9 @@
         <h1>Metodo de Pago</h1>
     </ui:define>
     <ui:define name="content" >
-        <!-- Contenedor informacion de Entradas*/-->
+    <section style="display:flex ;flex-direction:column;  align-items: center ;justify-content:center">
+    <section style="width:60%">   
+    <!-- Contenedor informacion de Entradas*/-->
         <div class="flex justify-content-between  " >
             <!--            seccion 1-->
             <div    class="flex-initial flex align-items-center justify-content-start surface-200 font-bold m-2 px-5 py-3 border-round" style=" width:40%">
@@ -64,12 +66,12 @@
                     </div>
 
                     <div class="field col-12">
-                        <div class="grid formgrid">
-                            <p:outputLabel class="field col-2" value="Cantidad de Tickets" />
-                            <span class="ui-float-label field col-8">
-                                <p:outputLabel value="#{pago.localidadesSeleccionadas.size()}" />                             
+                        <div class="formgrid grid">
+                            <p:outputLabel class="field col-12 md:col-5" value="Cantidad de Tickets" />
+                            <span class="ui-float-label field col-12 md:col-2">
+                                  <p:outputLabel value="#{pago.localidadesSeleccionadas.size()}" />                              
                             </span>
-                            <p:commandButton class="col-2 max-w-8rem ui-button-warning" value="Ver detalles" icon="pi pi-eye" onclick="PF('asientosDialog').show()"/>
+                            <p:commandButton class="field col-12 md:col-6 max-w-8rem ui-button-warning" value="Ver detalles" icon="pi pi-eye" onclick="PF('asientosDialog').show()"/>
                         </div>
 
                     </div>                        
@@ -83,10 +85,9 @@
 
 
 
-        </div>
-
-        <!-- Contenedor de Tarjeta*/-->
-        <h:form id="pago">
+        </div>    
+    
+    <h:form id="pago">
 
             <p:card style=" width: 100%; margin-bottom: 2em " styleClass="shadow-8" >
 
@@ -111,25 +112,44 @@
                     </svg>
 
                 </div>
+                <p:messages id="msgs"/>
                 <!-- Contenedor de Input de tarjeta*/-->
                 <div class="formgrid grid" style="padding: 0rem 3rem" >
-
+                    
+                    
                     <div class="field col-12 md:col-6">
-                        <h:outputText value ="Nombre del titular:"/>
-                        <p:inputText id="firstname6" type="text" placeholder="Nombre que aparece en tu tarjeta" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"/>
+                        <p:outputLabel for="nombre" value="Nombre:" styleClass=" font-bold border-round"/>
+                        <p:inputText id="nombre" required="true" label="Firstname" placeholder="Nombre del Titular" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                            <f:validateLength minimum="2"/>
+                        </p:inputText>
+                        <p:message for="nombre" display="icon"/>
+                
                     </div>
                     <div class="field col-12 md:col-6">
-                        <h:outputText value ="Número de Tarjeta:"/>
-                        <p:inputText id="lastname6" type="text" placeholder="#### #### #### ####" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"/>
+                        <p:outputLabel for="tarjeta" value="Numero de Tarjeta:" styleClass=" font-bold border-round" />
+                        <p:inputMask id="tarjeta" mask="9999-9999-9999-9999"  label="Lasttarjeta" placeholder="#### #### #### ####" required="true" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                            <f:validateLength minimum="10"/>
+                       
+                        </p:inputMask>
+                        <p:message for="tarjeta" id="msgLasttarjeta" display="icon"/>   
                     </div>
                     <div class="field col-12 md:col-3">
-                        <h:outputText value ="Seguridad CVV:"/>
-                        <p:inputText id="address" type="text" placeholder="3 Digitos" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"/>
+                        <p:outputLabel for="cvv" value="Codigo CVV:" styleClass=" font-bold border-round" />
+                        <p:inputMask id="cvv" mask="999"  label="Lastcvv" placeholder="###"  required="true" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                            <f:validateLength minimum="2"/>
+                        
+                        </p:inputMask>
+                        <p:message for="cvv" id="msgLastcvv" display="icon"/>   
                     </div>
                     <div class="field col-12 md:col-9">
-                        <h:outputText value ="Fecha de Vencimiento:"/>
-                        <p:inputText id="city" type="text" placeholder="Mes/Año" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"/>
+                    <p:outputLabel for="fecha" value="Fecha de Vencimiento:" styleClass=" font-bold border-round" />
+                    <p:inputMask id="fecha" mask="99/9999" label="Lastfecha" placeholder="##/####"  required="true" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                        <f:validateLength minimum="2"/>
+                        <p:ajax update="msgLastfecha" event="keyup"/>
+                    </p:inputMask>
+                    <p:message for="fecha" id="msgLastfecha" display="icon"/>   
                     </div>
+                    
 
 
 
@@ -137,8 +157,8 @@
 
                 <f:facet name="footer" >
                     <div Class="flex justify-content-end ">
-                        <p:commandButton icon="pi pi-check" value="Pagar" styleClass="ui-button-info" onclick="PF('confirmarPagoDialog').show()"/>
-                        <p:commandButton icon="pi pi-times" value="Cancelar" styleClass="ui-button-secondary" style="margin-left: .5em" onclick="PF('cancelarPagoDialog').show()"/>
+                        <p:commandButton  type="submit" value="Cancelar" styleClass="ui-button-success mr-2" style="width: 6rem" onclick="PF('cancelarPagoDialog').show()"  /> 
+                        <p:commandButton value="Pagar" update="msgs @form" icon="pi pi-check" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('confirmarPagoDialog').show();"/>
                     </div>
                 </f:facet>  
 
@@ -148,7 +168,7 @@
                 <p class="m-0">La reserva se ha realizado correctamente</p>
                 <f:facet name="footer">
                     <div class="flex justify-content-center">
-                        <p:commandButton  type="submit" value="Aceptar" styleClass="ui-button-success mr-2" style="width: 6rem" action="#{pago.confirmarPago()}" />                        
+                        <p:commandButton  type="submit" value="Aceptar" styleClass="ui-button-success mr-2" style="width: 6rem" action="#{pago.confirmarPago()}" />                              
                     </div>
                 </f:facet>
             </p:dialog>
@@ -160,8 +180,8 @@
                 </div>
 
             </p:dialog>
-
-            <p:dialog  draggable="false" resizable="false" header="Asientos seleccionados" widgetVar="asientosDialog" minHeight="40" width="350" showEffect="fade" modal="true">
+        </h:form>    
+        <p:dialog  draggable="false" resizable="false" header="Asientos seleccionados" widgetVar="asientosDialog" minHeight="40" width="350" showEffect="fade" modal="true">
                 <div class="flex justify-content-center">
                     <p:dataTable var="localidadS" value="#{pago.localidadesSeleccionadas}">
                         <p:column headerText="Asiento">
@@ -177,9 +197,9 @@
                         </p:column>
                     </p:dataTable>
                 </div>
-            </p:dialog>
-
-        </h:form>    
+            </p:dialog>   
+    </section>
+    </section>    
 
 
 
