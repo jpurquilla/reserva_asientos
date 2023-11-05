@@ -5,10 +5,12 @@
 package sv.edu.ues.igf.reserva_asientos.web.portal;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.faces.context.ExternalContext;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import java.io.IOException;
 import sv.edu.ues.igf.reserva_asientos.entidades.Localidad;
 import java.util.List;
 import java.math.BigDecimal;
@@ -16,14 +18,18 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import sv.edu.ues.igf.reserva_asientos.entidades.Evento;
 import sv.edu.ues.igf.reserva_asientos.entidades.Reserva;
 import sv.edu.ues.igf.reserva_asientos.entidades.Reservadetalle;
 import sv.edu.ues.igf.reserva_asientos.entidades.ReservadetallePK;
+import sv.edu.ues.igf.reserva_asientos.entidades.Seccion;
 import sv.edu.ues.igf.reserva_asientos.repository.EventoRepository;
 import sv.edu.ues.igf.reserva_asientos.repository.LocalidadRepository;
 import sv.edu.ues.igf.reserva_asientos.repository.ReservaRepository;
 import sv.edu.ues.igf.reserva_asientos.repository.ReservadetalleRepository;
+import sv.edu.ues.igf.reserva_asientos.repository.SeccionRepository;
  /*
  * @author Leo
  */
@@ -41,12 +47,16 @@ public class Pago implements Serializable{
     ReservaRepository reservaRepository;  
     
     @Inject
-    EventoRepository eventoRepository;        
+    EventoRepository eventoRepository;
+    
+    @Inject
+    SeccionRepository seccionRepository;        
     
     List<Localidad> localidadesSeleccionadas;
     BigDecimal subtotal;
     Evento evento;
     Reserva reserva;
+    List<Seccion> secciones;
     
     @PostConstruct
     public void init(){
@@ -54,8 +64,20 @@ public class Pago implements Serializable{
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         evento = eventoRepository.buscarEventoById(Integer.parseInt(params.get("idevento")));
         reserva = reservaRepository.buscarEventoById(Integer.parseInt(params.get("idreserva")));
+        secciones = seccionRepository.getSeccionesByEvento(evento.getIdevento());
         if(FacesContext.getCurrentInstance().getExternalContext().getFlash().get("localidadesSeleccionadas") instanceof Collection){
             localidadesSeleccionadas = new ArrayList<>((Collection<Localidad>) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("localidadesSeleccionadas"));
+        }
+        if(localidadesSeleccionadas == null || localidadesSeleccionadas.isEmpty()) {
+            try {
+               
+                ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+                externalContext.redirect(externalContext.getRequestContextPath() + "/portal/principal.xhtml");
+               
+                return;
+            } catch (IOException ex) {
+                Logger.getLogger(ReservaBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
@@ -67,6 +89,14 @@ public class Pago implements Serializable{
         this.localidadesSeleccionadas = localidadesSeleccionadas;
     }
 
+    public List<Seccion> getSecciones() {
+        return secciones;
+    }
+
+    public void setSecciones(List<Seccion> secciones) {
+        this.secciones = secciones;
+    }
+    
     public BigDecimal getSubtotal() {
         return subtotal;
     }
@@ -118,6 +148,10 @@ public class Pago implements Serializable{
         reserva.setEstado(30);
         reservaRepository.actualizarReserva(reserva);
         return "principal.xhtml?faces-redirect=true";
+    }
+    
+    public Seccion getSeccion(Localidad localidad) {
+        return secciones.stream().filter(s -> s.getSeccionPK().getIdseccion().equals(localidad.getLocalidadPK().getIdseccion())).toList().get(0);
     }
     
 }

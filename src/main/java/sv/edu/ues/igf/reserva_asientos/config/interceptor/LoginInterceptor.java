@@ -24,7 +24,7 @@ public class LoginInterceptor implements PhaseListener{
     public void beforePhase(PhaseEvent event) {
         FacesContext facesContext = event.getFacesContext();
         HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
-
+        System.out.println("URI ------------------> " + request.getRequestURI());
         // Si la página no está en la lista de páginas protegidas, no hacemos nada
         if (!isProtectedPage(request.getRequestURI())) {
             return;
@@ -52,7 +52,7 @@ public class LoginInterceptor implements PhaseListener{
     private boolean isProtectedPage(String requestURI) {
         // Lista de páginas protegidas
         System.out.println("requesURI " + requestURI);
-        List<String> protectedPages = Arrays.asList("/portal/reserva.xhtml", "/admin/registro.xhtml");
+        List<String> protectedPages = Arrays.asList("/portal/reserva.xhtml", "/admin/registro.xhtml", "/portal/historial.xhtml", "/portal/pagosentradas.xhtml");
 
         return protectedPages.contains(requestURI);
     }

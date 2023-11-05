@@ -21,24 +21,33 @@
         <h:body>
 
             <div class="header">
-                <div class="menu">
-                    <p:tabMenu activeIndex="#{param.i}" orientation="vertical" >
-                        <p:menuitem value="Principal" outcome="/portal/principal.xhtml" icon="pi pi-fw pi-home">
-                            <f:param name="i" value="0"/>
-                        </p:menuitem>
-                        <p:menuitem value="Historial" outcome="/portal/historial.xhtml" icon="pi pi-fw pi-clock">
-                            <f:param name="i" value="1"/>
-                        </p:menuitem>
-                        <p:menuitem value="FAQ" outcome="/portal/faq.xhtml" icon="pi pi-fw pi-ticket">
-                            <f:param name="i" value="2"/>
-                        </p:menuitem>
-                        
-                        <p:menuitem value="Iniciar sesión" rendered="#{!login.isLogged}"  outcome="/seguridad/login.xhtml" icon="pi pi-fw pi-user">
-                            <f:param name="i" value="3"/>
-                        </p:menuitem>
+                <h:form>
+                    <div class="menu">
+                   
+                        <p:tabMenu id="tabMenuCliente" styleClass="w-full" activeIndex="#{param.i}" orientation="vertical">
+                            <p:menuitem value="Principal" outcome="/portal/principal.xhtml" icon="pi pi-fw pi-home">
+                                <f:param name="i" value="0"/>
+                            </p:menuitem>
+                            <p:menuitem value="Historial" rendered="#{login.isLogged}"  outcome="/portal/historial.xhtml" icon="pi pi-fw pi-clock">
+                                <f:param name="i" value="1"/>
+                            </p:menuitem>
+                            <p:menuitem value="FAQ" outcome="/portal/faq.xhtml" icon="pi pi-fw pi-ticket">
+                                <f:param name="i" value="#{login.isLogged ? '2' : '1'}"/>
+                            </p:menuitem>
 
-                    </p:tabMenu>
+                            <p:menuitem value="Iniciar sesión" rendered="#{!login.isLogged}"  outcome="/seguridad/login.xhtml" icon="pi pi-fw pi-user">
+                                <f:param name="i" value="3"/>
+                            </p:menuitem>
+                            <p:menuitem value="Cerrar sesión" rendered="#{login.isLogged}"    icon="pi pi-fw pi-user" update="tabMenuCliente" actionListener="#{login.logout()}">
+                                <f:param name="i" value="4"/>
+                            </p:menuitem>
+                        </p:tabMenu>
+                   
+                    <p:remoteCommand name="actualizarMenu" update="tabMenuCliente" />
                 </div>
+                </h:form>
+                
+
             </div>
             <div class="content">
                 <ui:insert name="content">

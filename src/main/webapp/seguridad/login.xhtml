@@ -30,7 +30,7 @@
                <p:password  id="txtPassword" placeholder="Password"  styleClass="text-base w-full font-bold border-roun " value="#{login.password}"/>
 
             </div>
-            <p:commandButton value="Inicia sesión" styleClass=" font-bold border-roun w-full bg-gray-700 text-write focus:border-700" action="#{login.loginAction()}"/>
+             <p:commandButton value="Inicia sesión" styleClass=" font-bold border-roun w-full bg-gray-700 text-write focus:border-700"  oncomplete="actualizarMenu()"  action="#{login.loginAction()}"/>
            <p:divider />
          </p:card>
 

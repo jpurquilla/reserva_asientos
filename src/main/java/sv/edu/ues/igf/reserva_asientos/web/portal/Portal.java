@@ -69,9 +69,11 @@ public class Portal implements Serializable {
     }
     
     public String goToReserva(Evento evento){
-        if(sessionBean == null || sessionBean.getCodusr() == null || sessionBean.getCodusr().equals("")) {
-            System.out.println("Entro al if");
-            return "/seguridad/login.xhtml?faces-redirect=true";
+//        if(sessionBean == null || sessionBean.getCodusr() == null || sessionBean.getCodusr().equals("")) {
+//            return "/seguridad/login.xhtml?faces-redirect=true";
+//        }
+        if(!sessionBean.isIsLogged()) {
+             return "/seguridad/login.xhtml?faces-redirect=true";
         }
             
         //FacesContext.getCurrentInstance().getExternalContext().getFlash().put("evento", evento);

@@ -2,9 +2,12 @@ package sv.edu.ues.igf.reserva_asientos.web.seguridad;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.logging.Level;
 import sv.edu.ues.igf.reserva_asientos.entidades.Usuario;
 import sv.edu.ues.igf.reserva_asientos.repository.UsuarioRepository;
 import sv.edu.ues.igf.reserva_asientos.web.configuracion.SessionBean;
@@ -66,17 +69,30 @@ public class Login implements Serializable{
         sesion.setNombreUsuario(usuario.getPersona().getNombres());
         sesion.setCodusr(usuario.getCodusr());
         sesion.setIdpersona(usuario.getPersona().getIdpersona());
+        sesion.setIdperfil(usuario.getIdperfil());
+        sesion.setIsLogged(true);
         isLogged = true;
 
 
        
-        return usuario.getPerfil().getIdperfil()== 10 ? "/admin/principal.xhtml" : "/portal/principal.xhtml";
+        return usuario.getPerfil().getIdperfil() == 10 ? "/admin/principal.xhtml" : "/portal/principal.xhtml";
 
     }
     
     public void logout() {
-        System.out.println("Entro al logout");
-        sesion = new SessionBean();
-       
+        try {
+            System.out.println("Entro a cerrar sesion");
+            sesion.setCodusr("");
+            sesion.setIdperfil(null);
+            sesion.setNombreUsuario("");
+            sesion.setIdpersona(null);
+            sesion.setIsLogged(false);
+            isLogged = false;
+            System.out.println("codusr " + sesion.getCodusr() + " esta loggueado : " + sesion.isIsLogged());
+            FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/portal/principal.xhtml");
+        } catch (IOException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 }

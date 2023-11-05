@@ -47,7 +47,7 @@
             <div class="">
                 
             </div>
-            <p:tag id="timer" styleClass="mr-2" class="text-xl" severity="success"></p:tag>
+            
             
             <h:form id="asientos" class="mx-8">
                 
@@ -69,7 +69,7 @@
                                                     styleClass="ui-icon" id="asiento">
                                              <f:ajax event="click" execute="@form" render="asientos sidebar" listener="#{reservaBean.changeStatus(localidad)}"/>
                                              <i class="pi pi-stop" 
-                                                style="font-size: 18px; #{localidad.estado eq 20 ? 'color:aquamarine;' : localidad.estado eq 30 ? 'color:yellow;' : localidad.estado eq 40 ? 'color:red;' : 'color:grey;'}"></i>
+                                                style="font-size: 18px; #{localidad.estado eq 20 ? 'color:aquamarine;' : localidad.estado eq 30 ? 'color: #D4AC0D;' : localidad.estado eq 40 ? 'color:red;' : 'color:grey;'}"></i>
 
                                              <p:tooltip rendered="#{localidad.estado ne 40}" for="asiento" position="top">
                                                  <h:outputLabel value="Local: #{localidad.localidadPK.codigo}"/>
@@ -172,8 +172,10 @@
                         </h:form>                      
                     </f:facet>               
             </p:dialog>
-            
+
         </div>
-       
+            <div class="fixed bottom-0 left-0 max-w-20rem" >
+                <p:tag id="timer" styleClass="mr-2" class=" " style="font-size: 25px !important;" severity="success"></p:tag>
+            </div>         
     </ui:define>
 </ui:composition>

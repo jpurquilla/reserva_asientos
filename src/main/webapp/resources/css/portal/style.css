@@ -1,6 +1,6 @@
 body{
-    font-size: 12px !important; 
-    background-color: #9b111e;
+    font-size: 12px ; 
+    background-color: #bdbdbd;
 }
 
 .ui-widget {
@@ -24,6 +24,7 @@ body{
     height: 50px;
     border-bottom: 1px solid #ccc;
     padding: 10px 0;
+    background-color: white;
 }
 
 .header h1 {

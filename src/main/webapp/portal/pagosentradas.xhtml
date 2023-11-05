@@ -63,20 +63,13 @@
 
                     </div>
 
-                    <div class="field col-12 md:col-6 ">
-                        <div class="formgrid grid">
-                            <p:outputLabel class="field col-12 md:col-6" value="Cantidad de Tickets" />
-                            <span class="ui-float-label field col-12 md:col-6">
-                                <!--<p:selectOneMenu id="cantidadTicket" autoWidth="false">
-                                    <f:selectItem itemLabel="1" itemValue="1" />
-                                    <f:selectItem itemLabel="2" itemValue="2" />
-                                    <f:selectItem itemLabel="3" itemValue="3" />
-                                    <f:selectItem itemLabel="4" itemValue="4" />
-                                    <f:selectItem itemLabel="5" itemValue="5" />
-                                    <f:selectItem itemLabel="6" itemValue="6" />
-                                </p:selectOneMenu>-->
-                                <p:outputLabel value="#{pago.localidadesSeleccionadas.size()}" />
+                    <div class="field col-12">
+                        <div class="grid formgrid">
+                            <p:outputLabel class="field col-2" value="Cantidad de Tickets" />
+                            <span class="ui-float-label field col-8">
+                                <p:outputLabel value="#{pago.localidadesSeleccionadas.size()}" />                             
                             </span>
+                            <p:commandButton class="col-2 max-w-8rem ui-button-warning" value="Ver detalles" icon="pi pi-eye" onclick="PF('asientosDialog').show()"/>
                         </div>
 
                     </div>                        
@@ -159,13 +152,31 @@
                     </div>
                 </f:facet>
             </p:dialog>
-            
+
             <p:dialog closable="false" draggable="false" resizable="false" header="¿Desea cancelar la compra?" widgetVar="cancelarPagoDialog" minHeight="40" width="350" showEffect="fade" modal="true">
                 <div class="flex justify-content-center">
                     <p:commandButton type="submit" value="SI" styleClass="ui-button-danger mr-2" style="width: 6rem" action="#{pago.cancelarPago()}" />
                     <p:commandButton type="submit" value="NO" styleClass="ui-button-danger ui-button-flat mr-2" style="width: 6rem" onclick="PF('cancelarPagoDialog').hide()" />
                 </div>
 
+            </p:dialog>
+
+            <p:dialog  draggable="false" resizable="false" header="Asientos seleccionados" widgetVar="asientosDialog" minHeight="40" width="350" showEffect="fade" modal="true">
+                <div class="flex justify-content-center">
+                    <p:dataTable var="localidadS" value="#{pago.localidadesSeleccionadas}">
+                        <p:column headerText="Asiento">
+                            <h:outputText value="#{localidadS.localidadPK.codigo}" />
+                        </p:column>
+
+                        <p:column headerText="Sección">
+                            <h:outputText value="#{pago.getSeccion(localidadS).nombre}" />
+                        </p:column>
+
+                        <p:column headerText="Precio">
+                            <h:outputText value="#{pago.getSeccion(localidadS).precio}" />
+                        </p:column>
+                    </p:dataTable>
+                </div>
             </p:dialog>
 
         </h:form>    

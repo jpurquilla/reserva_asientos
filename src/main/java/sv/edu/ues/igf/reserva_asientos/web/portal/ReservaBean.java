@@ -31,6 +31,7 @@ import sv.edu.ues.igf.reserva_asientos.repository.EventoRepository;
 import sv.edu.ues.igf.reserva_asientos.repository.LocalidadRepository;
 import sv.edu.ues.igf.reserva_asientos.repository.ReservaRepository;
 import sv.edu.ues.igf.reserva_asientos.repository.SeccionRepository;
+import sv.edu.ues.igf.reserva_asientos.web.configuracion.SessionBean;
 
 /**
  *
@@ -51,6 +52,9 @@ public class ReservaBean implements Serializable {
     
     @Inject
     EventoRepository eventoRepository;
+    
+    @Inject
+    SessionBean sessionBean;
     
 
     private List<Seccion> secciones;
@@ -78,10 +82,6 @@ public class ReservaBean implements Serializable {
         }
         subtotal = BigDecimal.ZERO;
         guardarReserva = true;
-        if (guardarReserva) {
-            reserva = reservaRepository.guardarReserva(guardarReserva());
-            guardarReserva = false;
-        }
         localidadesSeleccionadas = new ArrayList<>();
         secciones = seccionRepository.getSeccionesByEvento(evento.getIdevento());
         secciones.forEach(s -> {
@@ -131,9 +131,10 @@ public class ReservaBean implements Serializable {
 
     public Reserva guardarReserva() {
         Reserva reserva = new Reserva();
+        reserva.setIdevento(evento.getIdevento());
         reserva.setEstado(10);
-        reserva.setTotal(subtotal);
-        reserva.setIdpersona(1);
+        reserva.setTotal(BigDecimal.ZERO);
+        reserva.setIdpersona(sessionBean.getIdpersona());
         reserva.setFecha(LocalDate.now());
         return reserva;
     }
@@ -145,7 +146,7 @@ public class ReservaBean implements Serializable {
         if (localidad.getEstado() == 40 || localidad.getEstado() == 30) {
             return;
         }
-        Seccion seccion = secciones.stream().filter(s -> s.getSeccionPK().getIdseccion() == localidad.getLocalidadPK().getIdseccion()).toList().get(0);
+        Seccion seccion = secciones.stream().filter(s -> s.getSeccionPK().getIdseccion().equals(localidad.getLocalidadPK().getIdseccion())).toList().get(0);
         System.out.println("localidad ------------------> " + localidad);
         if (localidad.getEstado() == 20) {
             localidadesSeleccionadas.remove(localidad);
@@ -160,11 +161,15 @@ public class ReservaBean implements Serializable {
             localidadRepository.actualizarLocalidad(localidad);
             localidad.setEstado(20);
         }
+        if (guardarReserva) {
+            reserva = reservaRepository.guardarReserva(guardarReserva());
+            guardarReserva = false;
+        }
         System.out.println("************************************** " + localidadesSeleccionadas);
     }
 
     public BigDecimal getPrecioSeccion(Localidad localidad) {
-        return secciones.stream().filter(s -> s.getSeccionPK().getIdseccion() == localidad.getLocalidadPK().getIdseccion()).toList().get(0).getPrecio();
+        return secciones.stream().filter(s -> s.getSeccionPK().getIdseccion().equals(localidad.getLocalidadPK().getIdseccion())).toList().get(0).getPrecio();
     }
 
     public void reestablecerSelecciones() {
