@@ -20,17 +20,18 @@
              <p:outputLabel value ="Sistema de Boletos en línea" styleClass=" font-bold border-round  flex align-items-center justify-content-center text-black"></p:outputLabel>
              <p:outputLabel value ="Inicia sesión" styleClass="  h-1rem  flex align-items-center justify-content-center text-black"></p:outputLabel>
              <p:divider />
+             <p:messages id="msgs"/>
              <div class="field">
 <!--             <p:outputLabel for="txtUsuario">Usuario</p:outputLabel>-->
-               <p:inputText placeholder="Usuario" id="txtUsuario" styleClass="text-base w-full font-bold border-round " value="#{login.codusr}"/>
-
+               <p:inputText placeholder="Usuario" id="txtUsuario" label="Usuario" required="true" styleClass="text-base w-full font-bold border-round " value="#{login.codusr}"/>
+                <p:message for="txtUsuario" id="msgUsuario" display="icon"/>
             </div>
             <div class="field">
 <!--               <p:outputLabel for="txtPassword">Password</p:outputLabel>-->
-               <p:password  id="txtPassword" placeholder="Password"  styleClass="text-base w-full font-bold border-roun " value="#{login.password}"/>
-
+               <p:password  id="txtPassword" label="Contraseña" placeholder="Password" required="true" styleClass="text-base w-full font-bold border-roun " value="#{login.password}"/>
+               <p:message for="txtPassword" id="msgContraseña" display="icon"/>
             </div>
-            <p:commandButton value="Inicia sesión" styleClass=" font-bold border-roun w-full bg-gray-700 text-write focus:border-700" action="#{login.loginAction()}"/>
+            <p:commandButton value="Inicia sesión" update="@form" styleClass=" font-bold border-roun w-full bg-gray-700 text-write focus:border-700" action="#{login.loginAction()}"/>
            <p:divider />
          </p:card>
 
