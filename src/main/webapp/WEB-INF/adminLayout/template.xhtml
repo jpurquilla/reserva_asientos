@@ -3,45 +3,58 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="jakarta.faces.core"
       xmlns:ui="jakarta.faces.facelets"
-      xmlns:h="jakarta.faces.html">
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="http://primefaces.org/ui"
+      >
 
-<f:view>
+    <f:view>
 
-    <h:head>
-        <title>Reserva de Asientos</title>
-       
-        <h:outputStylesheet library="webjars" name="primeflex/3.3.1/primeflex.min.css" />
-       
-        
+        <h:head>
+            <title>Reserva de Asientos</title>
 
-    </h:head>
+            <h:outputStylesheet library="webjars" name="primeflex/3.3.1/primeflex.min.css" />
 
-    <h:body>
-    <h:outputStylesheet name="css/admin/style.css"/>
-        <div >
 
-            <div class="header">
-                <ui:insert name="header">
-                     <h1>Título de la aplicación</h1>
-                </ui:insert>
+
+        </h:head>
+
+        <h:body>
+            <h:outputStylesheet name="css/admin/style.css"/>
+            <div >
+                <!--<div class="flex w-screen justify-content-between flex-wrap">-->
+<!--                    <div class="inline" >
+                        <p:graphicImage library="images" name="Logo.png" width="200px" height="70px"  alt="Mi Imagen" />
+                    </div>    -->
+                    <div class="flex justify-content-end px-6">
+
+                        <ui:insert name="header">
+                            <h1>Administración</h1>
+                        </ui:insert>
+
+                    </div>
+                <!--</div>-->
+
+
+                <div class="content h-screen">
+                    <ui:insert name="content" >
+                        Contenido de la página
+                    </ui:insert>
+                </div>
+                <div class="menu h-screen">
+                    <p:megaMenu orientation="vertical" styleClass="h-screen " style="width: 100%">
+                        <p:menuitem value="Registro" outcome="/admin/registro.xhtml" icon="pi pi-file-edit"/>
+                        <p:menuitem value="Eventos" outcome="/admin/eventos.xhtml" icon="pi pi-ticket"/>
+                        <p:menuitem value="Reservas" icon="pi pi-list"/>
+                        <p:menuitem value="Cerrar Sesion" icon="pi pi-power-off" outcome="/portal/principal.xhtml" actionListener="#{login.logout}"/>
+                    </p:megaMenu>
+                    
+                </div>
             </div>
-            <div class="content h-screen">
-                <ui:insert name="content" >
-                    Contenido de la página
-                </ui:insert>
-            </div>
-            <div class="menu h-screen">
-                <ul>
-                    <li><h:link outcome="/admin/page1" value="Pagina1"/></li>
-                    <li><h:link outcome="/admin/page2" value="Pagina1"/></li>
-                </ul>
-            </div>
-        </div>
-        
 
-    </h:body>
 
-</f:view>
-    
+        </h:body>
+
+    </f:view>
+
 
 </html>

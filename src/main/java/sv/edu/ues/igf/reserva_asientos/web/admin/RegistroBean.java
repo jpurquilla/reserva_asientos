@@ -149,22 +149,17 @@ public class RegistroBean {
     @Transactional
     public void guardarRegistro(ActionEvent ae) {
         
-        System.out.println("Entro al medoto de guardar Registros");
-        try {
-            Persona persona = new Persona(nombres, apellidos, dui, email, telefono);
+        
+        Persona persona = new Persona(nombres, apellidos, dui, email, telefono);
         persona = personaRepository.guardarPersona(persona);
         Perfil perfil =lstPerfiles.stream().filter(p -> p.getIdperfil() == perfilSel).findAny().get();
-            System.out.println("perfil " + perfil.getDescripcion());
         Usuario usuario = new Usuario(codusr, BCrypt.hashpw(password, BCrypt.gensalt()), persona, perfil);
         usuario.setIdpersona(persona.getIdpersona());
         usuario.setIdperfil(perfil.getIdperfil());
         persona.setUsuario(usuario);
-        System.out.println("Antes de guardar " + usuario.getPassword());
         usuarioRepository.guardarUsuario(usuario);
          lstPersonas.add(persona);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        
         
        
         limpiar();
@@ -188,10 +183,8 @@ public class RegistroBean {
     
     @Transactional
     public void eliminarPersona (Persona persona) {
-        Usuario usuario = persona.getUsuario();
-        
-        personaRepository.eliminarPersona(persona.getIdpersona());
-        lstPersonas.remove(persona);
+       personaRepository.eliminarPersona(persona.getIdpersona());
+       lstPersonas.remove(persona);
     }
     
     public void seleccionarPersona (Persona persona) {

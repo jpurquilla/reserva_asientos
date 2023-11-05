@@ -73,4 +73,10 @@ public class Login implements Serializable{
         return usuario.getPerfil().getIdperfil()== 10 ? "/admin/principal.xhtml" : "/portal/principal.xhtml";
 
     }
+    
+    public void logout() {
+        System.out.println("Entro al logout");
+        sesion = new SessionBean();
+       
+    }
 }
