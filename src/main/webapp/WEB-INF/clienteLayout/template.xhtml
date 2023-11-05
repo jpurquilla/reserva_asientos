@@ -28,7 +28,7 @@
                         <p:menuitem value="Principal" outcome="/portal/principal.xhtml" icon="pi pi-fw pi-home">
                             <f:param name="i" value="0"/>
                         </p:menuitem>
-                        <p:menuitem value="Historial" outcome="/portal/historial.xhtml" icon="pi pi-fw pi-clock">
+                        <p:menuitem value="Historial" rendered="#{login.isLogged}"  outcome="/portal/historial.xhtml" icon="pi pi-fw pi-clock">
                             <f:param name="i" value="1"/>
                         </p:menuitem>
                         <p:menuitem value="FAQ" outcome="/portal/faq.xhtml" icon="pi pi-fw pi-ticket">
