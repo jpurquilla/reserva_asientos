@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
+import org.primefaces.PrimeFaces;
 import org.primefaces.event.FileUploadEvent;
 import sv.edu.ues.igf.reserva_asientos.entidades.Evento;
 import sv.edu.ues.igf.reserva_asientos.entidades.Localidad;
@@ -204,6 +205,7 @@ public class Eventos implements Serializable {
 
     @Transactional
     public void guardarEvento() {
+        if(!validar()) return;
         boolean esNuevo = true;
         if(evento.getIdevento() != null) {
             esNuevo = false;
@@ -221,7 +223,32 @@ public class Eventos implements Serializable {
         if(esNuevo) 
             localidadRepository.actualizarLocalidad(lstLocalidades);
         
-
+        limpiar();
+        lstEventos = eventoRepository.buscarEventos();
+        
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Info:", "Guardado con exito");
+        PrimeFaces.current().dialog().showMessageDynamic(message);
+        
+        PrimeFaces.current().ajax().update( "formLista:tblEventos");
+        PrimeFaces.current().executeScript("PF('eventoDialog').hide()");
+    }
+    
+    boolean validar() {
+        boolean valido = true;
+        StringBuilder mensajes = new StringBuilder();
+        if(evento.getNombre().isBlank() || evento.getDescripcion().isBlank() 
+                || evento.getFecha() == null || evento.getHorainicio() == null
+                || evento.getFoto() == null) {
+            valido = false;
+            mensajes.append("- Debe completar todos los campos");
+        }
+        if(!valido) {
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, 
+                    "Info:", mensajes.toString());
+            PrimeFaces.current().dialog().showMessageDynamic(message);
+        }
+        return valido; 
+        
     }
     
     public void seleccionarEvento(Evento eventoSel) {

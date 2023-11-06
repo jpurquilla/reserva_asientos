@@ -168,7 +168,6 @@ public class RegistroBean implements Serializable{
         
         if(idPersona != null) {
             persona = personaRepository.buscarPersona(idPersona);
-            System.out.println("persona ---> " + persona);
             usuario = usuarioRepository.buscarUsuarioPorIdPersona(idPersona);
         } else {
             usuario.setCodusr(codusr);

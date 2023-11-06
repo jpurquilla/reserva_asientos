@@ -23,7 +23,7 @@
             </p:toolbar>
             <h:form id="formLista">
                 <div style="padding-top: 25px">
-                    <p:dataTable id="tblEventos" value="#{eventos.lstEventos}"  var="evento">
+                    <p:dataTable id="tblEventos" value="#{eventos.lstEventos}" scrollHeight="80%" scrollable="true" var="evento">
                         <p:column headerText="Titulo">
                             <h:outputText  value="#{evento.nombre}"/>
                         </p:column>
@@ -61,12 +61,12 @@
 
 
                                 <div class="field">
-                                    <p:outputLabel for="txtNombre" value="Nombre"/>
-                                    <p:inputText id="txtNombre" value="#{eventos.evento.nombre}"   required="true"/>
+                                    <p:outputLabel for="txtNombre" value="Nombre*"/>
+                                    <p:inputText id="txtNombre" value="#{eventos.evento.nombre}"  />
                                 </div>
                                 <div class="field">
-                                    <p:outputLabel for="txtDescripcion" value="Descripcion"/>
-                                    <p:inputTextarea rows="6" cols="33" id="txtDescripcion" value="#{eventos.evento.descripcion}"   required="true" />
+                                    <p:outputLabel for="txtDescripcion" value="Descripcion*"/>
+                                    <p:inputTextarea rows="6" cols="33" id="txtDescripcion" value="#{eventos.evento.descripcion}"   />
                                 </div>
 
 
@@ -76,24 +76,26 @@
                                                   skinSimple="true" multiple="false" mode="simple" auto='true' />
 
 
-                                    <br/>
-                                    <p:graphicImage  id="gIPoster" value="#{not empty eventos.evento.foto ?eventos.evento.foto : null}" height="100" width="100" stream="false"/>
+                                </div>
+                                <div class="field flex justify-content-center">
+                                    <p:graphicImage  id="gIPoster" value="#{not empty eventos.evento.foto ?eventos.evento.foto : null}" height="250" width="350" stream="false"/>
 
 
                                 </div>
+                                
                             </div>
                             <div class="ui-fluid col form-grid">
                                 <div class="field">
-                                    <p:outputLabel for="dpFecha" value="Fecha" />
-                                    <p:datePicker id="dpFecha"  locale="es" showIcon="true" value="#{eventos.evento.fecha}" mindate="#{eventos.fechaMinima}" required="true"/>
+                                    <p:outputLabel for="dpFecha" value="Fecha*" />
+                                    <p:datePicker id="dpFecha"  locale="es" showIcon="true" value="#{eventos.evento.fecha}" mindate="#{eventos.fechaMinima}" />
                                 </div>
                                 <div class="field">
-                                    <p:outputLabel for="dpHora" value="Hora" />
+                                    <p:outputLabel for="dpHora" value="Hora*" />
                                     <p:datePicker id="dpHora" value="#{eventos.evento.horainicio}"
                                                   pattern="HH:mm"/>
                                 </div>
                                 <div class="field">
-                                    <p:outputLabel for="tblprecios" value="Precios" />
+                                    <p:outputLabel for="tblprecios" value="Precios*" />
                                     <p:dataTable id="tblprecios" value="#{eventos.lstSecciones}" editable="true"  editMode="cell" var="seccion">
                                         <p:column headerText="Sección">
                                             <p:outputLabel value="#{seccion.nombre}"/>
