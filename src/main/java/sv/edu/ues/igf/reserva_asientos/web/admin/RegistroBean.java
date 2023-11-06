@@ -2,10 +2,8 @@
 package sv.edu.ues.igf.reserva_asientos.web.admin;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.application.FacesMessage;
-import jakarta.faces.context.FacesContext;
 import jakarta.faces.event.ActionEvent;
 import jakarta.faces.model.SelectItem;
 import jakarta.inject.Inject;
@@ -221,7 +219,6 @@ public class RegistroBean implements Serializable{
         }
         if(valido && idPersona == null) {
             Usuario usuarioAVerificar = usuarioRepository.listarUsuarios(codusr);
-            System.out.println("El ususario a verificar es "  + usuarioAVerificar);
             if(usuarioAVerificar != null) {
                 valido = false;
                 mensajes.append("- Ese codigo de usuario ya existe");
@@ -229,7 +226,8 @@ public class RegistroBean implements Serializable{
         }
         
         if(!valido) {
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Info:", mensajes.toString());
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, 
+                    "Info:", mensajes.toString());
             PrimeFaces.current().dialog().showMessageDynamic(message);
         }
         return valido; 
@@ -264,7 +262,6 @@ public class RegistroBean implements Serializable{
         codusr = usuario.getCodusr();
         perfilSel = usuario.getIdperfil();
         
-        System.out.println("El idpersona es " + idPersona);
     }
     
     
