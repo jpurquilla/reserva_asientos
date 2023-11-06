@@ -10,40 +10,59 @@
     <ui:define name="header">
         <h1>Titulo de pantalla de comprador</h1>
     </ui:define>
+    
     <ui:define name="content">
-        <p:outputLabel value="Reservar boletos" class=" flex justify-content-center "/>
-        <p:card class="mt-2 mb-2">
-            <p:panelGrid columns="2" layout="grid" styleClass="showcase-text-align-center bg-red-200">
-                <p:graphicImage value="#{not empty reservaBean.evento.foto ? reservaBean.evento.foto : 'resources/images/ImageDefault.jpg'}" style="width: 350px; height: 250px" styleClass=" max-w-full max-h-full float-left" stream="false"/>
-                <!--<p:outputLabel class="flex justify-content-center" value="#{reservaBean.evento.nombre}"/>-->
-                <div class="grid">    
-                    <div class="col-12">
-                        <h:outputText value ="#{reservaBean.evento.nombre}"/>                     
-                    </div>
-                    <div class="col-12">
+           <div class=" flex align-items-center border-bottom-1 surface-border surface-overlay w-full border-round">
+               <p class="text-2xl w-full surface-800 h-4rem flex align-items-center justify-content-center text-white  border-round  " style="font-family: Arial, Helvetica, sans-serif;font-weight: bolder;margin-bottom: 0.5rem">Reservar Boletos</p>
+            </div>         
+           
+<!--        contenedor 1-->
+           <div class="flex justify-content-between  " >
+             <div    class=" shadow-3 flex flex align-items-center  mr-3 justify-content-start surface-200 font-bold border-round" style=" width:60%">
+<!--                seccion1-->
+                <p:card styleClass=" h-full w-full " style="display: flex; justify-content: center; align-items: center;">
+                    
+                   <p:graphicImage   value="#{not empty reservaBean.evento.foto ? reservaBean.evento.foto : 'resources/images/ImageDefault.jpg'}" style="width: 350px; height: 250px" styleClass=" max-w-full max-h-full float-left" stream="false"/>
+                   <!--<p:outputLabel class="flex justify-content-center" value="#{reservaBean.evento.nombre}"/>--> 
+                </p:card>
+            </div>
+            <div  class=" shadow-3 flex-initial flex align-items-center ml-0 mr-1 justify-content-start surface-200 font-bold   border-round" style=" width:40%">  
+<!--                seccion2-->   
+                <p:card styleClass=" h-full w-full pt-0" >
+                  
+                    <f:facet name="title">
+                        <h:outputText value ="#{reservaBean.evento.nombre}"/> 
                         <p:divider />
-                    </div>
-                    <div class="fluid formgrid">
                         <h:outputText value ="Fecha: #{reservaBean.evento.fecha} "/>
-                        
-                        <h:outputText value ="Hora: #{reservaBean.evento.horainicio} "/>   
-                        
-                    </div>         
-                </div>
-            </p:panelGrid >
+                        <p:divider />
+                        <h:outputText value ="Hora: #{reservaBean.evento.horainicio} "/> 
+                    </f:facet>
+                    <!--                    cantidad de sillas-->
+                    
+                        <h:form id="inputCantidadaSeleccionar" >
+                            <div class="field col-12">
+                                <p class="text-1xl w-full surface-700 h-2rem flex align-items-center justify-content-center text-white  border-round  " style="font-family: Arial, Helvetica, sans-serif;font-weight: bolder;margin-bottom: 0.5rem">Cantidad de Boletos</p>
+                                <p:outputLabel value="Ingrese cantidad de localidades a reservar" style="font-size: 40px;" />
+                                <p:inputNumber class="ml-4" id="cantidadAReservar" value="#{reservaBean.cantidadaReservar}" minValue="0" decimalPlaces="0">
+                                    <f:ajax event="keyup" render="asientos" execute="@this" listener="#{reservaBean.reestablecerSelecciones()}" />
+                                </p:inputNumber>
+                            </div>
+                        </h:form>
+                   
+                    
+                    
+                </p:card>
+            </div>     
+                
+             
             
             
-        </p:card>       
+        </div> 
+<!--Seccion de seleccion-->
         <div class="mb-2">
+          <p:card styleClass="shadow-5 mt-3">
+                
             
-            <h:form id="inputCantidadaSeleccionar">
-                <div class="field col-12">
-                    <p:outputLabel value="Ingrese cantidad de localidades a reservar"/>
-                    <p:inputNumber class="ml-4" id="cantidadAReservar" value="#{reservaBean.cantidadaReservar}" minValue="0" decimalPlaces="0">
-                        <f:ajax event="keyup" render="asientos" execute="@this" listener="#{reservaBean.reestablecerSelecciones()}" />
-                    </p:inputNumber>
-                </div>
-            </h:form>
             <div class="">
                 
             </div>
@@ -52,7 +71,8 @@
             <h:form id="asientos" class="mx-8">
                 
                 <div class="">
-                    <p:outputLabel value="Seleccionar asientos" class="flex justify-content-center mb-4 mt-2"/>
+                    <p class="text-2xl w-full  h-2rem flex align-items-center justify-content-center   border-round  " style="font-family: Arial, Helvetica, sans-serif;font-weight: bolder;margin-bottom: 0.5rem">Seleccionar asientos</p>
+                   
                     <div class="flex justify-content-center">
                         <p:graphicImage name="images/escenarioDefault.png" alt="" style="height:  80px"/>
                     </div>
@@ -172,8 +192,9 @@
                         </h:form>                      
                     </f:facet>               
             </p:dialog>
-
+        </p:card >
         </div>
+         
             <div class="fixed bottom-0 left-0 max-w-20rem" >
                 <p:tag id="timer" styleClass="mr-2" class=" " style="font-size: 25px !important;" severity="success"></p:tag>
             </div>         
