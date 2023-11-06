@@ -1,6 +1,6 @@
 body{
     font-size: 12px ; 
-    background-color: #bdbdbd;
+    background-color: #9b111e;
 }
 
 .ui-widget {
@@ -88,12 +88,12 @@ body{
 }
 
 .ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem.ui-state-active a .ui-icon {
-    color: red !important;
+    color: #9b111e !important;
     border-color: red !important;
 }
 .ui-tabmenuitem.ui-state-active a {
-    color: red !important;
+    color: #9b111e !important;
 }
 body .ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem.ui-state-active {
-    border-color:red !important;
+    border-color:#9b111e !important;
 }
