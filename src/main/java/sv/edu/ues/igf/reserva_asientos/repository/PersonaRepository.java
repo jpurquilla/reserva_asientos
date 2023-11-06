@@ -24,6 +24,11 @@ public class PersonaRepository {
          
      }
      
+     public Persona buscarPersona(Integer idPersona) {
+         return (Persona) entityManager.createQuery("select c from Persona c where idpersona = :idpersona")
+                 .setParameter("idpersona", idPersona).getSingleResult();
+     }
+     
      public Persona buscarPersonaPorId(Integer idPersona) {
          return entityManager.find(Persona.class, idPersona);
      }

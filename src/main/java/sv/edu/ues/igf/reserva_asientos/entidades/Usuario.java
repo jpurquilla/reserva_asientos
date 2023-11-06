@@ -19,12 +19,12 @@ public class Usuario {
     private Integer idperfil;
 
    
-    @ManyToOne
-    @JoinColumn(name = "idpersona", referencedColumnName = "idpersona",insertable=false, updatable=false)
-    private Persona persona;
-    @ManyToOne
-    @JoinColumn(name = "idperfil", referencedColumnName = "idperfil",insertable=false, updatable=false)
-    private Perfil perfil;
+//    @ManyToOne
+//    @JoinColumn(name = "idpersona", referencedColumnName = "idpersona",insertable=false, updatable=false)
+//    private Persona persona;
+//    @ManyToOne
+//    @JoinColumn(name = "idperfil", referencedColumnName = "idperfil",insertable=false, updatable=false)
+//    private Perfil perfil;
 
     public Usuario() {
     }
@@ -32,8 +32,8 @@ public class Usuario {
     public Usuario(String codusr, String password, Persona persona, Perfil perfil) {
         this.codusr = codusr;
         this.password = password;
-        this.persona = persona;
-        this.perfil = perfil;
+        //this.persona = persona;
+        //this.perfil = perfil;
         this.fechacrea = LocalDateTime.now();
     }
 
@@ -75,21 +75,21 @@ public class Usuario {
         return fechacrea;
     }
 
-    public Persona getPersona() {
-        return persona;
-    }
-
-    public void setPersona(Persona persona) {
-        this.persona = persona;
-    }
-
-    public Perfil getPerfil() {
-        return perfil;
-    }
-
-    public void setPerfil(Perfil perfil) {
-        this.perfil = perfil;
-    }
+//    public Persona getPersona() {
+//        return persona;
+//    }
+//
+//    public void setPersona(Persona persona) {
+//        this.persona = persona;
+//    }
+//
+//    public Perfil getPerfil() {
+//        return perfil;
+//    }
+//
+//    public void setPerfil(Perfil perfil) {
+//        this.perfil = perfil;
+//    }
 
     public void setFechacrea(LocalDateTime fechacrea) {
         this.fechacrea = fechacrea;
@@ -137,8 +137,8 @@ public class Usuario {
                 "codusr='" + codusr + '\'' +
                 ", password='" + password + '\'' +
                 ", fechacrea=" + fechacrea +
-                ", persona=" + persona +
-                ", perfil=" + perfil +
+               // ", persona=" + persona +
+               // ", perfil=" + perfil +
                 '}';
     }
 }

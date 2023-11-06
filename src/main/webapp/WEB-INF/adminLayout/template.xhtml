@@ -24,23 +24,30 @@
                 <div class="flex justify-content-end px-6">
 
                     <ui:insert name="header">
-                        <h1>Administración</h1>
+                        <div class="titulo">
+                            <h4>Administración</h4>
+                        </div>
+                        
                     </ui:insert>
 
                 </div>
 
 
                 <div class="content h-screen">
-                    <ui:insert name="content" >
+                    <div style="padding: 25px;margin-left: 10px; background-color: white;height: 90%" >
+                        <ui:insert name="content">
+                        
                         Contenido de la página
                     </ui:insert>
+                    </div>
+                    
                 </div>
                 <div class="menu h-screen">
                     <h:form>
                         <p:megaMenu orientation="vertical" styleClass="h-screen " style="width: 100%">
                             <p:menuitem value="Registro" outcome="/admin/registro.xhtml" icon="pi pi-file-edit"/>
                             <p:menuitem value="Eventos" outcome="/admin/eventos.xhtml" icon="pi pi-ticket"/>
-                            <p:menuitem value="Reservas" icon="pi pi-list" outcome="/portal/historial.xhtml"/>
+                            <p:menuitem value="Reservas" outcome="/admin/reservas.xhtml" icon="pi pi-list" />
                             <p:menuitem value="Cerrar Sesion"  icon="pi pi-power-off" actionListener="#{login.logout()}"/>
                         </p:megaMenu>
                     </h:form>

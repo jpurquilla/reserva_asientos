@@ -6,7 +6,7 @@
                 template="/WEB-INF/adminLayout/template.xhtml">
 
     <ui:define name="header">
-        <h1> Registro de eventos </h1>
+        <h2 class="titulo"> Registro de eventos </h2>
     </ui:define>
     <ui:define name="content" >
         <div class="card" style="padding: 25px" >
@@ -116,12 +116,16 @@
 
 
                     </p:outputPanel>
+                    
 
                     <f:facet name="footer">
                         <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{eventos.guardarEvento}" />
                         <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('eventoDialog').hide()"
                                          class="ui-button-secondary" type="button" />
                     </f:facet>
+                </p:dialog>
+                <p:dialog>
+                    
                 </p:dialog>
             </h:form>
         </div>

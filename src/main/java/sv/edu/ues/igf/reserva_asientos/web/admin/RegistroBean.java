@@ -3,11 +3,16 @@ package sv.edu.ues.igf.reserva_asientos.web.admin;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
 import jakarta.faces.event.ActionEvent;
 import jakarta.faces.model.SelectItem;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.transaction.Transactional;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.mindrot.jbcrypt.BCrypt;
@@ -20,8 +25,8 @@ import sv.edu.ues.igf.reserva_asientos.repository.PersonaRepository;
 import sv.edu.ues.igf.reserva_asientos.repository.UsuarioRepository;
 
 @Named
-@RequestScoped
-public class RegistroBean {
+@SessionScoped
+public class RegistroBean implements Serializable{
     @Inject
     PersonaRepository personaRepository;
     
@@ -43,6 +48,7 @@ public class RegistroBean {
     private List <Perfil> lstPerfiles;
     private List <SelectItem> lstPerfilItem;
     private Integer perfilSel;
+    
 
     public List<Perfil> getLstPerfiles() {
         return lstPerfiles;
@@ -133,6 +139,16 @@ public class RegistroBean {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public Integer getIdPersona() {
+        return idPersona;
+    }
+
+    public void setIdPersona(Integer idPersona) {
+        this.idPersona = idPersona;
+    }
+    
+    
     
     @PostConstruct
     public void init() {
@@ -148,26 +164,75 @@ public class RegistroBean {
     
     @Transactional
     public void guardarRegistro(ActionEvent ae) {
+        Persona persona = new Persona();
+        Usuario usuario = new Usuario();
+        if(!validar()) return;
         
+        if(idPersona != null) {
+            persona = personaRepository.buscarPersona(idPersona);
+            System.out.println("persona ---> " + persona);
+            usuario = usuarioRepository.buscarUsuarioPorIdPersona(idPersona);
+        } else {
+            usuario.setCodusr(codusr);
+            usuario.setFechacrea(LocalDateTime.now());
+        }
+        persona.setNombres(nombres);
+        persona.setApellidos(apellidos);
+        persona.setDui(dui);
+        persona.setEmail(email);
+        persona.setTelefono(telefono);
         
-        Persona persona = new Persona(nombres, apellidos, dui, email, telefono);
         persona = personaRepository.guardarPersona(persona);
+        
         Perfil perfil =lstPerfiles.stream().filter(p -> p.getIdperfil() == perfilSel).findAny().get();
-        Usuario usuario = new Usuario(codusr, BCrypt.hashpw(password, BCrypt.gensalt()), persona, perfil);
+        usuario.setPassword(BCrypt.hashpw(password, BCrypt.gensalt()));
         usuario.setIdpersona(persona.getIdpersona());
         usuario.setIdperfil(perfil.getIdperfil());
-        persona.setUsuario(usuario);
         usuarioRepository.guardarUsuario(usuario);
-         lstPersonas.add(persona);
+        lstPersonas.clear();
+        lstPersonas = personaRepository.listarPersonas();
         
         
        
         limpiar();
         
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Info:", "Guardado con exito");
+        PrimeFaces.current().dialog().showMessageDynamic(message);
+        
         PrimeFaces.current().ajax().update( "formLista:tblUsuarios");
         PrimeFaces.current().executeScript("PF('personaDialog').hide()");
        
         
+    }
+    
+    public boolean validar() {
+        boolean valido = true;
+        StringBuilder mensajes = new StringBuilder();
+        if (!email.isBlank() && !email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
+            
+                mensajes.append("- El email no tiene formato correcto \n\n");
+                valido = false;
+        }
+        if(nombres.isBlank() || apellidos.isBlank() || dui.isBlank() 
+                || email.isBlank() || telefono.isBlank() || codusr.isBlank() 
+                || perfilSel == 0 || password.isBlank()) {
+            valido = false;
+            mensajes.append("- Debe completar todos los campos");
+        }
+        if(valido && idPersona == null) {
+            Usuario usuarioAVerificar = usuarioRepository.listarUsuarios(codusr);
+            System.out.println("El ususario a verificar es "  + usuarioAVerificar);
+            if(usuarioAVerificar != null) {
+                valido = false;
+                mensajes.append("- Ese codigo de usuario ya existe");
+            }
+        }
+        
+        if(!valido) {
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Info:", mensajes.toString());
+            PrimeFaces.current().dialog().showMessageDynamic(message);
+        }
+        return valido; 
     }
     
     public void limpiar() {
@@ -179,6 +244,7 @@ public class RegistroBean {
         telefono = "";
         codusr = "";
         password = "";
+        perfilSel = 0;
     }
     
     @Transactional
@@ -194,6 +260,11 @@ public class RegistroBean {
         dui = persona.getDui();
         email = persona.getEmail();
         telefono = persona.getTelefono(); 
+        Usuario usuario = usuarioRepository.buscarUsuarioPorIdPersona(idPersona);
+        codusr = usuario.getCodusr();
+        perfilSel = usuario.getIdperfil();
+        
+        System.out.println("El idpersona es " + idPersona);
     }
     
     
