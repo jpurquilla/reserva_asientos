@@ -1,0 +1,43 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:f="jakarta.faces.core"
+                xmlns:h="jakarta.faces.html"
+                template="/WEB-INF/adminLayout/template.xhtml"
+                xmlns:p="http://primefaces.org/ui">
+     <ui:define name="header">
+         <h2 class="titulo"> Reservas </h2>
+    </ui:define>
+    
+    <ui:define name="content">
+
+        <div class="card" style="padding: 25px" >
+            <p:dataTable var="reserva" value="#{historico.reservas}" scrollHeight="40%" scrollable="true">
+                <p:column headerText="Evento" class="flex justify-content-center align-items-center" >
+                    <p:graphicImage value="#{reserva.evento.foto}" styleClass="product-image max-h-8rem max-w-8rem mr-2" stream="false"/>
+                    <h:outputText  value="#{reserva.evento.nombre}" />
+                </p:column>
+                <p:column headerText="Fecha de reserva">
+                    <h:outputText value="#{historico.getDateFormatted(reserva.fecha)}" />
+                </p:column>
+                <p:column headerText="Total">
+                    <h:outputText value="$ #{reserva.total}" />
+                </p:column>
+                <p:column headerText="Fecha del evento">
+                    <h:outputText value="#{historico.getDateFormatted(reserva.evento.fecha)}" />
+                </p:column>
+                <p:column headerText="Hora del evento">
+                    <h:outputText value="#{historico.getTimeFormatted(reserva.evento.horainicio)}" />
+                </p:column>
+                <p:column headerText="Estado">
+                    <p:tag rendered="#{reserva.estado eq 20}" styleClass="mr-2" icon="pi pi-check" severity="success" value="COMPLETADA"></p:tag>
+                    <p:tag rendered="#{reserva.estado eq 10}" styleClass="mr-2" icon="pi pi-exclamation-circle" severity="warning" value="NO TERMINADA"></p:tag>
+                    <p:tag rendered="#{reserva.estado eq 30}" styleClass="mr-2" icon="pi pi-times" severity="danger" value="CANCELADA"></p:tag>
+                </p:column>
+            </p:dataTable>
+        </div>
+            
+            
+         
+
+    </ui:define>
+</ui:composition>

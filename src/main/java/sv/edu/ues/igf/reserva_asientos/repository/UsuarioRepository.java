@@ -17,26 +17,31 @@ public class UsuarioRepository {
         try {
             return entityManager.createQuery("select u from Usuario u where u.codusr = :codusr", Usuario.class)
                     .setParameter("codusr", codusr).getSingleResult();
-        }   catch (NoResultException nre) {
-               return null;
+        } catch (NoResultException nre) {
+            return null;
         }
 
     }
-
-public void guardarUsuario(Usuario usuario) {
-        entityManager.persist(usuario);
-    }
     
-    public Usuario
-
-buscarUsuarioPorId(String codusr) {
-        return entityManager.find(Usuario.class  
-
-, codusr);
+    public Usuario buscarUsuarioPorIdPersona(Integer idPersona) {
+        try {
+            return entityManager.createQuery("select u from Usuario u where u.idpersona = :idpersona", Usuario.class)
+                    .setParameter("idpersona", idPersona).getResultList().get(0);
+        } catch (NoResultException nre) {
+            return null;
+        }
     }
-    
-    public void eliminarUsuario(String codusr ) {
-         Usuario usuario = buscarUsuarioPorId(codusr);
-         entityManager.remove(usuario);
-     }
+
+    public void guardarUsuario(Usuario usuario) {
+        entityManager.merge(usuario);
+    }
+
+    public Usuario  buscarUsuarioPorId(String codusr) {
+        return entityManager.find(Usuario.class,codusr);
+    }
+
+    public void eliminarUsuario(String codusr) {
+        Usuario usuario = buscarUsuarioPorId(codusr);
+        entityManager.remove(usuario);
+    }
 }

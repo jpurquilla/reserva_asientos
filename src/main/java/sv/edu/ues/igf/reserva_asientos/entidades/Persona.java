@@ -14,8 +14,8 @@ public class Persona {
     private String dui;
     private String email;
     private String telefono;
-    @OneToOne(mappedBy = "persona")
-    private Usuario usuario;
+//    @OneToOne(mappedBy = "persona",cascade = )
+//    private Usuario usuario;
 
     public Persona() {
     }
@@ -28,13 +28,13 @@ public class Persona {
         this.telefono = telefono;
     }
     
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
+//    public Usuario getUsuario() {
+//        return usuario;
+//    }
+//
+//    public void setUsuario(Usuario usuario) {
+//        this.usuario = usuario;
+//    }
     
     public int getIdpersona() {
         return idpersona;

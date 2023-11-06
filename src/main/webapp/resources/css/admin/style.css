@@ -1,5 +1,10 @@
 body{
     font-size: 12px !important; 
+    background-color: lightgrey;
+}
+
+.titulo {
+    color: #4A94EC;
 }
 
 .ui-widget {
@@ -68,3 +73,6 @@ label {
     color: #ccc;
 }
 
+.card{
+    background-color: white;
+}

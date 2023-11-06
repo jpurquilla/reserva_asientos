@@ -23,6 +23,8 @@ public class Login implements Serializable{
 
     @Inject
     SessionBean sesion;
+    
+    
 
     private static final Logger LOGGER = Logger.getLogger(Login.class.getName());
     private String codusr;
@@ -55,7 +57,7 @@ public class Login implements Serializable{
     }
 
     public String loginAction() {
-        System.out.println("Aqui estamos con la info del usuario "+ codusr + " password " + password);
+       
         Usuario usuario = usuarioRepository.listarUsuarios(codusr);
         
         if(usuario == null) {
@@ -66,29 +68,28 @@ public class Login implements Serializable{
         }
         
         
-        sesion.setNombreUsuario(usuario.getPersona().getNombres());
+        //sesion.setNombreUsuario(usuario.getPersona().getNombres());
         sesion.setCodusr(usuario.getCodusr());
-        sesion.setIdpersona(usuario.getPersona().getIdpersona());
+        sesion.setIdpersona(usuario.getIdpersona());
         sesion.setIdperfil(usuario.getIdperfil());
         sesion.setIsLogged(true);
         isLogged = true;
 
 
        
-        return usuario.getPerfil().getIdperfil() == 10 ? "/admin/principal.xhtml" : "/portal/principal.xhtml";
+        return usuario.getIdperfil() == 10 ? "/admin/principal.xhtml" : "/portal/principal.xhtml";
 
     }
     
     public void logout() {
         try {
-            System.out.println("Entro a cerrar sesion");
             sesion.setCodusr("");
             sesion.setIdperfil(null);
             sesion.setNombreUsuario("");
             sesion.setIdpersona(null);
             sesion.setIsLogged(false);
             isLogged = false;
-            System.out.println("codusr " + sesion.getCodusr() + " esta loggueado : " + sesion.isIsLogged());
+            
             FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/portal/principal.xhtml");
         } catch (IOException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
